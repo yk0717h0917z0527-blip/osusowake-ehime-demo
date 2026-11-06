@@ -1,0 +1,1440 @@
+<meta charset="utf-8">
+<title>おすそわけ収穫 運営管理</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 運営管理画面：PCは左ナビ＋本文、スマホ幅では上部バー＋開閉メニュー。色はすべてトークン経由 */
+:root{
+  --g:#13A35A; --g-d:#0C8547; --g-ink:#0A6B38; --g-50:#E7F6ED; --g-100:#CDEEDB; --on-g:#FFFFFF;
+  --bg:#F3F6F4; --card:#FFFFFF; --ink:#13201A; --ink-2:#4B5C53; --ink-3:#7A8A81; --line:#E1E9E4; --line-2:#CBD8D0; --sunk:#F7FAF8;
+  --warm:#E4572A; --warm-50:#FDEDE6; --amber:#C98500; --amber-50:#FFF4DA; --danger:#D23B3B; --danger-50:#FCE9E9; --on-danger:#FFFFFF;
+  --info:#2F6FD6; --info-50:#E8F0FC;
+  --flash:#FFF1C9; --scrim:rgba(10,24,16,.42); --tip-bg:#13201A; --tip-ink:#FFFFFF;
+  --wall-1:#2E5B45; --wall-2:#14281D; --wall-ink:#FFFFFF; --push-bg:rgba(255,255,255,.86); --push-ink:#13201A; --push-sub:#4B5C53;
+  --emb-hi:rgba(255,255,255,.24);
+  --rk0:#7CC784; --rk0b:#3E8E47; --rk1:#D9A066; --rk1b:#9B6230; --rk2:#C3CCD2; --rk2b:#7D8A93; --rk3:#F4CE55; --rk3b:#B8891A;
+  --rk4:#A6E3E0; --rk4b:#4C9FA0; --rk5:#B49BEE; --rk5b:#6545C2; --rk6:#25352D; --rk6b:#E8C35A;
+  --shadow:0 1px 2px rgba(16,40,28,.06),0 6px 18px rgba(16,40,28,.07);
+  --shadow-lg:0 18px 48px -12px rgba(16,40,28,.32);
+  --f-round:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic UI",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --g:#2BBF6C; --g-d:#23A65D; --g-ink:#7FE0A7; --g-50:#11281B; --g-100:#1A3C29; --on-g:#04200F;
+  --bg:#0C120F; --card:#151E19; --ink:#E5EEE9; --ink-2:#A6B5AD; --ink-3:#7C8C83; --line:#24302A; --line-2:#33423A; --sunk:#101813;
+  --warm:#FF7C52; --warm-50:#3A1C12; --amber:#F5B43A; --amber-50:#33280F; --danger:#FF6B6B; --danger-50:#3A1717; --on-danger:#2A0808;
+  --info:#7AA7F5; --info-50:#17243A;
+  --flash:#3A3214; --scrim:rgba(0,0,0,.62); --tip-bg:#E5EEE9; --tip-ink:#0C120F;
+  --wall-1:#1C3A2B; --wall-2:#070D0A; --wall-ink:#E5EEE9; --push-bg:rgba(32,44,38,.9); --push-ink:#E5EEE9; --push-sub:#A6B5AD;
+  --emb-hi:rgba(255,255,255,.16);
+  --shadow:0 1px 0 rgba(0,0,0,.4); --shadow-lg:0 18px 48px -12px rgba(0,0,0,.7);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --g:#2BBF6C; --g-d:#23A65D; --g-ink:#7FE0A7; --g-50:#11281B; --g-100:#1A3C29; --on-g:#04200F;
+  --bg:#0C120F; --card:#151E19; --ink:#E5EEE9; --ink-2:#A6B5AD; --ink-3:#7C8C83; --line:#24302A; --line-2:#33423A; --sunk:#101813;
+  --warm:#FF7C52; --warm-50:#3A1C12; --amber:#F5B43A; --amber-50:#33280F; --danger:#FF6B6B; --danger-50:#3A1717; --on-danger:#2A0808;
+  --info:#7AA7F5; --info-50:#17243A;
+  --flash:#3A3214; --scrim:rgba(0,0,0,.62); --tip-bg:#E5EEE9; --tip-ink:#0C120F;
+  --wall-1:#1C3A2B; --wall-2:#070D0A; --wall-ink:#E5EEE9; --push-bg:rgba(32,44,38,.9); --push-ink:#E5EEE9; --push-sub:#A6B5AD;
+  --emb-hi:rgba(255,255,255,.16);
+  --shadow:0 1px 0 rgba(0,0,0,.4); --shadow-lg:0 18px 48px -12px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-round);margin:0;line-height:1.3}
+.ic{width:18px;height:18px;flex:none}
+.num,.tn{font-variant-numeric:tabular-nums}
+.num{font-family:var(--f-round)}
+.muted{color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- shell ---------- */
+.app{display:grid;grid-template-columns:236px minmax(0,1fr);gap:24px;align-items:start;max-width:1440px;margin:0 auto;padding-top:20px;padding-bottom:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-height:100vh}
+.side{position:sticky;top:20px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 12px;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 40px);overflow-y:auto}
+.brand{display:flex;gap:10px;align-items:center;padding:2px 6px}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--g);color:var(--on-g);display:grid;place-items:center;flex:none}
+.logo .ic{width:24px;height:24px}
+.brand b{display:block;font-family:var(--f-round);font-weight:800;font-size:16px;line-height:1.25}
+.brand small{display:block;color:var(--ink-3);font-size:11.5px}
+.menubtn{display:none}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:11px;color:var(--ink-2);font-weight:700;font-size:13.5px;position:relative}
+.nav button:hover{background:var(--bg);color:var(--ink)}
+.nav button.on{background:var(--g-50);color:var(--g-ink)}
+.nav button .rq{margin-left:auto;font-size:10.5px;color:var(--ink-3);font-weight:500;font-family:var(--f-round)}
+.nav .cnt{margin-left:auto;min-width:20px;height:20px;border-radius:10px;background:var(--warm);color:var(--on-danger);font-size:11px;display:grid;place-items:center;padding:0 6px;font-family:var(--f-round)}
+.nav .cnt+.rq{margin-left:6px}
+.acct{margin-top:auto;border-top:1px solid var(--line);padding:12px 6px 0;display:flex;flex-direction:column;gap:8px}
+.acct .who{display:flex;gap:8px;align-items:center}
+.acct .who b{font-size:13px;display:block}
+.acct .who small{font-size:11.5px;color:var(--ink-3);display:block}
+.linkbtn{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-2);padding:6px 4px;border-radius:8px;font-weight:700}
+.linkbtn:hover{color:var(--g-ink);background:var(--bg)}
+.linkbtn .ic{width:16px;height:16px}
+.main{min-width:0}
+.view-enter{animation:vin .28s ease-out}
+@keyframes vin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- page header ---------- */
+.phd{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin:4px 0 18px}
+.phd h1{font-size:24px;font-weight:800;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.phd p{margin:4px 0 0;color:var(--ink-2);font-size:13px}
+.rqtag{font-family:var(--f-round);font-size:11px;font-weight:700;color:var(--g-ink);background:var(--g-50);border-radius:6px;padding:1px 7px}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+/* ---------- common ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}
+.card>h2,.chd h2{font-size:16px;font-weight:800}
+.chd{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+.chd p{margin:2px 0 0;font-size:12px;color:var(--ink-3)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 16px;border-radius:11px;background:var(--g);color:var(--on-g);font-weight:700;font-size:13.5px;white-space:nowrap;transition:background .15s}
+.btn:hover{background:var(--g-d)}
+.btn:disabled{background:var(--line);color:var(--ink-3);cursor:not-allowed}
+.btn.ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line-2)}
+.btn.ghost:hover{background:var(--bg)}
+.btn.danger{background:var(--danger);color:var(--on-danger)}
+.btn.dline{background:var(--card);color:var(--danger);border:1.5px solid var(--danger)}
+.btn.dline:hover{background:var(--danger-50)}
+.btn.sm{height:32px;padding:0 11px;font-size:12.5px;border-radius:9px}
+.btn .ic{width:16px;height:16px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btnrow.end{justify-content:flex-end}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;background:var(--bg);color:var(--ink-2);white-space:nowrap;border:1px solid transparent}
+.pill .ic{width:12px;height:12px}
+.pill.g{background:var(--g-50);color:var(--g-ink)}
+.pill.amber{background:var(--amber-50);color:var(--ink)}
+.pill.red{background:var(--danger-50);color:var(--danger)}
+.pill.info{background:var(--info-50);color:var(--info)}
+.pill.line{background:none;border-color:var(--line-2);color:var(--ink-2)}
+.pill.pr{background:var(--ink);color:var(--card);border-radius:5px;padding:0 6px;font-family:var(--f-round);letter-spacing:.06em}
+.av{width:34px;height:34px;border-radius:50%;background:var(--g-100);color:var(--g-ink);display:grid;place-items:center;font-weight:800;font-family:var(--f-round);font-size:14px;flex:none}
+.av.f{border-radius:10px;background:var(--amber-50);color:var(--ink)}
+.av.lg{width:52px;height:52px;font-size:20px}
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:3px;gap:2px}
+.seg button{padding:5px 11px;border-radius:8px;font-size:12.5px;font-weight:700;color:var(--ink-2);white-space:nowrap}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.seg button .n{font-family:var(--f-round);color:var(--ink-3);margin-left:4px;font-variant-numeric:tabular-nums}
+.fine{font-size:12px;color:var(--ink-3);margin:0}
+.empty{padding:28px 12px;text-align:center;color:var(--ink-3);font-size:13px}
+.hr{height:1px;background:var(--line);margin:14px 0}
+
+/* form */
+.fld{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fld>span{font-size:12px;font-weight:700;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.fld>span em{font-style:normal;font-weight:500;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.fld>span em.over{color:var(--danger);font-weight:700}
+.inp{width:100%;min-width:0;height:38px;border:1.5px solid var(--line-2);border-radius:10px;background:var(--card);padding:0 11px;font-size:13.5px}
+textarea.inp{height:auto;min-height:84px;padding:9px 11px;resize:vertical;line-height:1.6}
+select.inp{padding-right:8px}
+.inp:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px var(--g-50)}
+.inp[readonly]{background:var(--sunk)}
+.search{position:relative;flex:1;min-width:180px}
+.search .ic{position:absolute;left:10px;top:10px;color:var(--ink-3)}
+.search .inp{padding-left:34px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.filters select.inp{width:auto;flex:none}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fgrid .full{grid-column:1/-1}
+.chks{display:flex;flex-wrap:wrap;gap:6px}
+.cchip{position:relative;display:inline-flex}
+.cchip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.cchip span{display:inline-flex;align-items:center;gap:4px;border:1.5px solid var(--line-2);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:700;color:var(--ink-2);background:var(--card);white-space:nowrap}
+.cchip input:checked+span{border-color:var(--g);background:var(--g-50);color:var(--g-ink)}
+.cchip input:focus-visible+span{outline:3px solid var(--g);outline-offset:2px}
+.cchip input:disabled+span{opacity:.45}
+.cchip.bad input:checked+span{border-color:var(--danger);background:var(--danger-50);color:var(--danger)}
+.err{color:var(--danger);font-size:12.5px;font-weight:700;margin:0;display:flex;gap:6px;align-items:flex-start}
+.err .ic{width:16px;height:16px;margin-top:2px}
+
+/* table */
+.tw{overflow-x:auto;margin:0 -18px;padding:0 18px;-webkit-overflow-scrolling:touch}
+table.t{width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
+.t th{text-align:left;font-size:11.5px;color:var(--ink-3);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.t td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.t tr:last-child td{border-bottom:0}
+.t td.r,.t th.r{text-align:right}
+.t td.r{font-variant-numeric:tabular-nums;font-family:var(--f-round)}
+.t .nm{display:flex;align-items:center;gap:9px;min-width:0}
+.t .nm b{display:block;font-size:13px}
+.t .nm small{display:block;color:var(--ink-3);font-size:11.5px}
+.t tbody tr:hover{background:var(--sunk)}
+.t.min{min-width:0}
+.flash{animation:flash 1.8s ease-out}
+@keyframes flash{0%,35%{background:var(--flash)}100%{background:transparent}}
+.dim td{color:var(--ink-3)}
+
+/* ---------- dashboard ---------- */
+.todo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.todo button{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:center;min-width:0}
+.todo button:hover{border-color:var(--g)}
+.todo .ti{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--g-50);color:var(--g-ink);flex:none}
+.todo .ti.w{background:var(--warm-50);color:var(--warm)}
+.todo .ti.a{background:var(--amber-50);color:var(--amber)}
+.todo .ti.i{background:var(--info-50);color:var(--info)}
+.todo b{font-family:var(--f-round);font-size:20px;line-height:1.1;display:block;font-variant-numeric:tabular-nums}
+.todo small{display:block;font-size:12px;color:var(--ink-2);line-height:1.35}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.kpi .kl{font-size:12px;font-weight:700;color:var(--ink-2);display:flex;justify-content:space-between;gap:6px}
+.kpi .kl small{font-weight:500;color:var(--ink-3)}
+.kpi .kv{font-family:var(--f-round);font-weight:800;font-size:28px;line-height:1.2;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.kpi .kv small{font-size:14px;font-weight:700;margin-left:2px;color:var(--ink-2)}
+.kpi .kd{font-size:12px;display:flex;align-items:center;gap:3px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.kpi .kd b{font-weight:700}
+.kpi .kd.up b{color:var(--g-ink)} .kpi .kd.dn b{color:var(--danger)}
+.kpi .kd .ic{width:14px;height:14px}
+.kpi .kd.up .ic{color:var(--g-ink)} .kpi .kd.dn .ic{color:var(--danger)}
+.chart{width:100%;min-height:220px;position:relative}
+.chart svg{display:block;overflow:visible}
+.ax text{fill:var(--ink-3);font-size:11px;font-family:var(--f-body);font-variant-numeric:tabular-nums}
+.ax line{stroke:var(--line);stroke-width:1}
+.ax line.base{stroke:var(--line-2)}
+.mk{fill:var(--g)}
+.mk.dim{fill:var(--g-100)}
+.ln{fill:none;stroke:var(--g);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{fill:var(--g);stroke:var(--card);stroke-width:2}
+.vl{fill:var(--ink);font-size:12px;font-weight:700;font-family:var(--f-round);font-variant-numeric:tabular-nums}
+.lbl{fill:var(--ink-2);font-size:12px;font-family:var(--f-body)}
+.hit{fill:transparent;cursor:default}
+.hit:hover+.mk,.hcol:hover .mk{fill:var(--g-d)}
+.hcol:hover .bgc{fill:var(--sunk)}
+.bgc{fill:transparent}
+details.tbl{margin-top:8px}
+details.tbl summary{cursor:pointer;font-size:12.5px;color:var(--ink-2);font-weight:700;padding:4px 0}
+.tip{position:fixed;z-index:80;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);font-size:12px;font-weight:700;padding:6px 9px;border-radius:8px;white-space:nowrap;font-variant-numeric:tabular-nums;transform:translate(-50%,calc(-100% - 10px))}
+.alist{display:flex;flex-direction:column}
+.arow{display:flex;gap:10px;align-items:center;padding:10px 6px;border-bottom:1px solid var(--line);flex-wrap:wrap;border-radius:8px}
+.arow:last-child{border-bottom:0}
+.arow .who{flex:1;min-width:150px}
+.arow .who b{font-size:13.5px}
+.arow .who small{display:block;color:var(--ink-3);font-size:11.5px}
+.why{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
+.rule{display:flex;gap:8px;align-items:flex-start;background:var(--sunk);border:1px dashed var(--line-2);border-radius:12px;padding:8px 10px;font-size:12px;color:var(--ink-2);margin-bottom:8px}
+.rule .ic{color:var(--amber);margin-top:2px;width:16px;height:16px}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.log li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px;padding:8px 2px;border-bottom:1px solid var(--line);font-size:12.5px}
+.log li:last-child{border-bottom:0}
+.log time{color:var(--ink-3);font-variant-numeric:tabular-nums;font-family:var(--f-round)}
+
+/* ---------- split (list + detail) ---------- */
+.split{display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:16px;align-items:start}
+.lpane{padding:12px}
+.lpane .seg{margin:0 0 10px}
+.li{display:flex;flex-direction:column;gap:3px;width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid transparent;margin-bottom:4px}
+.li:hover{background:var(--sunk)}
+.li.on{border-color:var(--g);background:var(--g-50)}
+.li .r1{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.li b{font-size:13.5px}
+.li small{font-size:11.5px;color:var(--ink-3)}
+.dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 16px;margin:12px 0}
+.dl div{min-width:0}
+.dl dt{font-size:11.5px;color:var(--ink-3);font-weight:700}
+.dl dd{margin:0;font-size:13.5px;overflow-wrap:anywhere}
+.docs{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.doc{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+.doc:last-child{border-bottom:0}
+.doc .dn b{font-size:13px;display:block}
+.doc .dn small{font-size:11.5px;color:var(--ink-3)}
+.doc .dn small.w{color:var(--danger)}
+.ck{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);font-weight:700;cursor:pointer;white-space:nowrap}
+.ck input{width:18px;height:18px;accent-color:var(--g);margin:0}
+.tl{list-style:none;margin:0;padding:0 0 0 4px;display:flex;flex-direction:column}
+.tl li{position:relative;padding:0 0 14px 20px;font-size:12.5px}
+.tl li::before{content:"";position:absolute;left:3px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--g)}
+.tl li::after{content:"";position:absolute;left:7px;top:17px;bottom:2px;width:1px;background:var(--line-2)}
+.tl li:last-child::after{display:none}
+.tl li.sys::before{background:var(--line-2)}
+.tl time{color:var(--ink-3);font-family:var(--f-round);font-variant-numeric:tabular-nums;margin-right:6px}
+.tl b{font-weight:700}
+.tl p{margin:2px 0 0;color:var(--ink-2)}
+.callout{display:flex;gap:10px;align-items:flex-start;border-radius:12px;padding:10px 12px;font-size:12.5px;background:var(--amber-50)}
+.callout .ic{margin-top:2px;color:var(--amber)}
+.callout.red{background:var(--danger-50)} .callout.red .ic{color:var(--danger)}
+.callout.g{background:var(--g-50)} .callout.g .ic{color:var(--g-ink)}
+.callout.info{background:var(--info-50)} .callout.info .ic{color:var(--info)}
+.tpls{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tpls button{font-size:12px;border:1px dashed var(--line-2);border-radius:8px;padding:3px 8px;color:var(--ink-2)}
+.tpls button:hover{border-color:var(--g);color:var(--g-ink)}
+
+/* penalty */
+.rules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.rules div{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.rules b{display:block;font-size:13px}
+.rules span{font-size:12px;color:var(--ink-2)}
+.meter{display:inline-flex;gap:3px;vertical-align:middle;margin-right:6px}
+.meter i{width:14px;height:8px;border-radius:3px;background:var(--line)}
+.meter i.on{background:var(--amber)}
+.meter.full i.on{background:var(--danger)}
+.recs{display:flex;flex-direction:column;gap:4px}
+.rec{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}
+.rec .x{color:var(--ink-3);border-radius:6px;padding:0 4px;font-size:11.5px;text-decoration:underline}
+.rec .x:hover{color:var(--danger)}
+.rec.exp{color:var(--ink-3);text-decoration:line-through}
+.picks{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.picks button{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;font-size:13px}
+.picks button:hover{background:var(--sunk)}
+
+/* insurance */
+.dates{display:flex;gap:8px;flex-wrap:wrap}
+.dbtn{border:1.5px solid var(--line-2);border-radius:12px;padding:6px 12px;display:flex;flex-direction:column;align-items:flex-start;min-width:104px}
+.dbtn b{font-family:var(--f-round);font-size:14px}
+.dbtn small{font-size:11px;color:var(--ink-3)}
+.dbtn.on{border-color:var(--g);background:var(--g-50)}
+.dbtn.on b{color:var(--g-ink)}
+.csvbox{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:12px;min-height:160px;white-space:pre;overflow:auto}
+.sum3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.sum3 div{background:var(--sunk);border-radius:12px;padding:8px 12px}
+.sum3 b{font-family:var(--f-round);font-size:20px;font-variant-numeric:tabular-nums}
+.sum3 span{display:block;font-size:11.5px;color:var(--ink-3)}
+
+/* notice / ad compose */
+.compose{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:16px;align-items:start}
+.prevwrap{position:sticky;top:20px;display:flex;flex-direction:column;gap:12px}
+.reach{display:flex;gap:10px;align-items:center;background:var(--g-50);border-radius:12px;padding:10px 12px;color:var(--g-ink);font-size:12.5px}
+.reach b{font-family:var(--f-round);font-size:22px;font-variant-numeric:tabular-nums}
+.lock{border-radius:22px;padding:18px 14px 20px;background:linear-gradient(165deg,var(--wall-1),var(--wall-2));color:var(--wall-ink)}
+.lock .clk{text-align:center;font-family:var(--f-round);font-size:40px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.lock .dt{text-align:center;font-size:12px;opacity:.85;margin:4px 0 14px}
+.push{background:var(--push-bg);color:var(--push-ink);border-radius:16px;padding:10px 12px;display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 9px;backdrop-filter:blur(6px)}
+.push .pi{width:28px;height:28px;border-radius:8px;background:var(--g);color:var(--on-g);display:grid;place-items:center;grid-row:span 2}
+.push .pi .ic{width:17px;height:17px}
+.push .ph1{display:flex;justify-content:space-between;font-size:11.5px;color:var(--push-sub)}
+.push .pb b{display:block;font-size:13px;overflow-wrap:anywhere}
+.push .pb p{margin:0;font-size:12.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.inapp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.inapp .ih{display:flex;gap:6px;align-items:center;margin-bottom:6px;font-size:11.5px;color:var(--ink-3)}
+.inapp b{display:block;font-size:14px;margin-bottom:4px;overflow-wrap:anywhere}
+.inapp p{margin:0;font-size:13px;color:var(--ink-2);white-space:pre-wrap;overflow-wrap:anywhere}
+.plabel{font-size:11.5px;font-weight:700;color:var(--ink-3);letter-spacing:.06em;margin:0 0 6px}
+.feed{display:flex;flex-direction:column;gap:8px;background:var(--bg);border-radius:16px;padding:10px;border:1px solid var(--line)}
+.skel{background:var(--card);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.skel i{display:block;height:8px;border-radius:4px;background:var(--line)}
+.adcard{background:var(--card);border-radius:12px;padding:12px;border:1.5px solid var(--line-2);display:flex;flex-direction:column;gap:6px}
+.adcard .ah{display:flex;gap:6px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.adcard b{font-size:14px;overflow-wrap:anywhere}
+.adcard p{margin:0;font-size:12.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.adcard .cta{align-self:flex-start;font-size:12px;font-weight:700;color:var(--g-ink);border:1.5px solid var(--g);border-radius:8px;padding:2px 10px}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.checks li{display:flex;gap:8px;align-items:flex-start;font-size:12.5px}
+.checks .ic{width:16px;height:16px;margin-top:2px}
+.checks li.ok .ic{color:var(--g)}
+.checks li.ng{color:var(--danger);font-weight:700}
+.cpex li{justify-content:space-between;font-size:13px}
+.insfee td.r b{font-size:14px}
+.checks li.ng .ic{color:var(--danger)}
+
+/* drawer, modal, toast */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:60;opacity:0;transition:opacity .2s}
+.scrim.show{opacity:1}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--card);z-index:61;box-shadow:var(--shadow-lg);transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+.drawer.show{transform:none}
+.dhd{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.dhd h2{font-size:17px;flex:1}
+.dbd{flex:1;overflow-y:auto;padding:16px 18px 24px;display:flex;flex-direction:column;gap:14px}
+.icbtn{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--ink-2);flex:none}
+.icbtn:hover{background:var(--bg)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stats div{background:var(--sunk);border-radius:12px;padding:8px 10px}
+.stats b{font-family:var(--f-round);font-size:18px;font-variant-numeric:tabular-nums;display:block}
+.stats span{font-size:11.5px;color:var(--ink-3)}
+.modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px}
+.mbox{background:var(--card);border-radius:20px;box-shadow:var(--shadow-lg);width:min(520px,100%);max-height:calc(100vh - 32px);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;animation:pop .2s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.mbox h2{font-size:18px}
+.mbody{display:flex;flex-direction:column;gap:12px;font-size:13.5px}
+.mbody p{margin:0}
+.radios{display:flex;flex-direction:column;gap:6px}
+.radios label{display:flex;gap:8px;align-items:flex-start;border:1.5px solid var(--line-2);border-radius:12px;padding:9px 11px;cursor:pointer}
+.radios label:has(input:checked){border-color:var(--g);background:var(--g-50)}
+.radios input{accent-color:var(--g);margin-top:4px}
+.radios b{display:block;font-size:13px}
+.radios small{color:var(--ink-3);font-size:11.5px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;z-index:90;background:var(--ink);color:var(--card);border-radius:14px;padding:11px 16px;font-size:13px;font-weight:700;box-shadow:var(--shadow-lg);display:flex;gap:8px;align-items:center;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .ic{color:var(--g)}
+.docprev{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;place-items:center}
+.docprev svg{width:100%;max-width:260px;height:auto}
+.dp-paper{fill:var(--card);stroke:var(--line-2)}
+.dp-line{fill:var(--line)}
+.dp-mask{fill:var(--ink-3);opacity:.35}
+.dp-head{fill:var(--g-100)}
+.dp-text{fill:var(--ink-3);font-size:10px;font-family:var(--f-body)}
+
+/* login demo */
+.login{position:fixed;inset:0;z-index:75;background:var(--bg);overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.lcard{width:min(420px,100%);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.lsteps{display:flex;gap:6px}
+.lsteps i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.lsteps i.on{background:var(--g)}
+.otp{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.otp input{height:52px;text-align:center;font-family:var(--f-round);font-size:22px;font-weight:800;border:1.5px solid var(--line-2);border-radius:12px;background:var(--card);min-width:0;width:100%;font-variant-numeric:tabular-nums}
+.otp input:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px var(--g-50)}
+.spin{width:28px;height:28px;border-radius:50%;border:3px solid var(--g-100);border-top-color:var(--g);animation:sp 0.8s linear infinite;margin:6px auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+.lnotes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink-2)}
+.lnotes li{display:flex;gap:6px}
+.lnotes .ic{width:15px;height:15px;color:var(--g);margin-top:2px}
+
+/* emblem */
+.emb{flex:none;vertical-align:middle}
+.emb .o{stroke-width:2.5} .emb .i{fill:var(--emb-hi)}
+.emb.rk0 .o{fill:var(--rk0);stroke:var(--rk0b)} .emb.rk0 .m{stroke:var(--rk0b);fill:none}
+.emb.rk1 .o{fill:var(--rk1);stroke:var(--rk1b)} .emb.rk1 .m{stroke:var(--rk1b);fill:none}
+.emb.rk2 .o{fill:var(--rk2);stroke:var(--rk2b)} .emb.rk2 .m{stroke:var(--rk2b);fill:none}
+.emb.rk3 .o{fill:var(--rk3);stroke:var(--rk3b)} .emb.rk3 .m{stroke:var(--rk3b);fill:none}
+.emb.rk4 .o{fill:var(--rk4);stroke:var(--rk4b)} .emb.rk4 .m{stroke:var(--rk4b);fill:none}
+.emb.rk5 .o{fill:var(--rk5);stroke:var(--rk5b)} .emb.rk5 .m{fill:var(--rk5b)}
+.emb.rk6 .o{fill:var(--rk6);stroke:var(--rk6b)} .emb.rk6 .m{fill:var(--rk6b)}
+.rk{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .todo{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rules{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .compose{grid-template-columns:minmax(0,1fr)}
+  .prevwrap{position:static}
+}
+@media (max-width:980px){
+  .split{grid-template-columns:minmax(0,1fr)}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:820px){
+  .app{grid-template-columns:minmax(0,1fr);gap:14px;padding-top:10px}
+  .side{position:sticky;top:8px;z-index:40;max-height:calc(100vh - 16px);padding:10px 12px;gap:10px;box-shadow:var(--shadow)}
+  .brand{padding:0}
+  .menubtn{display:inline-flex;margin-left:auto;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:10px;border:1.5px solid var(--line-2);font-weight:700;font-size:13px}
+  .side:not(.open) .nav,.side:not(.open) .acct{display:none}
+  .side.open .nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .nav button .rq{display:none}
+  .acct{margin-top:0}
+  .phd h1{font-size:20px}
+}
+@media (max-width:560px){
+  .card{padding:14px;border-radius:16px}
+  .tw{margin:0 -14px;padding:0 14px}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+  .dl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi .kv{font-size:24px}
+  .todo b{font-size:18px}
+  .sum3 b{font-size:17px}
+  .doc{grid-template-columns:minmax(0,1fr) auto}
+  .doc .ck{grid-column:1/-1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="app">
+  <aside class="side" id="side" aria-label="運営メニュー">
+    <div class="brand">
+      <span class="logo" id="logo"></span>
+      <div><b>おすそわけ収穫</b><small>運営管理・愛媛パイロット</small></div>
+      <button class="menubtn" data-act="menu" aria-expanded="false" aria-controls="nav" id="menubtn"></button>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="acct">
+      <div class="who"><span class="av">に</span><div><b>運営担当 にしむら</b><small>管理者権限</small></div></div>
+      <span class="pill g" id="mfaPill"></span>
+      <button class="linkbtn" data-act="login" id="loginBtn"></button>
+      <button class="linkbtn" data-act="theme" id="themeBtn"></button>
+    </div>
+  </aside>
+  <main class="main" id="view" tabindex="-1"></main>
+</div>
+
+<div class="scrim" id="scrim" hidden data-act="closeAll"></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dTitle"></aside>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="mbox">
+    <h2 id="mTitle"></h2>
+    <div class="mbody" id="mBody"></div>
+    <p class="err" id="mErr" hidden></p>
+    <div class="btnrow end"><button class="btn ghost" data-act="mCancel">やめる</button><button class="btn" data-act="mOk" id="mOk">実行する</button></div>
+  </div>
+</div>
+<div class="login" id="login" hidden role="dialog" aria-modal="true" aria-label="運営管理画面のログイン"></div>
+<div class="tip" id="tip" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== helpers ===== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const RM=window.matchMedia('(prefers-reduced-motion: reduce)');
+const TODAY=new Date(2026,9,30);
+const D=(m,d)=>new Date(2026,m-1,d);
+const addD=(dt,n)=>{const x=new Date(dt);x.setDate(x.getDate()+n);return x};
+const WD='日月火水木金土';
+const md=dt=>`${dt.getMonth()+1}/${dt.getDate()}`;
+const mdw=dt=>`${md(dt)}（${WD[dt.getDay()]}）`;
+const iso=dt=>`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+const fromIso=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const nf=n=>Number(n).toLocaleString('ja-JP');
+const rate=(g,b)=>g+b?g/(g+b)*100:100;
+const p1=v=>v.toFixed(1)+'%';
+const stamp=()=>{const n=new Date();return `10/30 ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`};
+const len=s=>[...(s||'')].length;
+
+const I={
+  home:'<path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
+  idcard:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.5-1.5 1.6-2 3-2s2.5.5 3 2M14 10h4M14 13h3"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5 6.5-5s5.7 1.5 6.5 5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 15c2 .6 3.2 2.2 3.6 5"/>',
+  flag:'<path d="M5 21V4h11l-2 4 2 4H5"/>',
+  shield:'<path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>',
+  bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  mega:'<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 0 1 0 6M7 14l1 5h3l-1-5"/>',
+  leaf:'<path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19 14 10"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+  check:'<path d="m5 12 5 5 9-10"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  alert:'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
+  up:'<path d="M12 19V5M6 11l6-6 6 6"/>',
+  down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
+  chev:'<path d="m9 5 7 7-7 7"/>',
+  copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+  lock:'<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+  menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
+  moon:'<path d="M20 14A8 8 0 1 1 10 4a6.5 6.5 0 0 0 10 10z"/>',
+  auto:'<circle cx="12" cy="12" r="8"/><path d="M12 4v16"/>',
+  eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  eyeoff:'<path d="M3 3l18 18M10.6 6.1A10 10 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.8M6.4 7.4A17 17 0 0 0 2 12s4 7 10 7a9.6 9.6 0 0 0 4.3-1"/>',
+  doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  phone:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+  send:'<path d="M4 12 20 4l-6 16-3-7z"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  pause:'<path d="M9 5v14M15 5v14"/>',
+  play:'<path d="M7 5v14l11-7z"/>',
+  basket:'<path d="M3 10h18l-2 10H5z"/><path d="m8 10 3-6M16 10l-3-6"/>',
+  pin:'<path d="M12 21s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+  good:'<path d="M7 10v10H4V10z"/><path d="M7 10l4.5-7a1.8 1.8 0 0 1 3.3 1.3L14 9h5.2a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 17.8 20H7"/>',
+  bad:'<g transform="rotate(180 12 12)"><path d="M7 10v10H4V10z"/><path d="M7 10l4.5-7a1.8 1.8 0 0 1 3.3 1.3L14 9h5.2a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 17.8 20H7"/></g>',
+  logout:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>'
+};
+const ic=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+
+const RANKS=['新人','ブロンズ','シルバー','ゴールド','プラチナ','マスター','プロフェッショナル'];
+const emblem=(i,sz=20)=>`<svg class="emb rk${i}" width="${sz}" height="${sz}" viewBox="0 0 48 48" aria-hidden="true"><path class="o" d="M24 3 42 13v22L24 45 6 35V13z"/><path class="i" d="M24 9 37 16.5v15L24 39 11 31.5v-15z"/>${
+  i===0?'<path class="m" d="M24 33v-9M24 26c0-4-3-6-7-6 0 4 3 6 7 6zM24 24c0-4 3-6 7-6 0 4-3 6-7 6z" stroke-width="2.4" stroke-linecap="round"/>'
+  :i<5?'<path class="m" d="M15 32c0-10 7-16 18-16 0 10-6 17-16 17M15 32l9-9" stroke-width="2.6" stroke-linecap="round"/>'
+  :'<path class="m" d="m24 13 3.2 6.6 7.3 1-5.3 5.1 1.3 7.2L24 29.5l-6.5 3.4 1.3-7.2-5.3-5.1 7.3-1z"/>'}</svg>`;
+const rankTag=i=>`<span class="rk">${emblem(i,18)}${RANKS[i]}</span>`;
+
+/* ===== data (すべて架空) ===== */
+const AREAS=['松山市','伊予市','東温市','砥部町','内子町','松前町'];
+const CROPS=['みかん','さつまいも','柿','キウイ','里芋','大根','玉ねぎ','トマト'];
+const P=(id,name,h,area,rank,good,bad,bad90,count,joined,last,extra={})=>Object.assign({id,k:'p',name,h,area,rank,good,bad,bad90,count,joined,last,st:'active',pen:[],until:null,reviewed:null},extra);
+const F=(id,name,h,area,good,bad,bad90,count,joined,last,extra={})=>Object.assign({id,k:'f',name,h,area,rank:null,good,bad,bad90,count,joined,last,st:'active',pen:[],until:null,reviewed:null},extra);
+let recSeq=1;
+const R=(d,type,pt,note,by='自動')=>({rid:'R'+(recSeq++),d,type,pt,note,by});
+const USERS=[
+  P('P-1001','みどり','midori_mtym','松山市',3,46,1,0,47,'2026/4/18','10/29'),
+  P('P-1002','さき','saki_iyo','伊予市',2,21,0,0,21,'2026/5/2','10/28'),
+  P('P-1003','ハル','haru_0915','松山市',1,11,0,0,11,'2026/6/9','10/26',{pen:[R(D(10,12),'当日キャンセル',1,'朝に体調不良の連絡')]}),
+  P('P-1004','けんた','kenta_iyo','伊予市',2,24,4,3,28,'2026/5/20','10/27',{pen:[R(D(10,2),'当日キャンセル',1,'開始1時間前に連絡'),R(D(10,24),'当日キャンセル',1,'当日朝に連絡')]}),
+  P('P-1005','こうへい','kohei_tobe','砥部町',0,7,2,2,9,'2026/7/3','10/16',{pen:[R(D(10,18),'無断欠席',3,'東温いも畑の募集に連絡なしで欠席')],until:D(11,17)}),
+  P('P-1006','ゆい','yui_toon','東温市',4,63,1,0,64,'2026/4/10','10/29'),
+  P('P-1007','たけし','takeshi_uchiko','内子町',5,98,2,0,100,'2026/4/3','10/30'),
+  P('P-1008','ゆうと','yuto_masaki','松前町',0,5,1,1,6,'2026/8/22','10/25'),
+  P('P-1009','あおい','aoi_mtym','松山市',1,9,0,0,9,'2026/7/14','10/25'),
+  P('P-1010','りく','riku_iyo','伊予市',0,2,0,0,2,'2026/10/5','10/19'),
+  P('P-1011','なつみ','natsumi_toon','東温市',3,38,3,3,41,'2026/4/25','10/28'),
+  P('P-1012','そうた','sota_mtym','松山市',2,19,1,0,20,'2026/5/30','10/22',{pen:[R(D(6,20),'当日キャンセル',1,'寝坊'),R(D(9,3),'当日キャンセル',1,'家族の用事')]}),
+  P('P-1013','まい','mai_tobe','砥部町',6,142,2,0,144,'2026/4/1','10/30'),
+  P('P-1014','ひろし','hiroshi_uchiko','内子町',1,12,0,0,12,'2026/6/18','10/24',{st:'suspended',stNote:'通報 T-0410 の確認中のため一時停止'}),
+  F('F-2001','たかはし農園','takahashi_farm','伊予市',88,2,0,31,'2026/4/1','10/30'),
+  F('F-2002','東温いも畑','toon_imo','東温市',54,1,0,18,'2026/4/8','10/29'),
+  F('F-2003','砥部キウイ園','tobe_kiwi','砥部町',31,0,0,12,'2026/5/11','10/29'),
+  F('F-2004','内子かきの木園','uchiko_kaki','内子町',22,1,0,9,'2026/6/2','10/28'),
+  F('F-2005','はなみずき農園','hanamizuki','松山市',33,4,3,14,'2026/9/12','10/29',{pen:[R(D(10,5),'当日中止（天候以外）',1,'人手が足りたとの理由で当日朝に中止')]})
+];
+const uById=id=>USERS.find(u=>u.id===id);
+const active=r=>addD(r.d,90)>TODAY;
+const ptOf=u=>u.pen.filter(active).reduce((a,r)=>a+r.pt,0);
+const restricted=u=>!!(u.until&&u.until>TODAY);
+const flagOf=u=>{const r=rate(u.good,u.bad),w=[];if(r<90)w.push(`好評価率 ${p1(r)}`);if(u.bad90>=3)w.push(`90日で残念だった ${u.bad90}件`);return w};
+const stOf=u=>u.st==='suspended'?['利用停止','red']:restricted(u)?['応募停止中','amber']:['利用中','g'];
+
+const LISTINGS=[
+  {id:'L-2041',title:'みかんの収穫と選果',farm:'F-2001',area:'伊予市',date:D(10,31),cap:6,ok:4,rep:0,st:'open'},
+  {id:'L-2042',title:'さつまいも掘り（紅はるか）',farm:'F-2002',area:'東温市',date:D(10,31),cap:8,ok:4,rep:0,st:'open'},
+  {id:'L-2043',title:'キウイフルーツの収穫',farm:'F-2003',area:'砥部町',date:D(10,31),cap:4,ok:3,rep:0,st:'open'},
+  {id:'L-2044',title:'柿の実もぎ（手の届く範囲のみ）',farm:'F-2004',area:'内子町',date:D(11,1),cap:5,ok:2,rep:0,st:'open'},
+  {id:'L-2045',title:'里芋掘りと泥落とし',farm:'F-2001',area:'伊予市',date:D(11,1),cap:6,ok:0,rep:0,st:'open'},
+  {id:'L-2046',title:'大根の収穫と葉おとし',farm:'F-2005',area:'松山市',date:D(11,3),cap:10,ok:3,rep:0,st:'open'},
+  {id:'L-2047',title:'ハウスの片づけと草取り（お礼は現金で）',farm:'F-2005',area:'松山市',date:D(11,4),cap:4,ok:1,rep:2,st:'open'},
+  {id:'L-2048',title:'早生みかんの収穫',farm:'F-2003',area:'砥部町',date:D(11,7),cap:6,ok:1,rep:0,st:'open'},
+  {id:'L-2039',title:'さつまいも掘りと選別',farm:'F-2002',area:'東温市',date:D(10,24),cap:8,ok:8,rep:0,st:'done'},
+  {id:'L-2036',title:'キウイの収穫',farm:'F-2003',area:'砥部町',date:D(10,18),cap:4,ok:4,rep:1,st:'done'}
+];
+const lById=id=>LISTINGS.find(l=>l.id===id);
+
+const DOCN=['本人確認書類（代表者）','農地の所在がわかる書類','営農の実態がわかる書類（出荷の記録など）','作業場所の写真（3枚以上）','休憩場所・トイレの写真'];
+const APPS=[
+  {id:'AP-121',name:'みなみ果樹園',rep:'南 ちひろ（架空）',area:'伊予市',crops:'みかん・レモン',size:'約1.2ha',sub:'10/29 21:14',st:'wait',docs:[['ok'],['ok'],['ok'],['ok'],['ok']],checked:[],memo:'',
+    hist:[{t:'10/29 21:14',w:'申請者',x:'書類を5点提出'},{t:'10/29 21:15',w:'自動チェック',x:'不足なし',sys:1}]},
+  {id:'AP-120',name:'くめ野菜畑',rep:'久米 たろう（架空）',area:'松山市',crops:'大根・白菜・ブロッコリー',size:'約0.6ha',sub:'10/28 9:40',st:'wait',docs:[['ok'],['ok'],['warn','画像が暗く、文字が読み取りにくい'],['ok'],['ok']],checked:[0,1],memo:'',
+    hist:[{t:'10/28 9:40',w:'申請者',x:'書類を5点提出'},{t:'10/28 9:41',w:'自動チェック',x:'要確認 1点（画像の明るさ）',sys:1}]},
+  {id:'AP-119',name:'とおんハーブ畑',rep:'東 みずき（架空）',area:'東温市',crops:'ハーブ・里芋',size:'約0.3ha',sub:'10/27 15:02',st:'wait',docs:[['ok'],['none'],['ok'],['ok'],['warn','写真が2枚のみ']],checked:[],memo:'',
+    hist:[{t:'10/27 15:02',w:'申請者',x:'書類を4点提出'},{t:'10/27 15:03',w:'自動チェック',x:'未提出 1点・要確認 1点',sys:1}]},
+  {id:'AP-117',name:'まさき菜園',rep:'正木 けい（架空）',area:'松前町',crops:'玉ねぎ・そら豆',size:'約0.8ha',sub:'10/20 11:30',st:'back',reason:'休憩場所・トイレの写真が確認できませんでした。作業場所から近いトイレの写真を追加してください。',docs:[['ok'],['ok'],['ok'],['ok'],['none']],checked:[0,1,2,3],memo:'',
+    hist:[{t:'10/20 11:30',w:'申請者',x:'書類を4点提出'},{t:'10/22 14:10',w:'にしむら',x:'差し戻し：休憩場所・トイレの写真が未提出'}]},
+  {id:'AP-112',name:'はなみずき農園',rep:'花水木 ゆう（架空）',area:'松山市',crops:'大根・トマト',size:'約0.9ha',sub:'9/8 10:00',st:'ok',decided:'9/12 16:20',docs:[['ok'],['ok'],['ok'],['ok'],['ok']],checked:[0,1,2,3,4],memo:'',
+    hist:[{t:'9/8 10:00',w:'申請者',x:'書類を5点提出'},{t:'9/12 16:20',w:'にしむら',x:'承認'}]},
+  {id:'AP-108',name:'内子かきの木園',rep:'内子 さとる（架空）',area:'内子町',crops:'柿・栗',size:'約1.5ha',sub:'5/27 13:12',st:'ok',decided:'6/2 10:05',docs:[['ok'],['ok'],['ok'],['ok'],['ok']],checked:[0,1,2,3,4],memo:'',
+    hist:[{t:'5/27 13:12',w:'申請者',x:'書類を5点提出'},{t:'6/2 10:05',w:'おかだ',x:'承認'}]}
+];
+const BACK_TPL=['書類の画像が暗く、文字が読み取れません。明るい場所で撮り直してください。','農地の所在がわかる書類（農地台帳の写しなど）が不足しています。','休憩場所・トイレの写真を追加してください。','作業場所の写真を3枚以上（全体・足元・道具置き場）提出してください。'];
+
+const TK_ST={open:['未対応','red'],doing:['対応中','amber'],hold:['保留','line'],done:['解決済み','g']};
+const TICKETS=[
+  {id:'T-0412',at:'10/30 9:12',from:'P-1002',tgt:{k:'l',id:'L-2047'},cat:'金銭のやりとり',pri:'高',st:'open',body:'募集のタイトルに「お礼は現金で」と書かれています。このアプリはお礼が野菜のはずなので、気になりました。',
+    hist:[{t:'10/30 9:12',w:'さき',x:'通報を受け付けました',sys:1}]},
+  {id:'T-0411',at:'10/29 18:40',from:'F-2002',tgt:{k:'u',id:'P-1005'},cat:'無断欠席',pri:'中',st:'doing',body:'10/18 のさつまいも掘りに連絡なしで来られませんでした。メッセージにも返事がありません。',
+    hist:[{t:'10/29 18:40',w:'東温いも畑',x:'通報を受け付けました',sys:1},{t:'10/29 19:05',w:'にしむら',x:'チェックイン記録なしを確認。無断欠席 3pt を付与し、30日間の応募停止を設定'}]},
+  {id:'T-0410',at:'10/29 11:05',from:'P-1006',tgt:{k:'u',id:'P-1014'},cat:'迷惑行為',pri:'高',st:'doing',body:'お手伝いのあと、アプリの外の連絡先を何度も聞かれて困りました。',
+    hist:[{t:'10/29 11:05',w:'ゆい',x:'通報を受け付けました',sys:1},{t:'10/29 11:40',w:'にしむら',x:'メッセージ履歴を確認中。調査が終わるまで対象ユーザーを一時的に利用停止'}]},
+  {id:'T-0409',at:'10/27 20:18',from:'P-1004',tgt:{k:'u',id:'F-2005'},cat:'募集内容と違う作業',pri:'中',st:'hold',body:'収穫のお手伝いと聞いていましたが、重い資材を運ぶ作業が中心でした。',
+    hist:[{t:'10/27 20:18',w:'けんた',x:'通報を受け付けました',sys:1},{t:'10/28 10:30',w:'おかだ',x:'農家さんに作業内容を問い合わせ。返事待ち'}]},
+  {id:'T-0407',at:'10/25 8:51',from:'P-1009',tgt:{k:'l',id:'L-2036'},cat:'不適切な写真',pri:'低',st:'done',body:'募集の写真に、ほかの参加者の顔がはっきり写っています。',
+    hist:[{t:'10/25 8:51',w:'あおい',x:'通報を受け付けました',sys:1},{t:'10/25 13:20',w:'にしむら',x:'農家さんに連絡し、写真を差し替えてもらった。解決'}]}
+];
+const tkById=id=>TICKETS.find(t=>t.id===id);
+
+/* KPI（週ごと・12週） */
+const WEEKS=Array.from({length:12},(_,i)=>addD(D(8,8),i*7));
+const METRICS={
+  match:{n:'マッチング数',u:'件',type:'bar',dec:0,sum:true,v:[52,58,61,66,72,70,79,85,88,101,108,112],def:'農家さんが応募を承認した件数'},
+  done:{n:'成立率',u:'%',type:'line',dec:1,v:[81.2,82.0,80.5,83.1,84.0,82.7,85.2,85.9,84.8,86.7,87.1,86.9],def:'公開した募集のうち、1人以上が参加して実施できた割合'},
+  cancel:{n:'キャンセル率',u:'%',type:'line',dec:1,lowGood:true,v:[8.4,7.9,8.8,7.1,6.9,7.4,6.2,6.0,6.5,5.6,5.4,5.9],def:'承認されたお手伝いのうち、キャンセル・無断欠席になった割合'},
+  veg:{n:'野菜提供量',u:'kg',type:'bar',dec:0,sum:true,v:[148,162,171,190,214,236,268,281,295,318,342,331],def:'お礼として渡された規格外野菜の重さ（農家さんの記録）'}
+};
+const CROPKG=[['みかん',412],['さつまいも',286],['柿',188],['キウイ',164],['里芋',102],['大根',78],['その他',56]];
+const AREAMATCH=[['松山市',142],['伊予市',98],['東温市',64],['砥部町',52],['内子町',31],['松前町',22]];
+const POP={p:{'松山市':468,'伊予市':214,'東温市':158,'砥部町':112,'内子町':74,'松前町':98},f:{'松山市':9,'伊予市':10,'東温市':7,'砥部町':5,'内子町':4,'松前町':3}};
+const RANK_SHARE=[.30,.24,.18,.12,.08,.05,.03];
+
+/* 保険名簿 */
+const MEM={'P-1001':['青木 みどり','アオキ ミドリ','1979-05-14'],'P-1002':['伊予田 さき','イヨダ サキ','1996-11-02'],'P-1003':['春野 はる','ハルノ ハル','2001-09-15'],'P-1004':['北条 けんた','ホウジョウ ケンタ','1993-02-27'],
+  'P-1006':['東 ゆい','アズマ ユイ','1988-07-08'],'P-1007':['内田 たけし','ウチダ タケシ','1957-12-01'],'P-1008':['正岡 ゆうと','マサオカ ユウト','2004-03-30'],'P-1009':['青井 あおい','アオイ アオイ','1999-06-21'],
+  'P-1010':['陸奥 りく','ムツ リク','2002-10-10'],'P-1011':['夏目 なつみ','ナツメ ナツミ','1985-08-03'],'P-1012':['宗田 そうた','ソウダ ソウタ','1991-01-19'],'P-1013':['舞田 まい','マイタ マイ','1972-04-04']};
+const ROSTER={
+  '2026-10-31':{st:'wait',rows:[['L-2041','8:30','11:30','P-1001',1],['L-2041','8:30','11:30','P-1002',0],['L-2041','8:30','11:30','P-1009',0],['L-2041','8:30','11:30','P-1010',0],
+    ['L-2042','9:00','12:00','P-1006',2],['L-2042','9:00','12:00','P-1011',0],['L-2042','9:00','12:00','P-1003',0],['L-2042','9:00','12:00','P-1012',1],
+    ['L-2043','13:00','15:30','P-1013',0],['L-2043','13:00','15:30','P-1008',0],['L-2043','13:00','15:30','P-1004',0]]},
+  '2026-10-30':{st:'sent',sentAt:'10/29 17:00',rows:[['L-2040','9:00','11:30','P-1007',0],['L-2040','9:00','11:30','P-1013',0],['L-2040','9:00','11:30','P-1001',0],['L-2040','9:00','11:30','P-1006',1]]},
+  '2026-10-29':{st:'sent',sentAt:'10/28 17:00',rows:[['L-2038','13:00','15:30','P-1002',0],['L-2038','13:00','15:30','P-1011',2],['L-2038','13:00','15:30','P-1009',0]]},
+  '2026-10-28':{st:'sent',sentAt:'10/27 17:00',rows:[['L-2037','9:30','12:00','P-1004',0],['L-2037','9:30','12:00','P-1012',0]]},
+  '2026-10-27':{st:'sent',sentAt:'10/26 17:00',rows:[['L-2035','8:30','11:00','P-1007',0],['L-2035','8:30','11:00','P-1003',0],['L-2035','8:30','11:00','P-1013',1],['L-2035','8:30','11:00','P-1001',0],['L-2035','8:30','11:00','P-1006',0]]}
+};
+const PAST_L={'L-2040':['たかはし農園','伊予市'],'L-2038':['砥部キウイ園','砥部町'],'L-2037':['東温いも畑','東温市'],'L-2035':['内子かきの木園','内子町']};
+const lInfo=id=>{const l=lById(id);if(l)return [uById(l.farm).name,l.area];return PAST_L[id]||['',''];};
+
+/* お知らせ */
+const NOTICES=[
+  {id:'N-031',at:'11/1 7:00',title:'柿の収穫シーズンが始まります',kind:'both',seg:'参加者・内子町・シルバー以上',n:52,st:'sched'},
+  {id:'N-030',at:'10/28 10:00',title:'11月の収穫カレンダーを公開しました',kind:'both',seg:'全員',n:1162,st:'sent',read:'61%'},
+  {id:'N-029',at:'10/24 18:00',title:'雨の日の中止連絡について',kind:'app',seg:'参加者・松山市・伊予市',n:682,st:'sent',read:'48%'},
+  {id:'N-028',at:'10/20 12:00',title:'募集のお礼は野菜でお願いします',kind:'both',seg:'農家',n:38,st:'sent',read:'89%'}
+];
+const KIND={app:'アプリ内',push:'プッシュ',both:'アプリ内＋プッシュ'};
+
+/* 広告 */
+const IND_OK=['農機具・資材','食品・飲料','地域のお店・観光','体験・教室','暮らしのサービス'];
+const IND_NG=['投資・資産運用','消費者金融・ローン','ギャンブル','出会い系'];
+const BAN_WORDS=['投資','利回り','元本','融資','ローン','キャッシング','借入','借り入れ','カジノ','パチンコ','スロット','競馬','競輪','競艇','オッズ','出会い','恋人募集'];
+const ADS=[
+  {id:'AD-036',adv:'果汁工房ひなた',ind:'食品・飲料',head:'しぼりたて みかんジュース',body:'規格外みかんを使ったジュースを直売所で販売しています。',start:'2026-11-01',end:'2026-11-30',areas:['松山市','伊予市','東温市','砥部町','内子町','松前町'],crops:['みかん'],imp:0,clk:0,paused:false},
+  {id:'AD-035',adv:'絵付け工房ひだまり',ind:'体験・教室',head:'砥部焼の絵付け体験',body:'収穫のあとに、器の絵付けはいかがですか。',start:'2026-10-15',end:'2026-11-15',areas:['砥部町'],crops:[],imp:6210,clk:158,paused:false},
+  {id:'AD-034',adv:'いよ農機サービス',ind:'農機具・資材',head:'収穫用はさみの研ぎ直し',body:'切れ味が戻ると、作業がぐっと楽になります。',start:'2026-10-01',end:'2026-11-30',areas:['伊予市','松前町'],crops:['みかん','里芋'],imp:18420,clk:312,paused:false},
+  {id:'AD-030',adv:'収穫かご ハタケノ',ind:'農機具・資材',head:'軽くて丈夫な収穫かご',body:'重ねて運べる収穫かごです。',start:'2026-09-01',end:'2026-09-30',areas:['松山市','伊予市','東温市'],crops:['さつまいも','里芋'],imp:22904,clk:401,paused:false},
+  {id:'AD-033',adv:'サンプル金融',ind:'消費者金融・ローン',head:'（入稿内容は表示しません）',body:'',start:'2026-10-10',end:'2026-11-10',areas:['松山市'],crops:[],imp:0,clk:0,rejected:true}
+];
+/* 保険料（農家さん負担・仮）：1募集あたり基本料＋名簿の人数（同伴の子どもを含む）×1人あたり */
+const INS={base:1000,per:200};
+const insFee=n=>INS.base+INS.per*n;
+
+/* キャンペーン（経験値の増額） */
+const CP_MUL=['1.5','2','3'],CP_ADD=['10','20','30','50'];
+const CAMPAIGNS=[
+  {id:'CP-004',name:'みかん収穫応援',type:'mul',val:2,start:'2026-10-24',end:'2026-11-08',areas:['伊予市','砥部町'],crops:['みかん'],n:22,xp:904},
+  {id:'CP-003',name:'柿シーズン開幕',type:'add',val:20,start:'2026-11-01',end:'2026-11-15',areas:['内子町'],crops:['柿'],n:0,xp:0},
+  {id:'CP-002',name:'さつまいも掘りウィーク',type:'mul',val:1.5,start:'2026-10-17',end:'2026-10-25',areas:['東温市','松山市'],crops:['さつまいも'],n:48,xp:1236},
+  {id:'CP-001',name:'はじめての秋収穫',type:'add',val:30,start:'2026-10-01',end:'2026-10-14',areas:['松山市','伊予市','東温市','砥部町','内子町','松前町'],crops:[],n:131,xp:3930}
+];
+const cpVal=c=>c.type==='mul'?`経験値${c.val}倍`:`経験値+${c.val}`;
+const cpSt=c=>{const s=fromIso(c.start),e=fromIso(c.end);if(c.stopped)return['終了（停止）','line'];if(e<TODAY)return['終了','line'];if(s>TODAY)return['予約','info'];return['実施中','g']};
+
+const adSt=a=>{if(a.rejected)return['掲載不可','red'];const s=fromIso(a.start),e=fromIso(a.end);if(e<TODAY)return['終了','line'];if(a.paused)return['一時停止','amber'];if(s>TODAY)return['予約','info'];return['掲載中','g']};
+
+/* ===== state ===== */
+const S={
+  view:'dash',metric:'match',
+  uTab:'users',uq:'',uk:'all',ua:'all',us:'all',lq:'',ls:'all',la:'all',
+  farmSel:'AP-121',farmFilter:'wait',farmBack:'',
+  tkSel:'T-0412',tkFilter:'active',tkNote:'',tkSt:'',
+  penQ:'',insDate:'2026-10-31',csv:null,
+  nt:{kind:'both',p:true,f:false,areas:new Set(AREAS),ranks:new Set([0,1,2,3,4,5,6]),title:'',body:'',when:'now',at:'2026-10-31T07:00',tag:'お知らせ'},
+  ad:{adv:'',ind:'',head:'',body:'',start:'2026-11-01',end:'2026-11-30',areas:new Set(['松山市']),crops:new Set()},
+  cp:{name:'',type:'mul',val:'2',start:'2026-11-16',end:'2026-11-29',areas:new Set(AREAS),crops:new Set()},
+  farmers:38,
+  flash:null,drawer:null,modal:null,login:null,theme:'auto',counted:false,
+  log:[
+    {t:'10/30 9:30',x:'通報 T-0412 を受け付け（未対応）'},
+    {t:'10/29 19:05',x:'こうへい に無断欠席 3pt を付与（30日間の応募停止）'},
+    {t:'10/29 17:00',x:'10/30 分の保険名簿を送付済みにした'},
+    {t:'10/29 11:40',x:'ひろし を一時的に利用停止（通報 T-0410）'},
+    {t:'10/28 10:00',x:'お知らせ「11月の収穫カレンダーを公開しました」を配信'}
+  ]
+};
+const addLog=x=>{S.log.unshift({t:stamp(),x})};
+
+/* ===== nav / shell ===== */
+const NAV=[['dash','ダッシュボード','home','A-06'],['farms','農家審査','idcard','A-01'],['users','ユーザー・募集','users','A-02'],['reports','通報対応','flag','A-03'],['penalty','ペナルティ','shield','A-04'],['insurance','保険名簿','list','A-05'],['notice','お知らせ配信','bell','A-07'],['campaign','キャンペーン','up','追加'],['ads','広告管理','mega','広告']];
+const counts=()=>({
+  farms:APPS.filter(a=>a.st==='wait').length,
+  reports:TICKETS.filter(t=>t.st==='open').length,
+  alerts:USERS.filter(u=>flagOf(u).length&&!u.reviewed).length,
+  ins:Object.values(ROSTER).filter(r=>r.st==='wait').length
+});
+function renderShell(){
+  const c=counts();
+  $('#logo').innerHTML=ic('leaf');
+  $('#nav').innerHTML=NAV.map(([k,n,icn,rq])=>{const cnt=k==='farms'?c.farms:k==='reports'?c.reports:k==='dash'?c.alerts:k==='insurance'?c.ins:0;
+    return `<button data-act="go:${k}" class="${S.view===k?'on':''}" ${S.view===k?'aria-current="page"':''}>${ic(icn)}<span>${n}</span>${cnt?`<span class="cnt" aria-label="${cnt}件">${cnt}</span>`:''}<span class="rq">${rq}</span></button>`}).join('');
+  $('#menubtn').innerHTML=`${ic('menu')}メニュー`;
+  $('#mfaPill').innerHTML=`${ic('lock')}多要素認証でログイン中`;
+  $('#loginBtn').innerHTML=`${ic('logout')}ログイン画面を見る`;
+  const tl={auto:['auto','表示：端末に合わせる'],light:['sun','表示：ライト'],dark:['moon','表示：ダーク']}[S.theme];
+  $('#themeBtn').innerHTML=`${ic(tl[0])}${tl[1]}`;
+}
+
+/* ===== charts ===== */
+function nice(x){if(x<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(x))),f=x/p;return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p}
+const fmtV=(v,dec)=>dec?v.toFixed(dec):nf(Math.round(v));
+const topPath=(x,y,w,h,r)=>{r=Math.min(r,w/2,h);return `M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`};
+function weekLab(i){return md(WEEKS[i])}
+function weekTip(i){return `${md(WEEKS[i])}〜${md(addD(WEEKS[i],6))}`}
+function chartTrend(W){
+  const m=METRICS[S.metric],v=m.v,H=W<480?200:240,L=46,Rr=14,T=22,B=28,iw=W-L-Rr,ih=H-T-B,n=v.length,bw=iw/n;
+  let lo,hi,step;
+  if(m.type==='bar'){step=nice(Math.max(...v)/4);lo=0;hi=Math.ceil(Math.max(...v)/step)*step;}
+  else{const mn=Math.min(...v),mx=Math.max(...v);step=nice((mx-mn)/3);lo=Math.floor(mn/step)*step;hi=Math.ceil(mx/step)*step;if(hi===mx)hi+=step;if(lo===mn&&lo>0)lo-=step;}
+  const y=val=>T+ih-(val-lo)/(hi-lo)*ih,cx=i=>L+bw*i+bw/2;
+  let g='<g class="ax">';
+  for(let t=lo;t<=hi+1e-9;t+=step){const yy=y(t);g+=`<line x1="${L}" x2="${W-Rr}" y1="${yy}" y2="${yy}" class="${t===lo?'base':''}"/><text x="${L-8}" y="${yy+4}" text-anchor="end">${fmtV(t,m.dec&&step<1?1:0)}${m.u==='%'?'%':''}</text>`}
+  const every=bw<30?3:bw<44?2:1;
+  for(let i=0;i<n;i++){if((n-1-i)%every)continue;g+=`<text x="${cx(i)}" y="${H-8}" text-anchor="middle">${weekLab(i)}</text>`}
+  g+=`<text x="${L-8}" y="${T-10}" text-anchor="end">${m.u==='%'?'':m.u}</text></g>`;
+  let marks='';
+  if(m.type==='bar'){const w=Math.max(6,Math.min(34,bw*.58));
+    for(let i=0;i<n;i++){const x=cx(i)-w/2,yy=y(v[i]);marks+=`<g class="hcol" data-tip="${weekTip(i)}の週：${fmtV(v[i],0)}${m.u}"><rect class="bgc" x="${L+bw*i+1}" y="${T}" width="${bw-2}" height="${ih}" rx="6"/><path class="mk" d="${topPath(x,yy,w,y(lo)-yy,4)}"/></g>`}
+    marks+=`<text class="vl" x="${cx(n-1)}" y="${y(v[n-1])-7}" text-anchor="middle">${fmtV(v[n-1],0)}</text>`;
+  }else{
+    const pts=v.map((val,i)=>`${cx(i).toFixed(1)},${y(val).toFixed(1)}`).join(' ');
+    marks+=`<polyline class="ln" points="${pts}"/>`;
+    for(let i=0;i<n;i++){marks+=`<g class="hcol" data-tip="${weekTip(i)}の週：${v[i].toFixed(1)}%"><rect class="bgc" x="${L+bw*i+1}" y="${T}" width="${bw-2}" height="${ih}" rx="6"/><circle class="dot" cx="${cx(i)}" cy="${y(v[i])}" r="${i===n-1?5:4}"/></g>`}
+    marks+=`<text class="vl" x="${cx(n-1)}" y="${y(v[n-1])-11}" text-anchor="middle">${v[n-1].toFixed(1)}%</text>`;
+  }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${m.n}の週ごとの推移（直近12週）">${g}${marks}</svg>`;
+}
+function chartH(W,rows,u){
+  const rowH=30,lw=W<420?64:78,vw=64,T=4,H=rows.length*rowH+T+4,max=Math.max(...rows.map(r=>r[1])),iw=W-lw-vw;
+  let s=`<g class="ax"><line class="base" x1="${lw}" x2="${lw}" y1="${T}" y2="${H-4}"/></g>`;
+  rows.forEach(([lab,val],i)=>{const yy=T+i*rowH,bh=16,w=Math.max(2,val/max*iw);
+    s+=`<g class="hcol" data-tip="${lab}：${nf(val)}${u}"><rect class="bgc" x="0" y="${yy}" width="${W}" height="${rowH-2}" rx="6"/><text class="lbl" x="${lw-8}" y="${yy+rowH/2+4}" text-anchor="end">${lab}</text><rect class="mk" x="${lw}" y="${yy+(rowH-bh)/2-1}" width="${w}" height="${bh}" rx="4"/><text class="vl" x="${lw+w+6}" y="${yy+rowH/2+4}">${nf(val)}${u}</text></g>`});
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">${s}</svg>`;
+}
+function drawCharts(){
+  document.querySelectorAll('[data-chart]').forEach(el=>{
+    const W=Math.max(260,Math.floor(el.clientWidth));
+    const k=el.dataset.chart;
+    el.innerHTML=k==='trend'?chartTrend(W):k==='crop'?chartH(W,CROPKG,'kg'):chartH(W,AREAMATCH,'件');
+  });
+}
+let rzT;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(drawCharts,120)});
+/* tooltip */
+const tip=$('#tip');
+document.addEventListener('pointerover',e=>{const t=e.target.closest&&e.target.closest('[data-tip]');if(!t){tip.hidden=true;return}tip.textContent=t.dataset.tip;tip.hidden=false});
+document.addEventListener('pointermove',e=>{if(tip.hidden)return;const x=Math.min(Math.max(e.clientX,80),window.innerWidth-80);tip.style.left=x+'px';tip.style.top=e.clientY+'px'});
+document.addEventListener('pointerout',e=>{if(e.relatedTarget&&e.relatedTarget.closest&&e.relatedTarget.closest('[data-tip]'))return;tip.hidden=true});
+
+/* ===== views ===== */
+const phd=(t,rq,sub,right='')=>`<div class="phd"><div><h1>${t}<span class="rqtag">${rq}</span></h1>${sub?`<p>${sub}</p>`:''}</div>${right}</div>`;
+const pill=(t,c)=>`<span class="pill ${c}">${t}</span>`;
+const userCell=u=>`<div class="nm"><span class="av ${u.k==='f'?'f':''}">${esc(u.name[0])}</span><div><b>${esc(u.name)}</b><small>${u.id}・@${esc(u.h)}</small></div></div>`;
+const sum4=a=>a.slice(-4).reduce((x,y)=>x+y,0),sumP=a=>a.slice(-8,-4).reduce((x,y)=>x+y,0);
+const avg4=a=>sum4(a)/4,avgP=a=>sumP(a)/4;
+
+function vDash(){
+  const c=counts();
+  const k=[];
+  const mm=METRICS;
+  const delta=(cur,prev,isPct,lowGood)=>{const d=isPct?cur-prev:(cur-prev)/prev*100;const good=lowGood?d<0:d>0;return {txt:isPct?`${d>0?'+':''}${d.toFixed(1)}pt`:`${d>0?'+':''}${d.toFixed(1)}%`,cls:good?'up':'dn',icn:d>0?'up':'down'}};
+  k.push(['マッチング数','直近4週',sum4(mm.match.v),0,'件',delta(sum4(mm.match.v),sumP(mm.match.v),false)]);
+  k.push(['成立率','直近4週',avg4(mm.done.v),1,'%',delta(avg4(mm.done.v),avgP(mm.done.v),true)]);
+  k.push(['キャンセル率','直近4週',avg4(mm.cancel.v),1,'%',delta(avg4(mm.cancel.v),avgP(mm.cancel.v),true,true)]);
+  k.push(['野菜提供量','直近4週',sum4(mm.veg.v),0,'kg',delta(sum4(mm.veg.v),sumP(mm.veg.v),false)]);
+  k.push(['登録農家数','10/30時点',S.farmers,0,'軒',{txt:`今月 +${S.farmers-33}軒`,cls:'up',icn:'up'}]);
+  k.push(['登録参加者','10/30時点',1124,0,'人',{txt:'今月 +96人',cls:'up',icn:'up'}]);
+  k.push(['リピート率','2回目以上の参加',47.2,1,'%',{txt:'+3.7pt',cls:'up',icn:'up'}]);
+  k.push(['好評価率','「良かった」の割合',96.8,1,'%',{txt:'+0.7pt',cls:'up',icn:'up'}]);
+  const m=METRICS[S.metric];
+  const flagged=USERS.filter(u=>flagOf(u).length);
+  const open=flagged.filter(u=>!u.reviewed),done=flagged.filter(u=>u.reviewed);
+  return `${phd('ダッシュボード','A-06','愛媛パイロット（松山市・伊予市・東温市・砥部町・内子町・松前町）・2026年10月30日（金）時点。前の4週と比べた増減を表示しています。')}
+  <div class="stack">
+  <section class="todo" aria-label="今日やること">
+    <button data-act="go:farms"><span class="ti">${ic('idcard')}</span><span><b>${c.farms}件</b><small>農家審査の待ち</small></span></button>
+    <button data-act="go:reports"><span class="ti w">${ic('flag')}</span><span><b>${c.reports}件</b><small>未対応の通報</small></span></button>
+    <button data-act="jump:alerts"><span class="ti a">${ic('alert')}</span><span><b>${c.alerts}人</b><small>個別確認が必要な人</small></span></button>
+    <button data-act="go:insurance"><span class="ti i">${ic('list')}</span><span><b>${c.ins?'未送付':'送付済み'}</b><small>10/31分の保険名簿</small></span></button>
+  </section>
+  <section class="kpis" aria-label="主な指標">
+    ${k.map(([l,s,v,dec,u,d])=>`<div class="kpi"><div class="kl">${l}<small>${s}</small></div><div class="kv"><span data-count="${v}" data-dec="${dec}">${fmtV(v,dec)}</span><small>${u}</small></div><div class="kd ${d.cls}">${ic(d.icn)}<b>${d.txt}</b></div></div>`).join('')}
+  </section>
+  <section class="card">
+    <div class="chd"><div><h2>${m.n}の推移</h2><p>週ごと・直近12週（8/8〜10/30）。${m.def}</p></div>
+      <div class="seg" role="tablist" aria-label="指標の切り替え">${Object.entries(METRICS).map(([key,x])=>`<button role="tab" aria-selected="${S.metric===key}" class="${S.metric===key?'on':''}" data-act="metric:${key}">${x.n}</button>`).join('')}</div></div>
+    <div class="chart" data-chart="trend"></div>
+    <details class="tbl"><summary>数値を表で見る</summary><div class="tw"><table class="t min"><thead><tr><th>週</th><th class="r">${m.n}</th></tr></thead><tbody>${m.v.map((x,i)=>`<tr><td>${weekTip(i)}</td><td class="r">${fmtV(x,m.dec)}${m.u}</td></tr>`).join('')}</tbody></table></div></details>
+  </section>
+  <div class="grid2">
+    <section class="card"><div class="chd"><div><h2>作物別の野菜提供量</h2><p>直近4週・合計 ${nf(sum4(mm.veg.v))}kg</p></div></div><div class="chart" data-chart="crop" style="min-height:0"></div></section>
+    <section class="card"><div class="chd"><div><h2>エリア別のマッチング数</h2><p>直近4週・合計 ${nf(sum4(mm.match.v))}件</p></div></div><div class="chart" data-chart="area" style="min-height:0"></div></section>
+  </div>
+  <div class="grid2">
+    <section class="card" id="alerts">
+      <div class="chd"><div><h2>個別確認リスト</h2><p>評価のルールにあてはまった人を自動で表示しています</p></div>${pill(`${open.length}人`,open.length?'amber':'g')}</div>
+      <div class="rule">${ic('alert')}<span>好評価率が90%未満、または90日以内に「残念だった」が3件以上の人。参加者・農家さんの両方が対象です。</span></div>
+      <div class="alist">${open.length?open.map(u=>`<div class="arow" data-row="${u.id}">
+        <span class="av ${u.k==='f'?'f':''}">${esc(u.name[0])}</span>
+        <div class="who"><b>${esc(u.name)}</b> <small style="display:inline">${u.k==='f'?'農家':'参加者'}・${u.area}</small>
+          <div class="why">${flagOf(u).map(w=>pill(w,'red')).join('')}<span class="pill line">良かった ${u.good}・残念だった ${u.bad}</span></div></div>
+        <div class="btnrow"><button class="btn ghost sm" data-act="user:${u.id}">詳細</button><button class="btn sm" data-act="review:${u.id}">確認済みにする</button></div></div>`).join(''):`<p class="empty">確認待ちの人はいません</p>`}
+      ${done.length?`<details class="tbl"><summary>確認済み（${done.length}人）</summary>${done.map(u=>`<div class="arow" data-row="${u.id}"><span class="av ${u.k==='f'?'f':''}">${esc(u.name[0])}</span><div class="who"><b>${esc(u.name)}</b><small>${u.reviewed.t}・${esc(u.reviewed.note)}</small></div><button class="btn ghost sm" data-act="user:${u.id}">詳細</button></div>`).join('')}</details>`:''}
+      </div>
+    </section>
+    <section class="card"><div class="chd"><div><h2>最近の操作</h2><p>運営メンバーの操作はすべて記録されます</p></div></div>
+      <ul class="log">${S.log.slice(0,7).map((l,i)=>`<li class="${i===0&&S.flash==='log'?'flash':''}"><time>${l.t}</time><span>${esc(l.x)}</span></li>`).join('')}</ul>
+    </section>
+  </div>
+  </div>`;
+}
+
+function vFarms(){
+  const f=S.farmFilter,list=APPS.filter(a=>a.st===f);
+  const cnt=k=>APPS.filter(a=>a.st===k).length;
+  if(!list.find(a=>a.id===S.farmSel)&&list[0])S.farmSel=list[0].id;
+  const a=APPS.find(x=>x.id===S.farmSel&&x.st===f);
+  const ST={wait:['審査待ち','amber'],back:['差戻し中','red'],ok:['承認済み','g']};
+  let det='<div class="card"><p class="empty">申請を選んでください</p></div>';
+  if(a){
+    const hasNone=a.docs.some(d=>d[0]==='none');
+    const ready=!hasNone&&a.docs.every((d,i)=>a.checked.includes(i));
+    det=`<div class="card" data-row="${a.id}">
+      <div class="chd"><div><h2>${esc(a.name)}</h2><p>${a.id}・提出 ${a.sub}</p></div>${pill(ST[a.st][0],ST[a.st][1])}</div>
+      <dl class="dl"><div><dt>代表者</dt><dd>${esc(a.rep)}</dd></div><div><dt>所在地</dt><dd>${a.area}（番地以下は省略）</dd></div><div><dt>連絡先</dt><dd class="tn">090-0000-0000 <span class="pill line">デモ用</span></dd></div>
+        <div><dt>主な作物</dt><dd>${esc(a.crops)}</dd></div><div><dt>畑の広さ</dt><dd>${esc(a.size)}</dd></div><div><dt>確認した書類</dt><dd class="tn">${a.checked.length} / ${a.docs.length}</dd></div></dl>
+      <h3 style="font-size:14px;margin:4px 0 8px">提出書類</h3>
+      <div class="docs">${a.docs.map((d,i)=>{const s=d[0];return `<div class="doc">
+        <label class="ck"><input type="checkbox" id="doc-${i}" data-doc="${i}" ${a.checked.includes(i)?'checked':''} ${s==='none'||a.st!=='wait'?'disabled':''}>確認した</label>
+        <div class="dn"><b>${DOCN[i]}</b>${s==='ok'?'<small>提出済み・自動チェックOK</small>':s==='warn'?`<small class="w">要確認：${esc(d[1])}</small>`:'<small class="w">未提出</small>'}</div>
+        ${s==='none'?pill('未提出','red'):`<button class="btn ghost sm" data-act="docView:${i}">${ic('eye')}見る</button>`}</div>`}).join('')}</div>
+      ${a.st==='wait'?`
+        ${hasNone?`<div class="callout red" style="margin-top:12px">${ic('alert')}<span>未提出の書類があるため承認できません。差し戻して追加を依頼してください。</span></div>`:!ready?`<div class="callout" style="margin-top:12px">${ic('alert')}<span>すべての書類に「確認した」を付けると承認できます。</span></div>`:`<div class="callout g" style="margin-top:12px">${ic('check')}<span>すべての書類を確認しました。承認すると、農家さんが募集を出せるようになります。</span></div>`}
+        <div class="btnrow end" style="margin-top:12px"><button class="btn dline" data-act="farmBack">差し戻す</button><button class="btn" data-act="farmOk" ${ready?'':'disabled'}>${ic('check')}承認する</button></div>`
+      :a.st==='back'?`<div class="callout red" style="margin-top:12px">${ic('alert')}<span><b>差し戻した理由</b><br>${esc(a.reason)}<br><span class="muted">農家さんの再提出を待っています</span></span></div>`
+      :`<div class="callout g" style="margin-top:12px">${ic('check')}<span>${a.decided} に承認しました</span></div>`}
+      <div class="hr"></div>
+      <h3 style="font-size:14px;margin:0 0 10px">審査の記録</h3>
+      <ul class="tl">${a.hist.slice().reverse().map(h=>`<li class="${h.sys?'sys':''}"><time>${h.t}</time><b>${esc(h.w)}</b><p>${esc(h.x)}</p></li>`).join('')}</ul>
+    </div>`;
+  }
+  return `${phd('農家審査','A-01','提出された書類を確認して、承認または差し戻しをします。承認されるまで募集は出せません。')}
+  <div class="split">
+    <div class="card lpane"><div class="seg">${[['wait','審査待ち'],['back','差戻し中'],['ok','承認済み']].map(([k,n])=>`<button class="${f===k?'on':''}" data-act="farmFilter:${k}">${n}<span class="n">${cnt(k)}</span></button>`).join('')}</div>
+      ${list.length?list.map(x=>`<button class="li ${x.id===S.farmSel?'on':''}" data-act="farmSel:${x.id}" data-row="${x.id}"><span class="r1"><b>${esc(x.name)}</b>${x.docs.some(d=>d[0]!=='ok')&&x.st==='wait'?pill('要確認あり','amber'):''}</span><small>${x.area}・${esc(x.crops)}・提出 ${x.sub}</small></button>`).join(''):'<p class="empty">該当する申請はありません</p>'}
+    </div>
+    ${det}
+  </div>`;
+}
+
+function vUsers(){
+  const tabs=`<div class="seg" style="margin-bottom:14px">${[['users','ユーザー'],['lists','募集']].map(([k,n])=>`<button class="${S.uTab===k?'on':''}" data-act="uTab:${k}">${n}</button>`).join('')}</div>`;
+  let body='';
+  if(S.uTab==='users'){
+    const q=S.uq.trim().toLowerCase();
+    const rows=USERS.filter(u=>(S.uk==='all'||u.k===S.uk)&&(S.ua==='all'||u.area===S.ua)&&(S.us==='all'||(S.us==='active'&&u.st==='active'&&!restricted(u))||(S.us==='restricted'&&restricted(u))||(S.us==='suspended'&&u.st==='suspended')||(S.us==='flag'&&flagOf(u).length))&&(!q||(u.name+u.h+u.id).toLowerCase().includes(q)));
+    body=`<div class="card">
+      <div class="filters">
+        <label class="search"><span class="sr">名前・ID で検索</span>${ic('search')}<input class="inp" id="f-uq" data-f="uq" value="${esc(S.uq)}" placeholder="名前・ID・ユーザー名で検索"></label>
+        <select class="inp" id="f-uk" data-f="uk" aria-label="区分"><option value="all">すべての区分</option><option value="p" ${S.uk==='p'?'selected':''}>参加者</option><option value="f" ${S.uk==='f'?'selected':''}>農家</option></select>
+        <select class="inp" id="f-ua" data-f="ua" aria-label="エリア"><option value="all">すべてのエリア</option>${AREAS.map(a=>`<option ${S.ua===a?'selected':''}>${a}</option>`).join('')}</select>
+        <select class="inp" id="f-us" data-f="us" aria-label="状態"><option value="all">すべての状態</option>${[['active','利用中'],['restricted','応募停止中'],['suspended','利用停止'],['flag','個別確認の対象']].map(([v,n])=>`<option value="${v}" ${S.us===v?'selected':''}>${n}</option>`).join('')}</select>
+      </div>
+      <p class="fine" style="margin-bottom:6px">${rows.length}件</p>
+      <div class="tw"><table class="t"><thead><tr><th>ユーザー</th><th>区分</th><th>エリア</th><th>ランク</th><th class="r">参加・受入</th><th class="r">好評価率</th><th class="r">ペナルティ</th><th>状態</th><th></th></tr></thead><tbody>
+      ${rows.map(u=>{const r=rate(u.good,u.bad),[sn,sc]=stOf(u),fl=flagOf(u).length;return `<tr data-row="${u.id}"><td>${userCell(u)}</td><td>${u.k==='f'?'農家':'参加者'}</td><td>${u.area}</td><td>${u.k==='p'?rankTag(u.rank):'<span class="muted">—</span>'}</td><td class="r">${u.count}回</td><td class="r">${fl?`<span style="color:var(--danger)">${p1(r)}</span>`:p1(r)}</td><td class="r">${ptOf(u)}pt</td><td>${pill(sn,sc)}${fl&&!u.reviewed?' '+pill('要確認','amber'):''}</td><td><button class="btn ghost sm" data-act="user:${u.id}">詳細</button></td></tr>`}).join('')||`<tr><td colspan="9"><p class="empty">条件に合うユーザーはいません</p></td></tr>`}
+      </tbody></table></div></div>`;
+  }else{
+    const q=S.lq.trim().toLowerCase();
+    const rows=LISTINGS.filter(l=>(S.ls==='all'||l.st===S.ls)&&(S.la==='all'||l.area===S.la)&&(!q||(l.title+l.id+uById(l.farm).name).toLowerCase().includes(q)));
+    const LS={open:['公開中','g'],hidden:['非公開','red'],done:['終了','line']};
+    body=`<div class="card">
+      <div class="filters">
+        <label class="search"><span class="sr">募集を検索</span>${ic('search')}<input class="inp" id="f-lq" data-f="lq" value="${esc(S.lq)}" placeholder="募集名・農園名・IDで検索"></label>
+        <select class="inp" id="f-la" data-f="la" aria-label="エリア"><option value="all">すべてのエリア</option>${AREAS.map(a=>`<option ${S.la===a?'selected':''}>${a}</option>`).join('')}</select>
+        <select class="inp" id="f-ls" data-f="ls" aria-label="状態"><option value="all">すべての状態</option>${Object.entries(LS).map(([k,v])=>`<option value="${k}" ${S.ls===k?'selected':''}>${v[0]}</option>`).join('')}</select>
+      </div>
+      <p class="fine" style="margin-bottom:6px">${rows.length}件</p>
+      <div class="tw"><table class="t"><thead><tr><th>募集</th><th>農園</th><th>日にち</th><th class="r">承認／定員</th><th class="r">通報</th><th>状態</th><th></th></tr></thead><tbody>
+      ${rows.map(l=>{const f=uById(l.farm);return `<tr data-row="${l.id}" class="${l.st==='hidden'?'dim':''}"><td><b>${esc(l.title)}</b><br><small class="muted">${l.id}</small></td><td>${esc(f.name)}<br><small class="muted">${l.area}</small></td><td class="tn">${mdw(l.date)}</td><td class="r">${l.ok} / ${l.cap}</td><td class="r">${l.rep?`<span style="color:var(--danger)">${l.rep}件</span>`:'0'}</td><td>${pill(LS[l.st][0],LS[l.st][1])}${l.hideReason?`<br><small class="muted">${esc(l.hideReason)}</small>`:''}</td>
+        <td>${l.st==='open'?`<button class="btn dline sm" data-act="hideL:${l.id}">${ic('eyeoff')}非公開にする</button>`:l.st==='hidden'?`<button class="btn ghost sm" data-act="showL:${l.id}">${ic('eye')}公開に戻す</button>`:''}</td></tr>`}).join('')||`<tr><td colspan="7"><p class="empty">条件に合う募集はありません</p></td></tr>`}
+      </tbody></table></div></div>`;
+  }
+  return `${phd('ユーザー・募集','A-02','ユーザーの検索と利用停止、規約に合わない募集の非公開化を行います。')}${tabs}${body}`;
+}
+
+function vReports(){
+  const f=S.tkFilter;
+  const list=TICKETS.filter(t=>f==='all'||(f==='active'?t.st!=='done':t.st===f));
+  if(!list.find(t=>t.id===S.tkSel)&&list[0])S.tkSel=list[0].id;
+  const t=list.find(x=>x.id===S.tkSel);
+  const n=k=>TICKETS.filter(x=>k==='active'?x.st!=='done':x.st===k).length;
+  const tgtName=x=>x.k==='l'?`募集「${lById(x.id).title}」`:`${uById(x.id).name}（${uById(x.id).k==='f'?'農家':'参加者'}）`;
+  let det='<div class="card"><p class="empty">チケットを選んでください</p></div>';
+  if(t){
+    const from=uById(t.from),tg=t.tgt;
+    let quick='';
+    if(tg.k==='l'){const l=lById(tg.id);quick=l.st==='open'?`<button class="btn dline sm" data-act="hideL:${l.id}">${ic('eyeoff')}この募集を非公開にする</button>`:pill('募集は非公開','line');}
+    else{const u=uById(tg.id);quick=`<button class="btn ghost sm" data-act="user:${u.id}">ユーザー詳細</button>`+(u.st==='active'?`<button class="btn dline sm" data-act="suspend:${u.id}">利用停止にする</button>`:pill('利用停止中','red'));}
+    det=`<div class="card" data-row="${t.id}">
+      <div class="chd"><div><h2>${t.id}・${esc(t.cat)}</h2><p>受付 ${t.at}・優先度 ${t.pri}</p></div>${pill(TK_ST[t.st][0],TK_ST[t.st][1])}</div>
+      <dl class="dl"><div><dt>通報した人</dt><dd>${esc(from.name)}（${from.k==='f'?'農家':'参加者'}）</dd></div><div><dt>対象</dt><dd>${esc(tgtName(tg))}</dd></div><div><dt>担当</dt><dd>${t.st==='open'?'未割り当て':'にしむら'}</dd></div></dl>
+      <div class="inapp" style="background:var(--sunk)"><p>${esc(t.body)}</p></div>
+      <div class="btnrow" style="margin-top:10px">${quick}</div>
+      <div class="hr"></div>
+      <h3 style="font-size:14px;margin:0 0 10px">対応履歴</h3>
+      <ul class="tl">${t.hist.slice().reverse().map(h=>`<li class="${h.sys?'sys':''}"><time>${h.t}</time><b>${esc(h.w)}</b><p>${esc(h.x)}</p></li>`).join('')}</ul>
+      <div class="hr"></div>
+      <h3 style="font-size:14px;margin:0 0 10px">対応を記録する</h3>
+      <div class="fgrid">
+        <label class="fld"><span>状態</span><select class="inp" id="tk-st" data-f="tkSt">${Object.entries(TK_ST).map(([k,v])=>`<option value="${k}" ${(S.tkSt||t.st)===k?'selected':''}>${v[0]}</option>`).join('')}</select></label>
+        <div></div>
+        <label class="fld full"><span>メモ（履歴に残ります）</span><textarea class="inp" id="tk-note" data-f="tkNote" placeholder="例：農家さんに電話で確認。募集の文面を直してもらう">${esc(S.tkNote)}</textarea></label>
+      </div>
+      <p class="err" id="tkErr" hidden></p>
+      <div class="btnrow end" style="margin-top:10px"><button class="btn" data-act="tkSave">${ic('check')}記録する</button></div>
+    </div>`;
+  }
+  return `${phd('通報対応','A-03','通報をチケットとして管理し、対応のたびに履歴を残します。')}
+  <div class="split">
+    <div class="card lpane"><div class="seg">${[['active','対応が必要'],['open','未対応'],['done','解決済み'],['all','すべて']].map(([k,nm])=>`<button class="${f===k?'on':''}" data-act="tkFilter:${k}">${nm}<span class="n">${k==='all'?TICKETS.length:n(k)}</span></button>`).join('')}</div>
+      ${list.map(x=>`<button class="li ${x.id===S.tkSel?'on':''}" data-act="tkSel:${x.id}" data-row="${x.id}"><span class="r1"><b>${esc(x.cat)}</b>${pill(TK_ST[x.st][0],TK_ST[x.st][1])}</span><small>${x.id}・${x.at}・優先度 ${x.pri}</small><small>対象：${esc(tgtName(x.tgt))}</small></button>`).join('')||'<p class="empty">該当するチケットはありません</p>'}
+    </div>
+    ${det}
+  </div>`;
+}
+
+function vPenalty(){
+  const rows=USERS.filter(u=>ptOf(u)>0||restricted(u));
+  const q=S.penQ.trim().toLowerCase();
+  const picks=q?USERS.filter(u=>(u.name+u.h+u.id).toLowerCase().includes(q)).slice(0,5):[];
+  const thisMonth=k=>USERS.reduce((a,u)=>a+u.pen.filter(r=>r.type===k&&r.d.getMonth()===9).length,0);
+  const expired=USERS.flatMap(u=>u.pen.filter(r=>!active(r)).map(r=>[u,r]));
+  return `${phd('ペナルティ','A-04','ポイントの付与・取り消しと、応募停止の設定・解除を行います。自動で付いたポイントもここで直せます。')}
+  <div class="stack">
+  <section class="card"><div class="chd"><h2>ルール</h2><span class="fine">ポイントは90日で失効します</span></div>
+    <div class="rules"><div><b>前日までのキャンセル</b><span>ポイントなし</span></div><div><b>当日キャンセル</b><span>1pt・経験値 −30</span></div><div><b>無断欠席</b><span>3pt・2ランクダウン</span></div><div><b>合計3pt以上</b><span>30日間 応募できません</span></div></div>
+    <p class="fine" style="margin-top:8px">農家さんが天候以外の理由で当日に中止した場合も1ptです。</p>
+  </section>
+  <div class="todo">
+    <div class="todo" style="display:contents">
+    ${[['応募停止中',USERS.filter(restricted).length+'人','w','shield'],['あと1ptで停止',USERS.filter(u=>ptOf(u)===2&&!restricted(u)).length+'人','a','alert'],['今月の当日キャンセル',thisMonth('当日キャンセル')+'件','i','clock'],['今月の無断欠席',thisMonth('無断欠席')+'件','w','x']].map(([l,v,c,icn])=>`<button tabindex="-1" style="cursor:default"><span class="ti ${c}">${ic(icn)}</span><span><b>${v}</b><small>${l}</small></span></button>`).join('')}
+    </div>
+  </div>
+  <section class="card">
+    <div class="chd"><div><h2>ポイントがある人</h2><p>有効なポイントがある人と、応募停止中の人</p></div></div>
+    <div class="tw"><table class="t"><thead><tr><th>ユーザー</th><th>現在のポイント</th><th>記録</th><th>応募の制限</th><th></th></tr></thead><tbody>
+    ${rows.map(u=>{const pt=ptOf(u);return `<tr data-row="${u.id}"><td>${userCell(u)}</td>
+      <td class="tn"><span class="meter ${pt>=3?'full':''}" aria-hidden="true">${[0,1,2].map(i=>`<i class="${i<pt?'on':''}"></i>`).join('')}</span><b class="num">${pt}pt</b></td>
+      <td><div class="recs">${u.pen.filter(active).map(r=>`<div class="rec"><span class="tn">${md(r.d)}</span>${pill(r.type+' '+r.pt+'pt',r.pt>=3?'red':'amber')}<span class="muted tn">失効 ${md(addD(r.d,90))}</span><button class="x" data-act="penDel:${u.id}" data-r="${r.rid}">取り消す</button></div>`).join('')||'<span class="muted">—</span>'}</div></td>
+      <td>${restricted(u)?`${pill('応募停止中','red')}<br><small class="muted tn">${md(u.until)}まで</small>`:'<span class="muted">なし</span>'}</td>
+      <td><div class="btnrow"><button class="btn ghost sm" data-act="penAdd:${u.id}">${ic('plus')}ポイント付与</button>${restricted(u)?`<button class="btn dline sm" data-act="lift:${u.id}">制限を解除</button>`:`<button class="btn ghost sm" data-act="restrict:${u.id}">応募停止にする</button>`}</div></td></tr>`}).join('')||`<tr><td colspan="5"><p class="empty">ポイントがある人はいません</p></td></tr>`}
+    </tbody></table></div>
+  </section>
+  <div class="grid2">
+    <section class="card"><div class="chd"><div><h2>ほかの人にポイントを付与する</h2><p>農家さんからの申し立てを確認したあとに使います</p></div></div>
+      <label class="search" style="display:block"><span class="sr">ユーザーを検索</span>${ic('search')}<input class="inp" id="f-penQ" data-f="penQ" value="${esc(S.penQ)}" placeholder="名前・IDで検索（例：ゆうと）"></label>
+      <div class="picks">${picks.map(u=>`<button data-act="penAdd:${u.id}"><span class="av ${u.k==='f'?'f':''}" style="width:28px;height:28px;font-size:12px">${esc(u.name[0])}</span><span style="flex:1">${esc(u.name)} <small class="muted">${u.id}・${u.k==='f'?'農家':'参加者'}・${ptOf(u)}pt</small></span>${ic('chev')}</button>`).join('')||(q?'<p class="fine">見つかりませんでした</p>':'')}</div>
+    </section>
+    <section class="card"><div class="chd"><div><h2>失効した記録</h2><p>90日を過ぎて合計から外れたもの</p></div></div>
+      ${expired.length?`<div class="recs">${expired.map(([u,r])=>`<div class="rec exp"><span class="tn">${md(r.d)}</span><span>${esc(u.name)}・${r.type} ${r.pt}pt</span><span class="tn">${md(addD(r.d,90))}に失効</span></div>`).join('')}</div>`:'<p class="empty">ありません</p>'}
+    </section>
+  </div>
+  </div>`;
+}
+
+function rosterRows(key){const r=ROSTER[key];return r.rows.map(([lid,s,e,mid,kids])=>{const [farm,area]=lInfo(lid),m=MEM[mid];return {lid,farm,area,s,e,mid,name:m[0],kana:m[1],birth:m[2],kids}})}
+function csvOf(key){const cell=v=>{v=String(v);return /[",\n]/.test(v)?`"${v.replace(/"/g,'""')}"`:v};
+  const head=['参加日','募集ID','農園名','作業場所（市町）','作業開始','作業終了','会員ID','氏名','フリガナ','生年月日','同伴の子ども（人）'];
+  return [head,...rosterRows(key).map(r=>[key,r.lid,r.farm,r.area,r.s,r.e,r.mid,r.name,r.kana,r.birth,r.kids])].map(a=>a.map(cell).join(',')).join('\n')}
+function vInsurance(){
+  const key=S.insDate,R0=ROSTER[key],rows=rosterRows(key),dt=fromIso(key);
+  const keys=Object.keys(ROSTER).sort();
+  return `${phd('保険参加者データ','A-05','保険会社へ出す参加者名簿を日ごとにCSVにします。名簿は前日17:00に確定します。')}
+  <div class="stack">
+  <section class="card">
+    <div class="dates" role="group" aria-label="参加日を選ぶ">${keys.map(k=>{const r=ROSTER[k];return `<button class="dbtn ${k===key?'on':''}" data-act="insDate:${k}" aria-pressed="${k===key}"><b>${mdw(fromIso(k))}</b><small>${r.rows.length}人・${r.st==='sent'?'送付済み':'未送付'}</small></button>`}).join('')}</div>
+    <div class="sum3"><div><span>参加者</span><b>${rows.length}<small style="font-size:12px">人</small></b></div><div><span>募集</span><b>${new Set(rows.map(r=>r.lid)).size}<small style="font-size:12px">件</small></b></div><div><span>同伴の子ども</span><b>${rows.reduce((a,r)=>a+r.kids,0)}<small style="font-size:12px">人</small></b></div></div>
+    ${R0.st==='sent'?`<div class="callout g">${ic('check')}<span>${mdw(dt)}分は ${R0.sentAt} に保険会社（デモ）へ送付済みです。</span></div>`:`<div class="callout">${ic('clock')}<span>${mdw(dt)}分は未送付です。きょう17:00に確定したあと、CSVを作って送付してください。確定後の当日キャンセルは翌朝の差分で知らせます。</span></div>`}
+    <div class="chd" style="margin-top:14px"><h2>名簿</h2><span class="pill line">デモ用の架空データ</span></div>
+    <div class="tw"><table class="t"><thead><tr><th>募集</th><th>作業場所</th><th>時間</th><th>会員ID</th><th>氏名</th><th>フリガナ</th><th>生年月日</th><th class="r">同伴の子ども</th></tr></thead><tbody>
+      ${rows.map(r=>`<tr><td>${r.lid}<br><small class="muted">${esc(r.farm)}</small></td><td>${r.area}</td><td class="tn">${r.s}〜${r.e}</td><td class="tn">${r.mid}</td><td>${esc(r.name)}</td><td>${esc(r.kana)}</td><td class="tn">${r.birth}</td><td class="r">${r.kids}人</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="btnrow" style="margin-top:14px"><button class="btn" data-act="csv">${ic('doc')}CSVを作成</button>${R0.st==='wait'?`<button class="btn ghost" data-act="sent">${ic('send')}送付済みにする</button>`:''}</div>
+  </section>
+  ${(()=>{const by={};rows.forEach(r=>{(by[r.lid]=by[r.lid]||{lid:r.lid,farm:r.farm,area:r.area,a:0,k:0});by[r.lid].a++;by[r.lid].k+=r.kids});const L=Object.values(by),tot=L.reduce((s,x)=>s+insFee(x.a+x.k),0);
+    return `<section class="card insfee"><div class="chd"><div><h2>保険料（農家さんの負担）</h2><p>1募集あたり 基本 ${nf(INS.base)}円 ＋ 名簿の人数（同伴の子どもを含む）× ${nf(INS.per)}円。月末にまとめて農家さんへ請求します。</p></div><span class="pill line">金額は仮</span></div>
+    <div class="tw"><table class="t"><thead><tr><th>募集</th><th>農園</th><th class="r">大人</th><th class="r">子ども</th><th class="r">基本</th><th class="r">人数分</th><th class="r">保険料</th></tr></thead><tbody>
+      ${L.map(x=>`<tr><td class="tn">${x.lid}</td><td>${esc(x.farm)}<br><small class="muted">${x.area}</small></td><td class="r">${x.a}人</td><td class="r">${x.k}人</td><td class="r">${nf(INS.base)}円</td><td class="r">${nf(INS.per*(x.a+x.k))}円</td><td class="r"><b>${nf(insFee(x.a+x.k))}円</b></td></tr>`).join('')}
+      <tr><td colspan="6"><b>${mdw(dt)}分の合計</b></td><td class="r"><b>${nf(tot)}円</b></td></tr>
+    </tbody></table></div>
+    <p class="fine" style="margin-top:10px">人数は前日17:00に確定した名簿で数えます。確定後の当日キャンセル・欠席・雨天中止でも、保険は手配済みのため請求の対象です。前日17:00までに中止した募集は請求しません。目安：行事用の傷害保険＋賠償責任保険は1人1日 約30〜280円（引受会社・作業区分で変わります）。</p>
+    </section>`})()}
+  ${S.csv===key?`<section class="card" data-row="csv">
+    <div class="chd"><div><h2>CSV（${key}）</h2><p>文字コード UTF-8・${rows.length+1}行。コピーして保険会社の指定フォームに貼り付けます。</p></div><button class="btn sm" data-act="copy">${ic('copy')}コピー</button></div>
+    <label class="sr" for="csvText">CSVの内容</label><textarea class="inp csvbox" id="csvText" readonly rows="${Math.min(14,rows.length+2)}">${esc(csvOf(key))}</textarea>
+  </section>`:''}
+  </div>`;
+}
+
+function reach(){const n=S.nt;let p=0,f=0;const sh=[...n.ranks].reduce((a,r)=>a+RANK_SHARE[r],0);
+  n.areas.forEach(a=>{if(n.p)p+=POP.p[a]*sh;if(n.f)f+=POP.f[a]});const tot=Math.round(p+f);return {tot,push:Math.round(tot*.72)}}
+const segText=()=>{const n=S.nt,who=[n.p&&'参加者',n.f&&'農家'].filter(Boolean).join('・')||'（未選択）';
+  const ar=n.areas.size===AREAS.length?'全エリア':[...n.areas].join('・')||'（エリア未選択）';
+  const rk=!n.p||n.ranks.size===7?'':n.ranks.size?'・'+[...n.ranks].sort().map(i=>RANKS[i]).join('/'):'・（ランク未選択）';return `${who}・${ar}${rk}`};
+function vNotice(){
+  const n=S.nt,r=reach();
+  const tl=len(n.title),bl=len(n.body),TMAX=20,BMAX=n.kind==='app'?400:60;
+  const pushT=n.title||'タイトル',pushB=n.body||'本文がここに入ります';
+  const atD=n.when==='sched'&&n.at?new Date(n.at):null;
+  const timeTxt=atD&&!isNaN(atD)?`${atD.getHours()}:${String(atD.getMinutes()).padStart(2,'0')}`:'9:41';
+  return `${phd('お知らせ配信','A-07','アプリ内のお知らせと、エリア・ランク・参加者／農家で絞ったプッシュ通知を送ります。')}
+  <div class="stack">
+  <div class="compose">
+    <section class="card">
+      <div class="chd"><h2>新しいお知らせ</h2></div>
+      <div class="fgrid">
+        <div class="fld full"><span>送り方</span><div class="chks">${Object.entries(KIND).map(([k,v])=>`<label class="cchip"><input type="radio" name="ntk" data-nt="kind" value="${k}" ${n.kind===k?'checked':''}><span>${v}</span></label>`).join('')}</div></div>
+        <div class="fld full"><span>対象</span><div class="chks"><label class="cchip"><input type="checkbox" id="nt-p" data-nt="p" ${n.p?'checked':''}><span>参加者</span></label><label class="cchip"><input type="checkbox" id="nt-f" data-nt="f" ${n.f?'checked':''}><span>農家</span></label></div></div>
+        <div class="fld full"><span>エリア<button class="linkbtn" style="padding:0" data-act="ntAllAreas">${n.areas.size===AREAS.length?'すべて外す':'すべて選ぶ'}</button></span><div class="chks">${AREAS.map(a=>`<label class="cchip"><input type="checkbox" id="nt-a-${a}" data-nt="area" value="${a}" ${n.areas.has(a)?'checked':''}><span>${a}</span></label>`).join('')}</div></div>
+        <div class="fld full"><span>ランク（参加者のみ）</span><div class="chks">${RANKS.map((rk,i)=>`<label class="cchip"><input type="checkbox" id="nt-r-${i}" data-nt="rank" value="${i}" ${n.ranks.has(i)?'checked':''} ${n.p?'':'disabled'}><span>${emblem(i,16)}${rk}</span></label>`).join('')}</div></div>
+        <label class="fld"><span>ラベル</span><select class="inp" id="nt-tag" data-nt="tag">${['お知らせ','重要','イベント'].map(t=>`<option ${n.tag===t?'selected':''}>${t}</option>`).join('')}</select></label>
+        <div class="fld"><span>配信日時</span><div class="chks"><label class="cchip"><input type="radio" name="ntw" data-nt="when" value="now" ${n.when==='now'?'checked':''}><span>すぐ送る</span></label><label class="cchip"><input type="radio" name="ntw" data-nt="when" value="sched" ${n.when==='sched'?'checked':''}><span>予約する</span></label></div></div>
+        ${n.when==='sched'?`<label class="fld full"><span>予約日時</span><input class="inp" type="datetime-local" id="nt-at" data-nt="at" value="${n.at}" min="2026-10-30T00:00"></label>`:''}
+        <label class="fld full"><span>タイトル<em class="${tl>TMAX?'over':''}">${tl} / ${TMAX}文字</em></span><input class="inp" id="nt-title" data-nt="title" value="${esc(n.title)}" placeholder="例：今週末は柿の収穫がたくさんあります"></label>
+        <label class="fld full"><span>本文<em class="${bl>BMAX?'over':''}">${bl} / ${BMAX}文字${n.kind==='both'?'（プッシュは60文字まで表示）':''}</em></span><textarea class="inp" id="nt-body" data-nt="body" placeholder="例：内子町で柿の実もぎの募集が増えています。手の届く範囲だけの作業なので、はじめての人も参加できます。">${esc(n.body)}</textarea></label>
+      </div>
+      <p class="err" id="ntErr" hidden></p>
+      <div class="btnrow end" style="margin-top:12px"><button class="btn" data-act="ntSend">${ic('send')}${n.when==='sched'?'予約する':'配信する'}</button></div>
+    </section>
+    <div class="prevwrap">
+      <div class="reach">${ic('users')}<span>対象 約<b class="tn"> ${nf(r.tot)} </b>人${n.kind!=='app'?`<br><small>うちプッシュ通知オンの人 約${nf(r.push)}人</small>`:''}</span></div>
+      <p class="fine">${esc(segText())}</p>
+      ${n.kind!=='app'?`<div><p class="plabel">プッシュ通知の見え方</p><div class="lock"><div class="clk">${timeTxt}</div><div class="dt">${atD&&!isNaN(atD)?mdw(atD):'10/30（金）'}</div>
+        <div class="push"><span class="pi">${ic('leaf')}</span><div class="ph1"><span>おすそわけ収穫</span><span>今</span></div><div class="pb"><b>${esc([...pushT].slice(0,TMAX).join(''))}</b><p>${esc([...pushB].slice(0,60).join(''))}${len(pushB)>60?'…':''}</p></div></div></div></div>`:''}
+      ${n.kind!=='push'?`<div><p class="plabel">アプリ内お知らせの見え方</p><div class="inapp"><div class="ih">${pill(esc(n.tag),n.tag==='重要'?'red':n.tag==='イベント'?'info':'g')}<span class="tn">${atD&&!isNaN(atD)?md(atD):'10/30'}</span><span>運営事務局</span></div><b>${esc(n.title||'タイトル')}</b><p>${esc(n.body||'本文がここに入ります')}</p></div></div>`:''}
+    </div>
+  </div>
+  <section class="card"><div class="chd"><h2>配信の履歴</h2></div>
+    <div class="tw"><table class="t"><thead><tr><th>配信日時</th><th>タイトル</th><th>対象</th><th>送り方</th><th class="r">人数</th><th>状態</th><th></th></tr></thead><tbody>
+    ${NOTICES.map(x=>`<tr data-row="${x.id}"><td class="tn">${x.at}</td><td><b>${esc(x.title)}</b></td><td>${esc(x.seg)}</td><td>${KIND[x.kind]}</td><td class="r">${nf(x.n)}</td><td>${x.st==='sent'?pill('配信済み','g')+` <small class="muted">既読 ${x.read}</small>`:x.st==='sched'?pill('予約','info'):pill('取り消し','line')}</td><td>${x.st==='sched'?`<button class="btn ghost sm" data-act="ntCancel:${x.id}">予約を取り消す</button>`:''}</td></tr>`).join('')}
+    </tbody></table></div>
+  </section>
+  </div>`;
+}
+
+function adChecks(){const a=S.ad,txt=a.adv+a.head+a.body,words=BAN_WORDS.filter(w=>txt.includes(w));
+  const s=a.start&&fromIso(a.start),e=a.end&&fromIso(a.end);
+  return [
+    {k:'ind',ok:!!a.ind&&!IND_NG.includes(a.ind),t:!a.ind?'業種を選んでください':IND_NG.includes(a.ind)?`「${a.ind}」は掲載できない業種です`:'掲載できる業種です'},
+    {k:'word',ok:!words.length,t:words.length?`使えない言葉が入っています：${words.join('・')}`:'見出し・本文に使えない言葉はありません'},
+    {k:'req',ok:!!a.adv.trim()&&!!a.head.trim()&&len(a.head)<=24&&len(a.body)<=50,t:!a.adv.trim()||!a.head.trim()?'広告主と見出しを入れてください':len(a.head)>24||len(a.body)>50?'文字数が多すぎます':'必要な項目が入っています'},
+    {k:'date',ok:!!(s&&e&&s<=e&&e>=TODAY),t:!(s&&e)?'掲載期間を入れてください':s>e?'終了日が開始日より前です':e<TODAY?'終了日が過ぎています':`掲載期間 ${md(s)}〜${md(e)}（${Math.round((e-s)/864e5)+1}日間）`},
+    {k:'area',ok:a.areas.size>0,t:a.areas.size?`対象エリア ${a.areas.size}か所`:'対象エリアを1つ以上選んでください'},
+    {k:'pr',ok:true,t:'「PR」表示は必ず付きます（外せません）'}
+  ]}
+function vAds(){
+  const a=S.ad,ch=adChecks(),allOk=ch.every(c=>c.ok),ngInd=IND_NG.includes(a.ind);
+  const tot=ADS.filter(x=>!x.rejected).reduce((s,x)=>[s[0]+x.imp,s[1]+x.clk],[0,0]);
+  return `${phd('広告管理','純広告','広告の入稿と掲載状況を管理します。広告には必ず「PR」が付きます。')}
+  <div class="stack">
+  <div class="todo">${[['掲載中の広告',ADS.filter(x=>adSt(x)[0]==='掲載中').length+'件','','mega'],['表示回数（累計）',nf(tot[0])+'回','i','eye'],['クリック数（累計）',nf(tot[1])+'回','i','chev'],['クリック率',(tot[0]?tot[1]/tot[0]*100:0).toFixed(2)+'%','a','up']].map(([l,v,c,icn])=>`<button tabindex="-1" style="cursor:default"><span class="ti ${c}">${ic(icn)}</span><span><b>${v}</b><small>${l}</small></span></button>`).join('')}</div>
+  <section class="card"><div class="chd"><div><h2>掲載中・予定の広告</h2><p>広告主はすべて架空です。表示場所：募集一覧の5件ごと</p></div></div>
+    <div class="tw"><table class="t"><thead><tr><th>広告</th><th>業種</th><th>期間</th><th>エリア</th><th>作物</th><th class="r">表示回数</th><th class="r">クリック</th><th class="r">クリック率</th><th>PR表示</th><th>状態</th><th></th></tr></thead><tbody>
+    ${ADS.map(x=>{const [sn,sc]=adSt(x);return `<tr data-row="${x.id}" class="${x.rejected?'dim':''}"><td><b>${esc(x.adv)}</b><br><small class="muted">${x.id}・${esc(x.head)}</small></td><td>${esc(x.ind)}</td><td class="tn">${md(fromIso(x.start))}〜${md(fromIso(x.end))}</td><td>${x.areas.length===AREAS.length?'全エリア':x.areas.join('・')}</td><td>${x.crops.length?x.crops.join('・'):'指定なし'}</td><td class="r">${nf(x.imp)}</td><td class="r">${nf(x.clk)}</td><td class="r">${x.imp?(x.clk/x.imp*100).toFixed(2)+'%':'—'}</td><td>${x.rejected?'—':pill('PR','pr')}</td><td>${pill(sn,sc)}${x.rejected?'<br><small class="muted">掲載できない業種</small>':''}</td>
+      <td>${sn==='掲載中'?`<button class="btn ghost sm" data-act="adPause:${x.id}">${ic('pause')}止める</button>`:sn==='一時停止'?`<button class="btn ghost sm" data-act="adResume:${x.id}">${ic('play')}再開</button>`:''}</td></tr>`}).join('')}
+    </tbody></table></div>
+  </section>
+  <div class="compose">
+    <section class="card"><div class="chd"><h2>広告を入稿する</h2></div>
+      <div class="fgrid">
+        <label class="fld"><span>広告主</span><input class="inp" id="ad-adv" data-ad="adv" value="${esc(a.adv)}" placeholder="例：みかん畑のカフェ"></label>
+        <label class="fld"><span>業種</span><select class="inp" id="ad-ind" data-ad="ind"><option value="">選んでください</option><optgroup label="掲載できる業種">${IND_OK.map(x=>`<option ${a.ind===x?'selected':''}>${x}</option>`).join('')}</optgroup><optgroup label="掲載できない業種">${IND_NG.map(x=>`<option ${a.ind===x?'selected':''}>${x}</option>`).join('')}</optgroup></select></label>
+        <label class="fld full"><span>見出し<em class="${len(a.head)>24?'over':''}">${len(a.head)} / 24文字</em></span><input class="inp" id="ad-head" data-ad="head" value="${esc(a.head)}" placeholder="例：収穫のあとに、みかんパフェ"></label>
+        <label class="fld full"><span>本文<em class="${len(a.body)>50?'over':''}">${len(a.body)} / 50文字</em></span><textarea class="inp" id="ad-body" data-ad="body" style="min-height:64px" placeholder="例：伊予市の畑のとなりで営業しています。">${esc(a.body)}</textarea></label>
+        <label class="fld"><span>開始日</span><input class="inp" type="date" id="ad-start" data-ad="start" value="${a.start}"></label>
+        <label class="fld"><span>終了日</span><input class="inp" type="date" id="ad-end" data-ad="end" value="${a.end}"></label>
+        <div class="fld full"><span>対象エリア</span><div class="chks">${AREAS.map(x=>`<label class="cchip"><input type="checkbox" id="ad-a-${x}" data-ad="area" value="${x}" ${a.areas.has(x)?'checked':''}><span>${x}</span></label>`).join('')}</div></div>
+        <div class="fld full"><span>対象の作物（選ばなければすべての募集に表示）</span><div class="chks">${CROPS.map(x=>`<label class="cchip"><input type="checkbox" id="ad-c-${x}" data-ad="crop" value="${x}" ${a.crops.has(x)?'checked':''}><span>${x}</span></label>`).join('')}</div></div>
+        <label class="ck full"><input type="checkbox" checked disabled>「PR」表示を付ける（必須・外せません）</label>
+      </div>
+      ${ngInd?`<div class="callout red" style="margin-top:12px">${ic('alert')}<span><b>この業種の広告は受け付けられません。</b><br>投資・消費者金融・ギャンブル・出会い系の広告は掲載しない決まりです。</span></div>`:''}
+      <div class="btnrow end" style="margin-top:12px"><button class="btn" data-act="adSubmit" ${allOk?'':'disabled'}>${ic('check')}入稿する</button></div>
+    </section>
+    <div class="prevwrap">
+      <div><p class="plabel">審査チェック</p><div class="card" style="padding:14px"><ul class="checks">${ch.map(c=>`<li class="${c.ok?'ok':'ng'}">${ic(c.ok?'check':'x')}<span>${esc(c.t)}</span></li>`).join('')}</ul></div></div>
+      <div><p class="plabel">募集一覧での見え方</p><div class="feed">
+        <div class="skel"><i style="width:60%"></i><i style="width:85%"></i></div>
+        <div class="adcard"><div class="ah">${pill('PR','pr')}<span>${esc(a.adv||'広告主')}</span></div><b>${esc(a.head||'見出しがここに入ります')}</b><p>${esc(a.body||'本文がここに入ります')}</p><span class="cta">くわしく見る</span></div>
+        <div class="skel"><i style="width:55%"></i><i style="width:80%"></i></div>
+      </div></div>
+    </div>
+  </div>
+  </div>`;
+}
+
+/* キャンペーン：期間・エリア・作物を絞って経験値を増やす */
+const ovl=(a,b)=>a.some(x=>b.includes(x));
+function cpChecks(){const c=S.cp,s=c.start&&fromIso(c.start),e=c.end&&fromIso(c.end),days=s&&e?Math.round((e-s)/864e5)+1:0;
+  const v=+c.val,crops=[...c.crops],areas=[...c.areas];
+  const dup=s&&e&&CAMPAIGNS.find(x=>!x.stopped&&cpSt(x)[0]!=='終了'&&fromIso(x.start)<=e&&fromIso(x.end)>=s&&ovl(x.areas,areas)&&(!x.crops.length||!crops.length||ovl(x.crops,crops)));
+  return [
+    {ok:!!c.name.trim()&&len(c.name)<=20,t:!c.name.trim()?'キャンペーン名を入れてください':len(c.name)>20?'キャンペーン名は20文字までです':'キャンペーン名が入っています'},
+    {ok:c.type==='mul'?v>1&&v<=3:v>0&&v<=50,t:c.type==='mul'?(v>3?'倍率は3倍までです':`お手伝いでもらえる経験値が${c.val}倍になります`):(v>50?'加算は+50までです':`お手伝い1回ごとに経験値+${c.val}`)},
+    {ok:!!(s&&e&&s<=e&&s>=TODAY&&days<=31),t:!(s&&e)?'期間を入れてください':s>e?'終了日が開始日より前です':s<TODAY?'開始日が過ぎています':days>31?`期間は31日までです（いま${days}日）`:`期間 ${md(s)}〜${md(e)}（${days}日間）`},
+    {ok:c.areas.size>0,t:c.areas.size?`対象エリア ${c.areas.size===AREAS.length?'全エリア':c.areas.size+'か所'}`:'対象エリアを1つ以上選んでください'},
+    {ok:!dup,t:dup?`${dup.id}「${dup.name}」と期間・エリア・作物が重なっています（重ねがけはできません）`:'ほかのキャンペーンと重なっていません'}
+  ]}
+function vCampaign(){
+  const c=S.cp,ch=cpChecks(),allOk=ch.every(x=>x.ok),v=+c.val||0;
+  const run=CAMPAIGNS.filter(x=>cpSt(x)[0]==='実施中'),tot=CAMPAIGNS.reduce((a,x)=>[a[0]+x.n,a[1]+x.xp],[0,0]);
+  const ex=(h,lbl)=>{const base=Math.floor(h*6),long=h>=3?25:h>=2?10:0,b=base+long,add=c.type==='mul'?Math.round(b*(v-1)):v;return `<li><span>${lbl}</span><b class="tn">${b} → ${b+Math.max(0,add)}</b></li>`};
+  return `${phd('キャンペーン','追加','期間・エリア・作物を絞って、お手伝いでもらえる経験値を増やします。対象の募集には参加者アプリで「経験値2倍」などの印が付きます。')}
+  <div class="stack">
+  <div class="todo">${[['実施中のキャンペーン',run.length+'件','','up'],['キャンペーン対象の参加（累計）',nf(tot[0])+'回','i','users'],['増やした経験値（累計）','+'+nf(tot[1]),'a','leaf']].map(([l,val,cl,icn])=>`<button tabindex="-1" style="cursor:default"><span class="ti ${cl}">${ic(icn)}</span><span><b>${val}</b><small>${l}</small></span></button>`).join('')}</div>
+  <section class="card"><div class="chd"><div><h2>キャンペーンの一覧</h2><p>増えた経験値は、チェックアウトのときにまとめて付きます。</p></div></div>
+    <div class="tw"><table class="t"><thead><tr><th>キャンペーン</th><th>増やし方</th><th>期間</th><th>エリア</th><th>作物</th><th class="r">対象の参加</th><th class="r">増やした経験値</th><th>状態</th><th></th></tr></thead><tbody>
+    ${CAMPAIGNS.map(x=>{const [sn,sc]=cpSt(x);return `<tr data-row="${x.id}" class="${sn.startsWith('終了')?'dim':''}"><td><b>${esc(x.name)}</b><br><small class="muted">${x.id}</small></td><td>${pill(cpVal(x),'amber')}</td><td class="tn">${md(fromIso(x.start))}〜${md(fromIso(x.end))}</td><td>${x.areas.length===AREAS.length?'全エリア':x.areas.join('・')}</td><td>${x.crops.length?x.crops.join('・'):'指定なし'}</td><td class="r">${nf(x.n)}回</td><td class="r">+${nf(x.xp)}</td><td>${pill(sn,sc)}</td>
+      <td>${sn==='実施中'||sn==='予約'?`<button class="btn ghost sm" data-act="cpStop:${x.id}">${ic('pause')}${sn==='予約'?'取り消す':'止める'}</button>`:''}</td></tr>`}).join('')}
+    </tbody></table></div>
+  </section>
+  <div class="compose">
+    <section class="card"><div class="chd"><h2>キャンペーンをつくる</h2></div>
+      <div class="fgrid">
+        <label class="fld full"><span>キャンペーン名<em class="${len(c.name)>20?'over':''}">${len(c.name)} / 20文字</em></span><input class="inp" id="cp-name" data-cp="name" value="${esc(c.name)}" placeholder="例：里芋掘り応援ウィーク"></label>
+        <div class="fld"><span>増やし方</span><div class="chks"><label class="cchip"><input type="radio" name="cpt" data-cp="type" value="mul" ${c.type==='mul'?'checked':''}><span>倍にする</span></label><label class="cchip"><input type="radio" name="cpt" data-cp="type" value="add" ${c.type==='add'?'checked':''}><span>上乗せする</span></label></div></div>
+        <label class="fld"><span>${c.type==='mul'?'倍率':'上乗せする経験値（1回ごと）'}</span><select class="inp" id="cp-val" data-cp="val">${(c.type==='mul'?CP_MUL:CP_ADD).map(x=>`<option value="${x}" ${c.val===x?'selected':''}>${c.type==='mul'?x+'倍':'+'+x}</option>`).join('')}</select></label>
+        <label class="fld"><span>開始日</span><input class="inp" type="date" id="cp-start" data-cp="start" value="${c.start}" min="2026-10-30"></label>
+        <label class="fld"><span>終了日</span><input class="inp" type="date" id="cp-end" data-cp="end" value="${c.end}" min="2026-10-30"></label>
+        <div class="fld full"><span>対象エリア<button class="linkbtn" style="padding:0" data-act="cpAllAreas">${c.areas.size===AREAS.length?'すべて外す':'すべて選ぶ'}</button></span><div class="chks">${AREAS.map(x=>`<label class="cchip"><input type="checkbox" id="cp-a-${x}" data-cp="area" value="${x}" ${c.areas.has(x)?'checked':''}><span>${x}</span></label>`).join('')}</div></div>
+        <div class="fld full"><span>対象の作物（選ばなければすべての募集が対象）</span><div class="chks">${CROPS.map(x=>`<label class="cchip"><input type="checkbox" id="cp-c-${x}" data-cp="crop" value="${x}" ${c.crops.has(x)?'checked':''}><span>${x}</span></label>`).join('')}</div></div>
+      </div>
+      <p class="fine" style="margin-top:10px">倍にするときは、時間の経験値・じっくりボーナスを合わせた分にかけます。なかまボーナス・招待ボーナスは増えません。</p>
+      <div class="btnrow end" style="margin-top:12px"><button class="btn" data-act="cpSubmit" ${allOk?'':'disabled'}>${ic('check')}キャンペーンを登録する</button></div>
+    </section>
+    <div class="prevwrap">
+      <div><p class="plabel">チェック</p><div class="card" style="padding:14px"><ul class="checks">${ch.map(x=>`<li class="${x.ok?'ok':'ng'}">${ic(x.ok?'check':'x')}<span>${esc(x.t)}</span></li>`).join('')}</ul></div></div>
+      <div><p class="plabel">もらえる経験値（1人で参加したとき）</p><div class="card" style="padding:14px"><ul class="checks cpex">${ex(2,'2時間')}${ex(3,'3時間')}${ex(4,'4時間')}</ul></div></div>
+      <div><p class="plabel">募集カードでの見え方</p><div class="feed"><div class="adcard"><div class="ah">${pill(c.type==='mul'?`経験値${c.val}倍`:`経験値+${c.val}`,'amber')}<span>${esc(c.name||'キャンペーン名')}</span></div><b>${[...c.crops][0]||'みかん'}の収穫</b><p>${md(fromIso(c.start||'2026-11-01'))}〜${md(fromIso(c.end||'2026-11-01'))}のお手伝いが対象です。</p></div></div></div>
+    </div>
+  </div>
+  </div>`;
+}
+function cpSubmit(){const c=S.cp;if(!cpChecks().every(x=>x.ok))return;
+  const id='CP-'+String(Math.max(...CAMPAIGNS.map(x=>+x.id.slice(3)))+1).padStart(3,'0');
+  CAMPAIGNS.unshift({id,name:c.name.trim(),type:c.type,val:+c.val,start:c.start,end:c.end,areas:AREAS.filter(a=>c.areas.has(a)),crops:CROPS.filter(x=>c.crops.has(x)),n:0,xp:0});
+  addLog(`キャンペーン「${c.name.trim()}」（${cpVal(CAMPAIGNS[0])}）を登録`);S.cp.name='';S.flash=id;render();toast('キャンペーンを登録しました');}
+
+const VIEWS={dash:vDash,farms:vFarms,users:vUsers,reports:vReports,penalty:vPenalty,insurance:vInsurance,notice:vNotice,campaign:vCampaign,ads:vAds};
+const TITLES={dash:'ダッシュボード',farms:'農家審査',users:'ユーザー・募集',reports:'通報対応',penalty:'ペナルティ',insurance:'保険名簿',notice:'お知らせ配信',campaign:'キャンペーン',ads:'広告管理'};
+
+/* ===== render ===== */
+function render(anim){
+  const ae=document.activeElement,fid=ae&&ae.id,sel=ae&&typeof ae.selectionStart==='number'?[ae.selectionStart,ae.selectionEnd]:null;
+  renderShell();
+  const v=$('#view');
+  v.innerHTML=VIEWS[S.view]();
+  if(anim&&!RM.matches){v.classList.remove('view-enter');void v.offsetWidth;v.classList.add('view-enter')}
+  drawCharts();
+  if(S.view==='dash'&&anim)countUp();
+  if(S.flash&&S.flash!=='log'){document.querySelectorAll(`[data-row="${S.flash}"]`).forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')})}
+  S.flash=null;
+  if(fid&&!anim){const el=document.getElementById(fid);if(el&&el!==document.activeElement){el.focus({preventScroll:true});if(sel&&el.setSelectionRange){try{el.setSelectionRange(sel[0],sel[1])}catch(e){}}}}
+  if(S.drawer)renderDrawer();
+}
+function go(view){S.view=view;S.csv=null;S.tkNote='';S.tkSt='';$('#side').classList.remove('open');$('#menubtn').setAttribute('aria-expanded','false');render(true);window.scrollTo({top:0,behavior:RM.matches?'auto':'smooth'});document.title=`${TITLES[view]}｜おすそわけ収穫 運営管理`}
+function countUp(){
+  document.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,dec=+el.dataset.dec;if(RM.matches)return;const t0=performance.now(),dur=700;
+    const step=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmtV(to*e,dec);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)});
+}
+let toastT;function toast(msg){const t=$('#toast');t.innerHTML=`${ic('check')}<span>${esc(msg)}</span>`;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600)}
+
+/* ===== modal ===== */
+let lastFocus=null;
+function openModal({title,body,ok='実行する',danger=false,onOk,onChange}){
+  lastFocus=document.activeElement;
+  S.modal={onOk,onChange};
+  $('#mTitle').textContent=title;$('#mBody').innerHTML=body;$('#mErr').hidden=true;
+  const b=$('#mOk');b.textContent=ok;b.className='btn'+(danger?' danger':'');
+  $('#modal').hidden=false;showScrim();
+  setTimeout(()=>{const f=$('#mBody').querySelector('input:not([type=hidden]):not([disabled]),textarea,select');(f||b).focus()},30);
+}
+function closeModal(){$('#modal').hidden=true;S.modal=null;if(!S.drawer)hideScrim();if(lastFocus&&document.contains(lastFocus))lastFocus.focus()}
+function mErr(msg){const e=$('#mErr');e.innerHTML=`${ic('alert')}<span>${esc(msg)}</span>`;e.hidden=false}
+function showScrim(){const s=$('#scrim');s.hidden=false;requestAnimationFrame(()=>s.classList.add('show'))}
+function hideScrim(){const s=$('#scrim');s.classList.remove('show');setTimeout(()=>{if(!S.modal&&!S.drawer)s.hidden=true},200)}
+
+/* ===== drawer (user detail) ===== */
+function openUser(id){S.drawer=id;lastFocus=document.activeElement;renderDrawer();const d=$('#drawer');d.hidden=false;showScrim();requestAnimationFrame(()=>d.classList.add('show'));setTimeout(()=>{const c=d.querySelector('[data-act="closeDrawer"]');if(c)c.focus()},50)}
+function closeDrawer(){const d=$('#drawer');d.classList.remove('show');S.drawer=null;setTimeout(()=>{if(!S.drawer)d.hidden=true},250);if(!S.modal)hideScrim();if(lastFocus&&document.contains(lastFocus))lastFocus.focus()}
+function ratingsOf(u){const farms=['たかはし農園','東温いも畑','砥部キウイ園','内子かきの木園','はなみずき農園'],ps=['みどり','さき','ゆい','たけし','まい'];
+  const src=u.k==='f'?ps:farms,out=[];const dates=[D(10,27),D(10,24),D(10,18),D(10,11),D(10,4),D(9,27)];
+  for(let i=0;i<6;i++){out.push([dates[i],src[(i+u.id.length+u.name.length)%src.length],i<u.bad90?'bad':'good'])}
+  return out.sort(()=>0)}
+function renderDrawer(){
+  const u=uById(S.drawer);if(!u)return;
+  const [sn,sc]=stOf(u),fl=flagOf(u),r=rate(u.good,u.bad);
+  $('#drawer').innerHTML=`<div class="dhd"><span class="av lg ${u.k==='f'?'f':''}">${esc(u.name[0])}</span><div style="flex:1;min-width:0"><h2 id="dTitle">${esc(u.name)}</h2><small class="muted">${u.id}・@${esc(u.h)}・${u.k==='f'?'農家':'参加者'}・${u.area}</small></div><button class="icbtn" data-act="closeDrawer" aria-label="閉じる">${ic('x')}</button></div>
+  <div class="dbd">
+    <div class="btnrow">${pill(sn,sc)}${u.k==='p'?rankTag(u.rank):''}${fl.map(w=>pill(w,'red')).join('')}${u.reviewed?pill('確認済み','g'):''}</div>
+    ${u.st==='suspended'&&u.stNote?`<div class="callout red">${ic('alert')}<span>${esc(u.stNote)}</span></div>`:''}
+    <div class="stats"><div><b>${u.count}回</b><span>${u.k==='f'?'受け入れ':'参加'}</span></div><div><b style="${fl.length&&r<90?'color:var(--danger)':''}">${p1(r)}</b><span>好評価率</span></div><div><b>${ptOf(u)}pt</b><span>ペナルティ</span></div>
+      <div><b>${u.good}</b><span>良かった</span></div><div><b>${u.bad}</b><span>残念だった</span></div><div><b style="${u.bad90>=3?'color:var(--danger)':''}">${u.bad90}</b><span>うち90日以内</span></div></div>
+    <dl class="dl" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:0"><div><dt>登録日</dt><dd class="tn">${u.joined}</dd></div><div><dt>最終利用</dt><dd class="tn">${u.last}</dd></div><div><dt>連絡先</dt><dd class="tn">090-0000-0000 <span class="pill line">デモ用</span></dd></div><div><dt>応募の制限</dt><dd>${restricted(u)?`${md(u.until)}まで停止`:'なし'}</dd></div></dl>
+    <div><h3 style="font-size:14px;margin:0 0 8px">最近の評価</h3><div class="recs">${ratingsOf(u).map(([d,who,g])=>`<div class="rec"><span class="tn muted" style="width:40px">${md(d)}</span><span style="flex:1">${esc(who)}から</span>${g==='good'?`<span class="pill g">${ic('good')}良かった</span>`:`<span class="pill red">${ic('bad')}残念だった</span>`}</div>`).join('')}</div></div>
+    ${u.reviewed?`<div class="callout g">${ic('check')}<span>${u.reviewed.t} 確認済み：${esc(u.reviewed.note)}</span></div>`:''}
+    <div class="btnrow">
+      ${fl.length&&!u.reviewed?`<button class="btn sm" data-act="review:${u.id}">確認済みにする</button>`:''}
+      <button class="btn ghost sm" data-act="penAdd:${u.id}">ペナルティを付与</button>
+      ${u.st==='active'?`<button class="btn dline sm" data-act="suspend:${u.id}">利用停止にする</button>`:`<button class="btn ghost sm" data-act="resume:${u.id}">利用を再開する</button>`}
+    </div>
+  </div>`;
+}
+
+/* ===== actions ===== */
+function farmOk(){
+  const a=APPS.find(x=>x.id===S.farmSel);
+  openModal({title:`${a.name} を承認しますか`,body:`<p>承認すると、${esc(a.name)}さんが募集を出せるようになります。承認のお知らせがアプリに届きます。</p><label class="fld"><span>メモ（任意）</span><textarea class="inp" id="m-memo" placeholder="例：書類5点を確認。トイレは作業場所から徒歩2分"></textarea></label>`,ok:'承認する',
+    onOk:()=>{const memo=$('#m-memo').value.trim();a.st='ok';a.decided=stamp();a.hist.push({t:stamp(),w:'にしむら',x:'承認'+(memo?`（${memo}）`:'')});S.farmers++;addLog(`${a.name} の農家登録を承認`);S.farmFilter='ok';S.farmSel=a.id;S.flash=a.id;toast(`${a.name} を承認しました`);return true}});
+}
+function farmBack(){
+  const a=APPS.find(x=>x.id===S.farmSel);
+  openModal({title:`${a.name} に差し戻す`,body:`<p>理由は農家さんにそのまま届きます。直してほしい点を具体的に書いてください。</p><label class="fld"><span>差し戻しの理由（必須）</span><textarea class="inp" id="m-reason"></textarea></label><div><span class="fine">よく使う文</span><div class="tpls">${BACK_TPL.map((t,i)=>`<button type="button" data-act="tpl:${i}">${esc(t.slice(0,18))}…</button>`).join('')}</div></div>`,ok:'差し戻す',danger:true,
+    onOk:()=>{const r=$('#m-reason').value.trim();if(!r){mErr('差し戻しの理由を入れてください');return false}a.st='back';a.reason=r;a.hist.push({t:stamp(),w:'にしむら',x:'差し戻し：'+r});addLog(`${a.name} の申請を差し戻し`);S.farmFilter='back';S.farmSel=a.id;S.flash=a.id;toast('差し戻しました');return true}});
+}
+function docView(i){
+  const a=APPS.find(x=>x.id===S.farmSel),d=a.docs[i];
+  openModal({title:DOCN[i],body:`<div class="docprev"><svg viewBox="0 0 260 320" role="img" aria-label="提出書類の見本（デモ）"><rect class="dp-paper" x="10" y="10" width="240" height="300" rx="8"/><rect class="dp-head" x="28" y="30" width="204" height="30" rx="4"/><text class="dp-text" x="130" y="50" text-anchor="middle">デモ用の見本（個人情報は表示しません）</text>${[80,100,120,140,170,190,210,240,260].map((y,k)=>`<rect class="${k%3===1?'dp-mask':'dp-line'}" x="28" y="${y}" width="${[204,160,190,120,204,150,180,90,140][k]}" height="9" rx="4"/>`).join('')}</svg></div>${d[0]==='warn'?`<div class="callout">${ic('alert')}<span>自動チェック：${esc(d[1])}</span></div>`:''}<p class="fine">${esc(a.name)}・提出 ${a.sub}</p>`,ok:a.checked.includes(i)||a.st!=='wait'?'閉じる':'確認したにする',
+    onOk:()=>{if(a.st==='wait'&&!a.checked.includes(i)){a.checked.push(i);S.flash=a.id}return true}});
+}
+function hideL(id){
+  const l=lById(id);
+  openModal({title:'募集を非公開にしますか',body:`<p><b>${esc(l.title)}</b>（${esc(uById(l.farm).name)}・${mdw(l.date)}）</p><p>非公開にすると、参加者の募集一覧と検索に出なくなります。承認済みの${l.ok}人にはお知らせが届きます。</p>
+    <div class="radios" role="radiogroup">${[['金銭の受け渡しが書かれている','お礼は野菜だけ、のルールに合いません'],['危険な作業が含まれる','高所・重機・農薬散布など'],['募集の内容が実際と違う','通報や問い合わせで確認できたもの'],['その他','メモに理由を書きます']].map((r,i)=>`<label><input type="radio" name="hr" value="${r[0]}" ${i===0&&/現金|お金|円/.test(l.title)?'checked':''}><span><b>${r[0]}</b><small>${r[1]}</small></span></label>`).join('')}</div>
+    <label class="fld"><span>メモ</span><textarea class="inp" id="m-memo" style="min-height:60px"></textarea></label>`,ok:'非公開にする',danger:true,
+    onOk:()=>{const c=document.querySelector('input[name=hr]:checked');if(!c){mErr('理由を選んでください');return false}const memo=$('#m-memo').value.trim();l.st='hidden';l.hideReason=c.value;
+      TICKETS.filter(t=>t.tgt.k==='l'&&t.tgt.id===id).forEach(t=>{t.hist.push({t:stamp(),w:'にしむら',x:`募集を非公開にした（${c.value}）${memo?'：'+memo:''}`});if(t.st==='open')t.st='doing'});
+      addLog(`募集 ${id} を非公開にした（${c.value}）`);S.flash=S.view==='reports'?S.tkSel:id;toast('募集を非公開にしました');return true}});
+}
+function showL(id){const l=lById(id);openModal({title:'募集を公開に戻しますか',body:`<p><b>${esc(l.title)}</b> を参加者の一覧に戻します。内容が直っていることを確認してください。</p>`,ok:'公開に戻す',onOk:()=>{l.st='open';l.hideReason='';addLog(`募集 ${id} を公開に戻した`);S.flash=id;toast('公開に戻しました');return true}})}
+function suspend(id){const u=uById(id);
+  openModal({title:`${u.name} を利用停止にしますか`,body:`<p>利用停止中はログインできず、予定しているお手伝い${u.k==='f'?'の募集はすべて非公開':'はキャンセル扱い（ペナルティなし）'}になります。</p><label class="fld"><span>理由（必須・本人には届きません）</span><textarea class="inp" id="m-reason" placeholder="例：通報 T-0410 の調査が終わるまで"></textarea></label>`,ok:'利用停止にする',danger:true,
+    onOk:()=>{const r=$('#m-reason').value.trim();if(!r){mErr('理由を入れてください');return false}u.st='suspended';u.stNote=r;addLog(`${u.name} を利用停止（${r}）`);
+      TICKETS.filter(t=>t.tgt.k==='u'&&t.tgt.id===id&&t.st!=='done').forEach(t=>t.hist.push({t:stamp(),w:'にしむら',x:'対象ユーザーを利用停止：'+r}));S.flash=S.view==='reports'?S.tkSel:id;toast(`${u.name} を利用停止にしました`);return true}});
+}
+function resume(id){const u=uById(id);openModal({title:`${u.name} の利用を再開しますか`,body:`<p>すぐにログインして使えるようになります。</p><label class="fld"><span>メモ</span><textarea class="inp" id="m-reason" style="min-height:60px" placeholder="例：調査の結果、問題なし"></textarea></label>`,ok:'利用を再開する',
+  onOk:()=>{u.st='active';u.stNote='';addLog(`${u.name} の利用を再開${$('#m-reason').value.trim()?'（'+$('#m-reason').value.trim()+'）':''}`);S.flash=id;toast('利用を再開しました');return true}})}
+function review(id){const u=uById(id);
+  openModal({title:`${u.name} を確認済みにする`,body:`<p>${flagOf(u).map(esc).join('・')}</p><label class="fld"><span>確認した内容（必須）</span><textarea class="inp" id="m-note" placeholder="例：本人に連絡。体調不良が続いていたため。様子を見る"></textarea></label><p class="fine">このあと新しく「残念だった」が付いた場合は、もう一度リストに出ます。</p>`,ok:'確認済みにする',
+    onOk:()=>{const n=$('#m-note').value.trim();if(!n){mErr('確認した内容を入れてください');return false}u.reviewed={t:stamp(),note:n};addLog(`${u.name} を個別確認（${n}）`);S.flash='log';toast('確認済みにしました');return true}});
+}
+const PEN_TYPES=[['当日キャンセル',1,'経験値 −30'],['無断欠席',3,'2ランクダウン'],['当日中止（天候以外）',1,'農家さんのみ']];
+function penCalcText(u,idx){const t=PEN_TYPES[idx],after=ptOf(u)+t[1];
+  return after>=3&&!restricted(u)?`付与後 ${after}pt。合計3pt以上になるため、30日間（${md(addD(TODAY,30))}まで）の応募停止が始まります。`:`付与後 ${after}pt。${after>=3?'すでに応募停止中です。':`あと${3-after}ptで応募停止になります。`}`}
+function penAdd(id){const u=uById(id);const opts=PEN_TYPES.map((t,i)=>[t,i]).filter(([t,i])=>u.k==='f'?i===2:i<2);
+  openModal({title:`${u.name} にポイントを付与`,body:`<p>現在 <b class="num">${ptOf(u)}pt</b>${restricted(u)?`・${md(u.until)}まで応募停止中`:''}</p>
+    <div class="radios" role="radiogroup">${opts.map(([t,i],k)=>`<label><input type="radio" name="pt" value="${i}" data-pen ${k===0?'checked':''}><span><b>${t[0]}　${t[1]}pt</b><small>${t[2]}</small></span></label>`).join('')}</div>
+    <label class="fld"><span>あった日</span><input class="inp" type="date" id="m-date" value="2026-10-30" max="2026-10-30"></label>
+    <label class="fld"><span>理由（必須・記録に残ります）</span><textarea class="inp" id="m-reason" style="min-height:60px" placeholder="例：農家さんの申し立てとチェックイン記録で確認"></textarea></label>
+    <div class="callout" id="penCalc">${ic('alert')}<span>${penCalcText(u,opts[0][1])}</span></div>`,ok:'付与する',danger:true,
+    onChange:()=>{const v=+document.querySelector('input[name=pt]:checked').value;$('#penCalc').innerHTML=`${ic('alert')}<span>${penCalcText(u,v)}</span>`},
+    onOk:()=>{const v=+document.querySelector('input[name=pt]:checked').value,r=$('#m-reason').value.trim(),ds=$('#m-date').value;if(!r){mErr('理由を入れてください');return false}if(!ds){mErr('日付を入れてください');return false}
+      const t=PEN_TYPES[v];u.pen.push(R(fromIso(ds),t[0],t[1],r,'にしむら'));let extra='';
+      if(t[0]==='無断欠席'&&u.k==='p'){const from=u.rank;u.rank=Math.max(0,u.rank-2);extra=`・${RANKS[from]}→${RANKS[u.rank]}`}
+      if(ptOf(u)>=3&&!restricted(u)){u.until=addD(TODAY,30);extra+=`・${md(u.until)}まで応募停止`}
+      addLog(`${u.name} に${t[0]} ${t[1]}pt を付与${extra}`);S.flash=id;S.penQ='';toast(`${u.name} に ${t[1]}pt を付与しました`);return true}});
+}
+function penDel(id,rid){const u=uById(id),r=u.pen.find(x=>x.rid===rid);const after=ptOf(u)-r.pt;
+  openModal({title:'ポイントを取り消しますか',body:`<p><b>${esc(u.name)}</b>・${md(r.d)} ${r.type} ${r.pt}pt</p><p class="fine">記録時のメモ：${esc(r.note)}</p>
+    <label class="fld"><span>取り消す理由（必須）</span><textarea class="inp" id="m-reason" style="min-height:60px" placeholder="例：農家さんの記録ミス。実際は前日に連絡あり"></textarea></label>
+    ${restricted(u)&&after<3?`<label class="ck"><input type="checkbox" id="m-lift" checked>合計が${after}ptになるので、応募停止も解除する</label>`:''}
+    ${r.type==='無断欠席'?`<p class="fine">下がったランクは自動では戻りません。必要ならシステム担当に依頼してください。</p>`:''}`,ok:'取り消す',danger:true,
+    onOk:()=>{const why=$('#m-reason').value.trim();if(!why){mErr('理由を入れてください');return false}u.pen=u.pen.filter(x=>x.rid!==rid);const lift=$('#m-lift');let ex='';if(lift&&lift.checked){u.until=null;ex='・応募停止も解除'}
+      addLog(`${u.name} の${r.type} ${r.pt}pt を取り消し${ex}（${why}）`);S.flash=id;toast('ポイントを取り消しました');return true}});
+}
+function lift(id){const u=uById(id);openModal({title:`${u.name} の応募停止を解除しますか`,body:`<p>${md(u.until)}までの応募停止を解除し、すぐに応募できるようにします。ポイント（現在 ${ptOf(u)}pt）はそのまま残り、90日で失効します。</p><label class="fld"><span>解除する理由（必須）</span><textarea class="inp" id="m-reason" style="min-height:60px" placeholder="例：欠席の理由が急病だったと確認できた"></textarea></label>`,ok:'解除する',
+  onOk:()=>{const r=$('#m-reason').value.trim();if(!r){mErr('理由を入れてください');return false}u.until=null;addLog(`${u.name} の応募停止を解除（${r}）`);S.flash=id;toast('応募停止を解除しました');return true}})}
+function restrict(id){const u=uById(id);openModal({title:`${u.name} を応募停止にしますか`,body:`<p>きょうから30日間（${md(addD(TODAY,30))}まで）、新しい応募ができなくなります。承認済みの予定はそのまま残ります。</p><label class="fld"><span>理由（必須）</span><textarea class="inp" id="m-reason" style="min-height:60px"></textarea></label>`,ok:'応募停止にする',danger:true,
+  onOk:()=>{const r=$('#m-reason').value.trim();if(!r){mErr('理由を入れてください');return false}u.until=addD(TODAY,30);addLog(`${u.name} を手動で応募停止（${r}）`);S.flash=id;toast('応募停止にしました');return true}})}
+function tkSave(){const t=tkById(S.tkSel),st=S.tkSt||t.st,note=S.tkNote.trim(),e=$('#tkErr');
+  if(!note&&st===t.st){e.innerHTML=`${ic('alert')}<span>状態を変えるか、メモを入れてください</span>`;e.hidden=false;return}
+  const parts=[];if(st!==t.st)parts.push(`状態を「${TK_ST[t.st][0]}」→「${TK_ST[st][0]}」に変更`);if(note)parts.push(note);
+  t.hist.push({t:stamp(),w:'にしむら',x:parts.join('。')});t.st=st;S.tkNote='';S.tkSt='';addLog(`通報 ${t.id}：${parts[0]}`);S.flash=t.id;
+  if(S.tkFilter==='open'&&st!=='open')S.tkFilter='active';if(S.tkFilter==='active'&&st==='done')S.tkFilter='all';
+  render();toast('対応を記録しました')}
+function ntSend(){const n=S.nt,e=$('#ntErr'),r=reach(),BMAX=n.kind==='app'?400:60;let msg='';
+  if(!n.p&&!n.f)msg='対象（参加者・農家）を選んでください';else if(!n.areas.size)msg='エリアを1つ以上選んでください';else if(n.p&&!n.f&&!n.ranks.size)msg='ランクを1つ以上選んでください';
+  else if(!n.title.trim())msg='タイトルを入れてください';else if(len(n.title)>20)msg='タイトルは20文字までです';else if(!n.body.trim())msg='本文を入れてください';else if(len(n.body)>BMAX&&n.kind!=='both')msg=`本文は${BMAX}文字までです`;else if(n.kind==='both'&&len(n.body)>400)msg='本文は400文字までです';
+  else if(n.when==='sched'&&(!n.at||new Date(n.at)<=new Date(2026,9,30,0,0)))msg='予約日時を正しく入れてください';
+  if(msg){e.innerHTML=`${ic('alert')}<span>${msg}</span>`;e.hidden=false;return}
+  const at=n.when==='sched'?new Date(n.at):null;
+  openModal({title:n.when==='sched'?'この内容で予約しますか':'この内容で配信しますか',body:`<p><b>${esc(n.title)}</b></p><p>対象：${esc(segText())}<br>人数：約${nf(r.tot)}人${n.kind!=='app'?`（プッシュ 約${nf(r.push)}人）`:''}<br>送り方：${KIND[n.kind]}<br>日時：${at?`${mdw(at)} ${at.getHours()}:${String(at.getMinutes()).padStart(2,'0')}`:'すぐ'}</p><p class="fine">配信後は取り消せません。予約は配信前なら取り消せます。</p>`,ok:n.when==='sched'?'予約する':'配信する',
+    onOk:()=>{const id='N-0'+(32+NOTICES.length-4);NOTICES.unshift({id,at:at?`${md(at)} ${at.getHours()}:${String(at.getMinutes()).padStart(2,'0')}`:stamp(),title:n.title,kind:n.kind,seg:segText(),n:r.tot,st:at?'sched':'sent',read:'0%'});
+      addLog(`お知らせ「${n.title}」を${at?'予約':'配信'}`);n.title='';n.body='';S.flash=id;toast(at?'予約しました':'配信しました');return true}});
+}
+function adSubmit(){const a=S.ad;if(!adChecks().every(c=>c.ok))return;
+  openModal({title:'この広告を入稿しますか',body:`<p><b>${esc(a.adv)}</b>「${esc(a.head)}」</p><p>${md(fromIso(a.start))}〜${md(fromIso(a.end))}・${[...a.areas].join('・')}・作物 ${a.crops.size?[...a.crops].join('・'):'指定なし'}</p><p class="fine">「PR」表示付きで掲載されます。表示回数とクリック数は毎日0時に集計します。</p>`,ok:'入稿する',
+    onOk:()=>{const id='AD-0'+(37+ADS.length-5);ADS.unshift({id,adv:a.adv.trim(),ind:a.ind,head:a.head.trim(),body:a.body.trim(),start:a.start,end:a.end,areas:[...a.areas],crops:[...a.crops],imp:0,clk:0,paused:false});
+      addLog(`広告 ${id}（${a.adv.trim()}）を入稿`);S.ad={adv:'',ind:'',head:'',body:'',start:'2026-11-01',end:'2026-11-30',areas:new Set(['松山市']),crops:new Set()};S.flash=id;toast('入稿しました');return true}});
+}
+
+/* ===== login demo (MFA) ===== */
+function renderLogin(){
+  const L=S.login,el=$('#login');
+  const steps=`<div class="lsteps" aria-hidden="true"><i class="on"></i><i class="${L.step>=2?'on':''}"></i></div>`;
+  let body='';
+  if(L.step===1)body=`<div><h2 style="font-size:20px">運営管理にログイン</h2><p class="fine" style="margin-top:4px">手順1／2：IDとパスワード</p></div>
+    <label class="fld"><span>ログインID</span><input class="inp" id="lg-id" value="unei-demo@example.jp" autocomplete="off"></label>
+    <label class="fld"><span>パスワード</span><input class="inp" type="password" id="lg-pw" autocomplete="off" placeholder="デモなので何を入れても進めます"></label>
+    ${L.err?`<p class="err">${ic('alert')}<span>${esc(L.err)}</span></p>`:''}
+    <button class="btn" style="height:44px" data-act="lgNext">次へ</button>`;
+  else if(L.step===2)body=`<div><h2 style="font-size:20px">確認コードを入力</h2><p class="fine" style="margin-top:4px">手順2／2：認証アプリに出ている6桁の数字</p></div>
+    <div class="otp" role="group" aria-label="6桁の確認コード">${[0,1,2,3,4,5].map(i=>`<input inputmode="numeric" maxlength="1" autocomplete="one-time-code" id="otp-${i}" data-otp="${i}" aria-label="${i+1}桁目" value="${L.code[i]||''}">`).join('')}</div>
+    ${L.err?`<p class="err">${ic('alert')}<span>${esc(L.err)}</span></p>`:''}
+    <button class="btn" style="height:44px" data-act="lgVerify" ${L.code.join('').length===6?'':'disabled'}>確認してログイン</button>
+    <button class="linkbtn" style="justify-content:center" data-act="lgFill">デモ用のコードを入れる</button>`;
+  else body=`<div style="text-align:center"><div class="spin" aria-hidden="true"></div><p style="margin:8px 0 0">確認しています…</p></div>`;
+  el.innerHTML=`<div class="lcard"><div class="brand"><span class="logo">${ic('leaf')}</span><div><b>おすそわけ収穫</b><small>運営管理・愛媛パイロット</small></div></div>${steps}${body}
+    <ul class="lnotes"><li>${ic('lock')}<span>管理画面は、パスワードと認証アプリのコードの2つがそろったときだけ入れます</span></li><li>${ic('clock')}<span>30分操作がないと自動でログアウトします</span></li><li>${ic('list')}<span>ログインと操作はすべて記録に残ります</span></li></ul>
+    <button class="linkbtn" style="justify-content:center" data-act="lgClose">ログイン画面を閉じてダッシュボードに戻る</button></div>`;
+}
+function openLogin(){S.login={step:1,code:['','','','','',''],err:''};lastFocus=document.activeElement;renderLogin();$('#login').hidden=false;setTimeout(()=>{const p=$('#lg-pw');if(p)p.focus()},30)}
+function closeLogin(done){$('#login').hidden=true;S.login=null;if(done){addLog('ログイン（パスワード＋確認コード）');S.flash='log';S.view='dash';render(true);toast('多要素認証でログインしました')}else if(lastFocus)lastFocus.focus()}
+
+/* ===== events ===== */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  if(b.disabled)return;
+  const [a,arg]=b.dataset.act.split(':');
+  switch(a){
+    case'go':go(arg);break;
+    case'menu':{const s=$('#side');const o=s.classList.toggle('open');b.setAttribute('aria-expanded',o);break}
+    case'theme':{S.theme={auto:'light',light:'dark',dark:'auto'}[S.theme];if(S.theme==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',S.theme);renderShell();break}
+    case'login':openLogin();break;
+    case'jump':{const el=document.getElementById(arg);if(el){el.scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}break}
+    case'metric':S.metric=arg;render();break;
+    case'user':openUser(arg);break;
+    case'closeDrawer':closeDrawer();break;
+    case'closeAll':if(S.modal)closeModal();else if(S.drawer)closeDrawer();break;
+    case'review':review(arg);break;
+    case'suspend':suspend(arg);break;
+    case'resume':resume(arg);break;
+    case'uTab':S.uTab=arg;render(true);break;
+    case'hideL':hideL(arg);break;
+    case'showL':showL(arg);break;
+    case'farmFilter':S.farmFilter=arg;render();break;
+    case'farmSel':S.farmSel=arg;render();if(window.innerWidth<=980){const d=document.querySelector(`.split>.card[data-row="${arg}"]`);if(d)d.scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'})}break;
+    case'farmOk':farmOk();break;
+    case'farmBack':farmBack();break;
+    case'docView':docView(+arg);break;
+    case'tpl':{const t=$('#m-reason');if(t){t.value=(t.value?t.value+'\n':'')+BACK_TPL[+arg];t.focus()}break}
+    case'tkFilter':S.tkFilter=arg;S.tkNote='';S.tkSt='';render();break;
+    case'tkSel':S.tkSel=arg;S.tkNote='';S.tkSt='';render();if(window.innerWidth<=980){const d=document.querySelector(`.split>.card[data-row="${arg}"]`);if(d)d.scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'})}break;
+    case'tkSave':tkSave();break;
+    case'penAdd':penAdd(arg);break;
+    case'penDel':penDel(arg,b.dataset.r);break;
+    case'lift':lift(arg);break;
+    case'restrict':restrict(arg);break;
+    case'insDate':S.insDate=arg;S.csv=null;render();break;
+    case'csv':S.csv=S.insDate;S.flash='csv';render();addLog(`${S.insDate} 分の保険名簿CSVを作成`);setTimeout(()=>{const c=document.querySelector('[data-row="csv"]');if(c)c.scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'nearest'})},40);break;
+    case'copy':{const ta=$('#csvText');const fail=()=>{ta.focus();ta.select();toast('コピーできませんでした。選択した文字をコピーしてください')};
+      try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(()=>toast('CSVをコピーしました'),fail)}else fail()}catch(err){fail()}break}
+    case'sent':{const k=S.insDate;openModal({title:'送付済みにしますか',body:`<p>${mdw(fromIso(k))}分の名簿（${ROSTER[k].rows.length}人）を、保険会社（デモ）へ送付済みとして記録します。</p>`,ok:'送付済みにする',onOk:()=>{ROSTER[k].st='sent';ROSTER[k].sentAt=stamp();addLog(`${k} 分の保険名簿を送付済みにした`);toast('送付済みにしました');return true}});break}
+    case'ntAllAreas':S.nt.areas=S.nt.areas.size===AREAS.length?new Set():new Set(AREAS);render();break;
+    case'ntSend':ntSend();break;
+    case'ntCancel':{const x=NOTICES.find(n=>n.id===arg);openModal({title:'予約を取り消しますか',body:`<p>「${esc(x.title)}」（${x.at} 配信予定）を取り消します。</p>`,ok:'取り消す',danger:true,onOk:()=>{x.st='cancel';addLog(`お知らせ「${x.title}」の予約を取り消し`);S.flash=x.id;toast('予約を取り消しました');return true}});break}
+    case'cpAllAreas':S.cp.areas=S.cp.areas.size===AREAS.length?new Set():new Set(AREAS);render();break;
+    case'cpSubmit':cpSubmit();break;
+    case'cpStop':{const x=CAMPAIGNS.find(y=>y.id===arg),pre=cpSt(x)[0]==='予約';openModal({title:pre?'キャンペーンを取り消しますか':'キャンペーンを止めますか',body:`<p>「${esc(x.name)}」（${cpVal(x)}）を${pre?'取り消します':'いま止めます。これまでに付いた経験値はそのまま残ります'}。</p>`,ok:pre?'取り消す':'止める',danger:true,onOk:()=>{x.stopped=true;addLog(`キャンペーン ${x.id} を${pre?'取り消し':'停止'}`);S.flash=x.id;toast(pre?'取り消しました':'止めました');return true}});break}
+    case'adSubmit':adSubmit();break;
+    case'adPause':{const x=ADS.find(y=>y.id===arg);openModal({title:'広告を止めますか',body:`<p>${esc(x.adv)}「${esc(x.head)}」の表示を止めます。再開すると期間内は表示されます。</p>`,ok:'止める',danger:true,onOk:()=>{x.paused=true;addLog(`広告 ${x.id} を一時停止`);S.flash=x.id;toast('広告を止めました');return true}});break}
+    case'adResume':{const x=ADS.find(y=>y.id===arg);x.paused=false;addLog(`広告 ${x.id} を再開`);S.flash=x.id;render();toast('広告を再開しました');break}
+    case'mOk':{const m=S.modal;if(!m)break;const r=m.onOk?m.onOk():true;if(r!==false){closeModal();render()}break}
+    case'mCancel':closeModal();break;
+    case'lgNext':{const pw=$('#lg-pw').value;if(!pw){S.login.err='パスワードを入れてください（デモなので何でも進めます）';renderLogin();$('#lg-pw').focus();break}S.login={step:2,code:['','','','','',''],err:''};renderLogin();$('#otp-0').focus();break}
+    case'lgFill':S.login.code='482193'.split('');S.login.err='';renderLogin();$('[data-act="lgVerify"]').focus();break;
+    case'lgVerify':S.login.step=3;renderLogin();setTimeout(()=>closeLogin(true),RM.matches?100:900);break;
+    case'lgClose':closeLogin(false);break;
+  }
+});
+function onField(e){
+  const t=e.target;
+  if(e.isComposing)return;
+  if(t.dataset.f){S[t.dataset.f]=t.value;if(t.dataset.f!=='tkNote'&&t.dataset.f!=='tkSt')render();return}
+  if(t.dataset.nt){const k=t.dataset.nt,n=S.nt;
+    if(k==='p'||k==='f')n[k]=t.checked;else if(k==='area'){t.checked?n.areas.add(t.value):n.areas.delete(t.value)}else if(k==='rank'){t.checked?n.ranks.add(+t.value):n.ranks.delete(+t.value)}else n[k]=t.value;
+    $('#ntErr')&&($('#ntErr').hidden=true);render();return}
+  if(t.dataset.cp){const k=t.dataset.cp,c=S.cp;
+    if(k==='area'){t.checked?c.areas.add(t.value):c.areas.delete(t.value)}else if(k==='crop'){t.checked?c.crops.add(t.value):c.crops.delete(t.value)}
+    else if(k==='type'){c.type=t.value;c.val=t.value==='mul'?'2':'20'}else c[k]=t.value;render();return}
+  if(t.dataset.ad){const k=t.dataset.ad,a=S.ad;
+    if(k==='area'){t.checked?a.areas.add(t.value):a.areas.delete(t.value)}else if(k==='crop'){t.checked?a.crops.add(t.value):a.crops.delete(t.value)}else a[k]=t.value;render();return}
+  if(t.dataset.doc!=null&&e.type==='change'){const a=APPS.find(x=>x.id===S.farmSel),i=+t.dataset.doc;if(t.checked){if(!a.checked.includes(i))a.checked.push(i)}else a.checked=a.checked.filter(x=>x!==i);render();return}
+  if(t.hasAttribute('data-pen')&&S.modal&&S.modal.onChange){S.modal.onChange();return}
+  if(t.dataset.otp!=null&&S.login){const i=+t.dataset.otp,v=t.value.replace(/\D/g,'');
+    if(v.length>1){v.slice(0,6-i).split('').forEach((d,k)=>S.login.code[i+k]=d)}else S.login.code[i]=v;
+    S.login.err='';const nx=Math.min(5,i+Math.max(1,v.length));renderLogin();const el=$(`#otp-${v?nx:i}`);if(el){el.focus();el.select()}return}
+}
+document.addEventListener('input',e=>{const t=e.target;if(t.type==='checkbox'||t.type==='radio'||t.tagName==='SELECT'||t.type==='date'||t.type==='datetime-local')return;onField(e)});
+document.addEventListener('change',e=>{const t=e.target;if(t.type==='checkbox'||t.type==='radio'||t.tagName==='SELECT'||t.type==='date'||t.type==='datetime-local')onField(e)});
+document.addEventListener('compositionend',e=>{onField({target:e.target,type:'input',isComposing:false})});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(S.login){closeLogin(false)}else if(S.modal)closeModal();else if(S.drawer)closeDrawer();else $('#side').classList.remove('open')}
+  if(e.key==='Backspace'&&e.target.dataset&&e.target.dataset.otp!=null&&!e.target.value&&S.login){const i=+e.target.dataset.otp;if(i>0){S.login.code[i-1]='';renderLogin();$(`#otp-${i-1}`).focus()}}
+  if(e.key==='Enter'&&S.login&&e.target.id==='lg-pw'){e.preventDefault();$('[data-act="lgNext"]').click()}
+  if(e.key==='Tab'&&(S.modal||S.drawer||S.login)){const root=S.login?$('#login'):S.modal?$('#modal'):$('#drawer');const f=[...root.querySelectorAll('button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])')];if(!f.length)return;const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+});
+
+document.title='おすそわけ収穫 運営管理';
+render(true);
+</script>

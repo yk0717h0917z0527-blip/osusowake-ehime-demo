@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1060" width="1600" height="1060" role="img" aria-label="デモ版 AWS 構成図">
+<style>
+text{font-family:"Noto Sans JP","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif}
+.t{font-size:14px;font-weight:700;fill:#232F3E}
+.s{font-size:12.5px;fill:#5B6670}
+.g{font-size:14px;font-weight:700}
+.l{font-size:12.5px;fill:#3F4B57;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.lb{font-size:12.5px;fill:#2F6FDE;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+</style>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3F4B57"/></marker>
+<marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2F6FDE"/></marker>
+</defs>
+<rect width="1600" height="1060" fill="#fff"/>
+<text x="30" y="42" font-size="27" font-weight="700" fill="#232F3E">デモ版 AWS 構成図（Amplify Hosting）</text>
+<text x="30" y="70" font-size="15" fill="#5B6670">おすそわけ収穫。AWS に作るのは Amplify アプリ、IAM ロール、DynamoDB テーブルの 3 つだけ。外部 API はすべて無料・キー不要</text>
+<line x1="1120" x2="1154" y1="40" y2="40" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/><text x="1162" y="45" class="l">サーバー経由</text>
+<line x1="1270" x2="1304" y1="40" y2="40" stroke="#2F6FDE" stroke-width="1.9" stroke-dasharray="6 5" marker-end="url(#b)"/><text x="1312" y="45" class="l">ブラウザから直接</text>
+<circle cx="1440" cy="40" r="10" fill="#1D4ED8"/><text x="1440" y="45" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">A</text><text x="1456" y="45" class="l">担当者</text>
+<rect x="30" y="110" width="230" height="560" rx="4" fill="#FAFBFC" stroke="#5B6670" stroke-width="1.6"/>
+<text x="42" y="130" class="g" fill="#5B6670">利用者</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHRpdGxlPkljb24tUmVzb3VyY2UvR2VuZXJhbC1SZXNvdXJjZS9SZXNfTW9iaWxlLWNsaWVudF80OF9MaWdodDwvdGl0bGU+PHBhdGggZmlsbD0iIzIzMmYzZCIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTkuNjAzIDYuMTA5YS4zMDguMzA4IDAgMSAxIDAgLjYxNi4zMDguMzA4IDAgMCAxIDAtLjYxNm0wIDIuMTE1YTEuODEgMS44MSAwIDAgMCAxLjgwOC0xLjgwNyAxLjgxIDEuODEgMCAwIDAtMS44MDgtMS44MDggMS44MSAxLjgxIDAgMCAwLTEuODA4IDEuODA4IDEuODEgMS44MSAwIDAgMCAxLjgwOCAxLjgwN20zLjQwOS0uODIzaDUuMzYydi0yaC01LjM2MnptOS4xNjEgMzYuNDI1SDE1LjgxMmMtLjk5OSAwLTEuODEyLS43OTctMS44MTItMS43NzZ2LTEuNDA5aDE5Ljk4NnYxLjQwOWMwIC45NzktLjgxNCAxLjc3Ni0xLjgxMyAxLjc3Nk0xNCAxMC44MDJoMTkuOTg2djI3LjgzOUgxNFYxMC44MDJNMTYuNjQ2IDRoMTQuNjkzYzEuNDU5IDAgMi42NDcgMS4xNjcgMi42NDcgMi42djIuMjAySDE0VjYuNkMxNCA1LjE2NyAxNS4xODcgNCAxNi42NDYgNG0xNC43MDgtMkgxNi42NDZDMTQuMDg0IDIgMTIgNC4wNjQgMTIgNi42djM1LjQ1YzAgMi4wODIgMS43MSAzLjc3NiAzLjgxMiAzLjc3NmgxNi4zNjFjMi4xMDMgMCAzLjgxMy0xLjY5NCAzLjgxMy0zLjc3NlY2LjU5N2MwLTIuNTMtMi4wNzYtNC41ODktNC42MzItNC41OTciLz48L3N2Zz4=" x="117.0" y="150" width="56" height="56"/>
+<text x="145" y="226" class="t" text-anchor="middle">参加者（スマホ）</text>
+<text x="145" y="244" class="s" text-anchor="middle">QR をカメラで読み取り</text>
+<text x="145" y="261" class="s" text-anchor="middle">地図・天気・お礼の換算</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHRpdGxlPkljb24tUmVzb3VyY2UvR2VuZXJhbC1SZXNvdXJjZS9SZXNfTW9iaWxlLWNsaWVudF80OF9MaWdodDwvdGl0bGU+PHBhdGggZmlsbD0iIzIzMmYzZCIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTkuNjAzIDYuMTA5YS4zMDguMzA4IDAgMSAxIDAgLjYxNi4zMDguMzA4IDAgMCAxIDAtLjYxNm0wIDIuMTE1YTEuODEgMS44MSAwIDAgMCAxLjgwOC0xLjgwNyAxLjgxIDEuODEgMCAwIDAtMS44MDgtMS44MDggMS44MSAxLjgxIDAgMCAwLTEuODA4IDEuODA4IDEuODEgMS44MSAwIDAgMCAxLjgwOCAxLjgwN20zLjQwOS0uODIzaDUuMzYydi0yaC01LjM2MnptOS4xNjEgMzYuNDI1SDE1LjgxMmMtLjk5OSAwLTEuODEyLS43OTctMS44MTItMS43NzZ2LTEuNDA5aDE5Ljk4NnYxLjQwOWMwIC45NzktLjgxNCAxLjc3Ni0xLjgxMyAxLjc3Nk0xNCAxMC44MDJoMTkuOTg2djI3LjgzOUgxNFYxMC44MDJNMTYuNjQ2IDRoMTQuNjkzYzEuNDU5IDAgMi42NDcgMS4xNjcgMi42NDcgMi42djIuMjAySDE0VjYuNkMxNCA1LjE2NyAxNS4xODcgNCAxNi42NDYgNG0xNC43MDgtMkgxNi42NDZDMTQuMDg0IDIgMTIgNC4wNjQgMTIgNi42djM1LjQ1YzAgMi4wODIgMS43MSAzLjc3NiAzLjgxMiAzLjc3NmgxNi4zNjFjMi4xMDMgMCAzLjgxMy0xLjY5NCAzLjgxMy0zLjc3NlY2LjU5N2MwLTIuNTMtMi4wNzYtNC41ODktNC42MzItNC41OTciLz48L3N2Zz4=" x="117.0" y="330" width="56" height="56"/>
+<text x="145" y="406" class="t" text-anchor="middle">農家（スマホ）</text>
+<text x="145" y="424" class="s" text-anchor="middle">募集の QR を表示</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHRpdGxlPkljb24tUmVzb3VyY2UvR2VuZXJhbC1SZXNvdXJjZS9SZXNfVXNlcnNfNDhfTGlnaHQ8L3RpdGxlPjxwYXRoIGZpbGw9IiMyNDJmM2UiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjYzOSA5LjI4NmMwLTIuOTE1IDIuNDEzLTUuMjg2IDUuMzgtNS4yODZzNS4zNzggMi4zNzEgNS4zNzggNS4yODYtMi40MTIgNS4yODYtNS4zNzggNS4yODYtNS4zOC0yLjM3MS01LjM4LTUuMjg2bTExLjUyNCA3LjA0OGExMS43IDExLjcgMCAwIDAtMi4wMzUtMS4wMDFjMS45Ny0xLjMxIDMuMjY5LTMuNTMxIDMuMjY5LTYuMDQ3IDAtNC4wMTctMy4zMS03LjI4Ni03LjM3OC03LjI4Ni00LjA2OSAwLTcuMzggMy4yNjktNy4zOCA3LjI4NiAwIDIuNTEgMS4yOTMgNC43MjggMy4yNTYgNi4wMzlhMTEuOSAxMS45IDAgMCAwLTMuNTQ2IDIuMWwxLjMwMyAxLjUxOEE5Ljc3IDkuNzcgMCAwIDEgMzQgMTYuNTcyYzEuODAyIDAgMy41NjkuNTA1IDUuMTA5IDEuNDYxIDIuNzQgMS43MDIgNC41MzggNC42OTIgNC44NDQgNy45NjdIMzR2MmgxMWExIDEgMCAwIDAgMS0xYzAtNC4zNDMtMi4yMzYtOC40My01LjgzNy0xMC42NjZNOC42MzkgOS4yODZDOC42MzkgNi4zNzEgMTEuMDUyIDQgMTQuMDE5IDRzNS4zNzggMi4zNzEgNS4zNzggNS4yODYtMi40MTIgNS4yODYtNS4zNzggNS4yODYtNS4zOC0yLjM3MS01LjM4LTUuMjg2TTE0IDI2SDQuMDQ2QzQuNTMgMjAuNzE3IDguODEgMTYuNTcyIDE0IDE2LjU3MmMxLjgwMiAwIDMuNTY5LjUwNSA1LjEwOSAxLjQ2MS40MzIuMjY5Ljg0OS41NzUgMS4yNC45MWwxLjMwMy0xLjUxN2ExMS43MSAxMS43MSAwIDAgMC0zLjUyNC0yLjA5M2MxLjk3LTEuMzEgMy4yNjktMy41MzEgMy4yNjktNi4wNDcgMC00LjAxNy0zLjMxLTcuMjg2LTcuMzc4LTcuMjg2LTQuMDY5IDAtNy4zOCAzLjI2OS03LjM4IDcuMjg2IDAgMi41MTUgMS4yOTggNC43MzcgMy4yNjggNi4wNDZDNS4zMDIgMTcuMDcxIDIgMjEuNjM4IDIgMjdhMSAxIDAgMCAwIDEgMWgxMXptLjA0NiAxOGMuNDg0LTUuMjgzIDQuNzY0LTkuNDI4IDkuOTU0LTkuNDI4IDEuODAyIDAgMy41NjkuNTA1IDUuMTA5IDEuNDYxIDIuNzQgMS43MDIgNC41MzggNC42OTIgNC44NDQgNy45Njd6bTQuNTkzLTE2LjcxNGMwLTIuOTE1IDIuNDEzLTUuMjg2IDUuMzgtNS4yODZzNS4zNzggMi4zNzEgNS4zNzggNS4yODYtMi40MTIgNS4yODYtNS4zNzggNS4yODYtNS4zOC0yLjM3MS01LjM4LTUuMjg2bTExLjUyNCA3LjA0OGExMS43IDExLjcgMCAwIDAtMi4wMzUtMS4wMDFjMS45Ny0xLjMxIDMuMjY5LTMuNTMxIDMuMjY5LTYuMDQ3IDAtNC4wMTctMy4zMS03LjI4Ni03LjM3OC03LjI4Ni00LjA2OSAwLTcuMzggMy4yNjktNy4zOCA3LjI4NiAwIDIuNTE1IDEuMjk4IDQuNzM3IDMuMjY4IDYuMDQ2QzE1LjMwMiAzNS4wNzEgMTIgMzkuNjM4IDEyIDQ1YTEgMSAwIDAgMCAxIDFoMjJhMSAxIDAgMCAwIDEtMWMwLTQuMzQzLTIuMjM2LTguNDMtNS44MzctMTAuNjY2Ii8+PC9zdmc+" x="117.0" y="480" width="56" height="56"/>
+<text x="145" y="556" class="t" text-anchor="middle">開発チーム 3 人</text>
+<text x="145" y="574" class="s" text-anchor="middle">A 基盤・DB / B 外部 API</text>
+<text x="145" y="591" class="s" text-anchor="middle">C QR・チェックイン</text>
+<rect x="30" y="700" width="230" height="110" rx="4" fill="#F5F7FA" stroke="#334155" stroke-width="1.6"/>
+<text x="42" y="720" class="g" fill="#334155">ソース管理</text>
+<g transform="translate(52 735)"><rect width="48" height="48" rx="6" fill="#24292F"/><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="16" cy="14" r="4"/><circle cx="16" cy="36" r="4"/><circle cx="34" cy="20" r="4"/><path d="M16 18v14M34 24c0 7-8 7-15 10"/></g></g>
+<text x="112" y="755" class="t">GitHub</text><text x="112" y="773" class="s">1 リポジトリ</text><text x="112" y="790" class="s">main へ push</text>
+<rect x="300" y="110" width="860" height="900" rx="4" fill="#FCFCFD" stroke="#232F3E" stroke-width="1.6"/>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHRpdGxlPkljb24tQXJjaGl0ZWN0dXJlLUdyb3VwLzMyL0FXUy1DbG91ZC1sb2dvXzMyPC90aXRsZT48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyNDJmM2UiIGQ9Ik0wIDBoNDB2NDBIMHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMzIuNjk4IDIzLjljLjM2MS40Ny0uNCAyLjQtLjc0IDMuMjY0LS4xMDUuMjYyLjExNy4zNjUuMzUuMTY4IDEuNTEyLTEuMjg0IDEuOTA0LTMuOTc1IDEuNTkzLTQuMzYzLS4zMDctLjM4Ni0yLjk1LS43MTctNC41NjMuNDMyLS4yNDkuMTc3LS4yMDYuNDIuMDcuMzg5LjkwNy0uMTEyIDIuOTMtLjM1NyAzLjI5LjExbS0uODQyIDIuMDFjLjUxOC0uMzc4LjA3NC0uOTQxLS40NTQtLjcyLTMuNTEzIDEuNDY0LTcuMzI3IDIuMTczLTEwLjggMi4xNzMtNS4xNDMgMC0xMC4xMjctMS4zOS0xNC4xNTYtMy42OTUtLjM1Mi0uMjAyLS42MTMuMTU1LS4zMTkuNDE0IDMuNzMzIDMuMzE2IDguNjcgNS4zMDkgMTQuMTQ3IDUuMzA5IDMuOTEgMCA4LjQ1MS0xLjIwOCAxMS41ODItMy40ODFtLTIuMTQ0LTUuMjE1YTYuNiA2LjYgMCAwIDEtMS40NTktLjE2MXEtLjcxNC0uMTYzLTEuMDkzLS4zNzMtLjIzMy0uMTI4LS4yOS0uMjU4YS43LjcgMCAwIDEtLjA1OS0uMjZ2LS40N3EwLS4yOS4yMTYtLjI5Mi4wODMuMDAyLjE3My4wMzMuMDkxLjAzNC4yNDEuMDk4LjQ4LjIxIDEuMDQ0LjMyNC41NjQuMTEzIDEuMTI2LjExMy44OTUgMCAxLjM4NC0uMzA4YS45Ny45NyAwIDAgMCAuNDktLjg3My44OC44OCAwIDAgMC0uMjU4LS42NXEtLjI1Ni0uMjU4LS45NTItLjQ4NGwtMS4zNzUtLjQyMXEtMS4wNDUtLjMyNS0xLjUxNy0uOTM4YTIuMTcgMi4xNyAwIDAgMS0uNDcyLTEuMzQ3cTAtLjU4MS4yNTgtMS4wMjcuMjU1LS40NDUuNjc2LS43NjEuNDI3LS4zMTQuOTktLjQ3OEE0LjMgNC4zIDAgMCAxIDMwLjAyNSAxMnEuMzE1IDAgLjY0LjA0YTYuMyA2LjMgMCAwIDEgMS4xNS4yNTJxLjI0OC4wODIuNC4xNjJhLjkuOSAwIDAgMSAuMjguMjI3LjUuNSAwIDAgMSAuMDgzLjMwOHYuNDM2cTAgLjI5MS0uMjE3LjI5LS4xMTQuMDAyLS4zNjQtLjExMWMtLjU0LS4yNC0xLjE1LS4zNTYtMS44Mi0uMzU2cS0uODE1IDAtMS4yNjIuMjU4LS40NDguMjYtLjQ0OC44MjcgMCAuMzg4LjI4My42NTUuMjgxLjI2NyAxLjA0NC41MWwxLjM0Mi40MjNxMS4wMjguMzIyIDEuNDY2Ljg4OC40NDEuNTY4LjQ0MSAxLjI5NSAwIC42LS4yNSAxLjA3OC0uMjQ4LjQ3Ny0uNjg5LjgxN2EzLjEgMy4xIDAgMCAxLTEuMDUuNTE4cS0uNjE1LjE3OS0xLjM0My4xNzhtLTEyLjE2NS0uMjQ0cS0uMjQ4LjAwMi0uMzY1LS4wODctLjExNy0uMDktLjE5OS0uMzY1bC0yLjIyMi03LjE1N2ExLjggMS44IDAgMCAxLS4wODItLjM3MXEwLS4yMjcuMjMzLS4yMjdoLjkyN3EuMjY1IDAgLjM3NC4wOS4xMDYuMDg2LjE5LjM2NGwxLjU5IDYuMTIgMS40NzctNi4xMnEuMDY2LS4yNzguMTgxLS4zNjQuMTE2LS4wOS4zOC0uMDloLjc2NXEuMjYzIDAgLjM4LjA5LjExNi4wODYuMTgyLjM2NGwxLjQ5MyA2LjIgMS42NC02LjJxLjA4Mi0uMjc4LjE5LS4zNjQuMTA5LS4wOS4zNzMtLjA5aC44NzhxLjIzMyAwIC4yMzMuMjI3YTEgMSAwIDAgMS0uMDE2LjE0NCAyIDIgMCAwIDEtLjA2OC4yMjdsLTIuMjg2IDcuMTU3cS0uMDgzLjI3NS0uMi4zNjUtLjExNi4wODgtLjM2NC4wODdoLS44MTNxLS4yNjQuMDAxLS4zOC0uMDk0LS4xMTYtLjA5OS0uMTgyLS4zNzNsLTEuNDc2LTUuOTYtMS40NTcgNS45NnEtLjA2Ny4yNzQtLjE4My4zNzMtLjExNi4wOTUtLjM4LjA5NHpNOS45NCAxOS40NDlxLjQ2NSAwIC45OC0uMTcuNTEzLS4xNy44OTMtLjU5Mi4yMzItLjI1OS4zMjQtLjU5MS4wOS0uMzMuMDktLjgwMXYtLjM4OGE4IDggMCAwIDAtMS43NTctLjIxMXEtLjk0NSAwLTEuNDA4LjM3My0uNDY0LjM3LS40NjUgMS4wNyAwIC42NDUuMzUuOTc4LjM0Ny4zMzIuOTkzLjMzMm0zLjg0Ni0xLjQwOHEwIC41MTcuMTA3LjgyNS4xMS4zMS4zMDcuNjY0YS40LjQgMCAwIDEgLjA2Ni4yMDlxMCAuMTQ4LS4xODIuMjc2bC0uNTk3LjM5YS41LjUgMCAwIDEtLjI0OC4wOC40LjQgMCAwIDEtLjI4Mi0uMTI4IDIgMiAwIDAgMS0uMzM5LS40MyA2IDYgMCAwIDEtLjI5LS41NDRxLTEuMTEyIDEuMjgtMi43ODUgMS4yOC0xLjE5NC4wMDEtMS44OS0uNjY0LS42OTYtLjY2NC0uNjk2LTEuNzggMC0xLjE4Mi44NjMtMS45MDMuODYtLjcyIDIuMzItLjcyMS40OCAwIDEuMDAyLjA3M3QxLjA4NC4yMDN2LS42OHEuMDAxLTEuMDUyLS40NDYtMS40ODItLjQ0Ni0uNDI4LTEuNTQtLjQyOGE0LjUgNC41IDAgMCAwLTEuMDIuMTIgNy41IDcuNSAwIDAgMC0xLjAyLjMxNSAzIDMgMCAwIDEtLjMzLjEyMi43LjcgMCAwIDEtLjE1LjAyNHEtLjE5OS4wMDEtLjItLjI5MnYtLjQ1MnEuMDAxLS4yMjguMDY4LS4zMjMuMDY2LS4wOTkuMjY1LS4xOTVhNiA2IDAgMCAxIDEuMTkyLS40MjEgNiA2IDAgMCAxIDEuNDc2LS4xOGMxLjEyNiAwIDEuOTUyLjI1NCAyLjQ3Ny43NTRxLjc4Ny43NTMuNzg4IDIuMjc1eiIvPjwvZz48L3N2Zz4=" x="300" y="110" width="30" height="30"/>
+<text x="338" y="130" class="g" fill="#232F3E">AWS Cloud</text>
+<rect x="320" y="155" width="820" height="835" rx="4" fill="#fff" stroke="#00A4A6" stroke-width="1.6"/>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHRpdGxlPkljb24tQXJjaGl0ZWN0dXJlLUdyb3VwLzMyL1JlZ2lvbl8zMjwvdGl0bGU+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBmaWxsPSIjMDBhNGE2IiBkPSJNMCAwaDQwdjQwSDB6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE0IDIwLjAyNnYtOWgxNS4yOTNsLTQuMTQ3IDQuMTQ2YS41LjUgMCAwIDAgMCAuNzA4bDQuMTQ3IDQuMTQ2em0xMi4yMDctNC41IDQuNjQ3LTQuNjQ2YS41LjUgMCAwIDAtLjM1NC0uODU0SDE0VjguOTdBMS41MjggMS41MjggMCAwIDAgMTMuNDk1IDZjLS44NDUgMC0xLjUzMi42ODctMS41MzIgMS41MzEgMCAuNjcuNDM1IDEuMjM1IDEuMDM3IDEuNDQydjI0LjA1M2gtM3YxaDd2LTFoLTN2LTEyaDE2LjVhLjUuNSAwIDAgMCAuMzU0LS44NTR6Ii8+PC9nPjwvc3ZnPg==" x="320" y="155" width="30" height="30"/>
+<text x="358" y="175" class="g" fill="#00A4A6">東京リージョン ap-northeast-1</text>
+<rect x="345" y="200" width="770" height="420" rx="4" fill="#FFF8F9" stroke="#DD344C" stroke-width="1.6"/>
+<text x="357" y="220" class="g" fill="#DD344C">AWS Amplify Hosting　EhimeAI2026-osusowake-demo</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHRpdGxlPkljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQVdTLUFtcGxpZnlfNDg8L3RpdGxlPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZmlsbD0iI2RkMzQ0YyIgZD0iTTAgMGg2NHY2NEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik00Ni42MzcgNDcuNjc3IDMyLjMzMyAxN2gzLjc5NEw1MC40MyA0Ny42Nzd6bTYuMjcuNTc4TDM3LjY3IDE1LjU3N2ExIDEgMCAwIDAtLjkwNi0uNTc3aC02YTEgMSAwIDAgMC0uOTA2IDEuNDIybDE1LjIzNiAzMi42NzdhMSAxIDAgMCAwIC45MDYuNTc4aDZhMSAxIDAgMCAwIC45MDctMS40MjJtLTE2LjI3Ny0uNTc4LTEwLjUzNi0yMi4wMyAyLjMyNS0zLjg0NiAxMi4wMTUgMjUuODc2em0tNy4xODctMjguNDIyYTEgMSAwIDAgMC0uODUzLS41NzguOTYuOTYgMCAwIDAtLjkxLjQ4MWwtMy41NzYgNS45MTVhMSAxIDAgMCAwLS4wNDcuOTVsMTEuMDQgMjMuMDg2Yy4xNjcuMzQ3LjUxOS41NjguOTAzLjU2OGg2YTEgMSAwIDAgMCAuOTA4LTEuNDIxem0tMTYuNjcgMjguNDIyIDkuNjM5LTE1Ljk0IDEuNjE5IDMuMjM2LTQuNzgyIDguMTAyYTEgMSAwIDAgMCAuODYyIDEuNTA4aDguNzA0bDEuNTYgMy4wOTR6bTE3LjU1LTQuNTQ0YTEgMSAwIDAgMC0uODkzLS41NWgtNy41NjhsNC4xNjgtNy4wNjJjLjE3LS4yOTIuMTg0LS42NTIuMDMzLS45NTVsLTIuNjczLTUuMzQ3YTEgMSAwIDAgMC0uODU1LS41NTIuOTkuOTkgMCAwIDAtLjg5NS40ODJsLTExLjQ5NSAxOS4wMUExIDEgMCAwIDAgMTEgNDkuNjc3aDIxYTEgMSAwIDAgMCAuODkzLTEuNDUxeiIvPjwvZz48L3N2Zz4=" x="418.0" y="250" width="64" height="64"/>
+<text x="450" y="334" class="t" text-anchor="middle">Amplify Hosting</text>
+<text x="450" y="352" class="s" text-anchor="middle">Next.js 16（SSR）</text>
+<text x="450" y="369" class="s" text-anchor="middle">HTTPS の既定ドメイン</text>
+<text x="450" y="386" class="s" text-anchor="middle">Git push で自動デプロイ</text>
+<circle cx="490" cy="252" r="11" fill="#1D4ED8"/><text x="490" y="256.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<rect x="580" y="240" width="515" height="120" rx="6" fill="#fff" stroke="#E7A3AE"/>
+<text x="596" y="263" class="t">画面（PWA）</text>
+<text x="596" y="285" class="s">地図（Leaflet）・募集一覧・天気・お礼の換算</text>
+<text x="596" y="304" class="s">QR 表示（qrcode）・QR 読取（html5-qrcode）</text>
+<text x="596" y="323" class="s">ログインなし：デモ用の固定ユーザー 3 人を選ぶ</text>
+<text x="596" y="342" class="s">出典表示：地理院タイル / 気象庁 / e-Stat</text>
+<rect x="580" y="380" width="515" height="220" rx="6" fill="#fff" stroke="#E7A3AE"/>
+<text x="596" y="403" class="t">API（Route Handlers　/api/*）</text>
+<circle cx="606" cy="428" r="11" fill="#1D4ED8"/><text x="606" y="432.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<text x="626" y="432" font-size="13" font-family="Consolas,monospace" fill="#232F3E">GET  /api/farms ・ /api/events</text>
+<text x="626" y="447" class="s" font-size="11.5">農場・募集・地図の座標</text>
+<circle cx="606" cy="462" r="11" fill="#0F7B3F"/><text x="606" y="466.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+<text x="626" y="466" font-size="13" font-family="Consolas,monospace" fill="#232F3E">GET  /api/weather</text>
+<text x="626" y="481" class="s" font-size="11.5">気象庁の予報（3 時間キャッシュ）</text>
+<circle cx="606" cy="496" r="11" fill="#0F7B3F"/><text x="606" y="500.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+<text x="626" y="500" font-size="13" font-family="Consolas,monospace" fill="#232F3E">GET  /api/prices ・ POST /api/prices/calc</text>
+<text x="626" y="515" class="s" font-size="11.5">単価 × kg で換算</text>
+<circle cx="606" cy="530" r="11" fill="#B45309"/><text x="606" y="534.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">C</text>
+<text x="626" y="534" font-size="13" font-family="Consolas,monospace" fill="#232F3E">POST /api/qr/issue</text>
+<text x="626" y="549" class="s" font-size="11.5">QR トークン発行（15 分）</text>
+<circle cx="606" cy="564" r="11" fill="#B45309"/><text x="606" y="568.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">C</text>
+<text x="626" y="568" font-size="13" font-family="Consolas,monospace" fill="#232F3E">POST /api/checkin</text>
+<text x="626" y="583" class="s" font-size="11.5">照合と二重防止</text>
+<rect x="365" y="440" width="195" height="92" rx="6" fill="#fff" stroke="#E7A3AE" stroke-dasharray="4 3"/>
+<text x="377" y="462" class="t" font-size="13">環境変数</text>
+<text x="377" y="482" class="s" font-family="Consolas,monospace">ESTAT_STATINF_ID</text>
+<text x="377" y="500" class="s">e-Stat のファイル ID</text>
+<text x="377" y="517" class="s">月 1 回だけ人が更新</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHRpdGxlPkljb24tUmVzb3VyY2UvU2VjdXJpdHktSWRlbnRpdHktYW5kLUNvbXBsaWFuY2UvUmVzX0FXUy1JZGVudGl0eS1BY2Nlc3MtTWFuYWdlbWVudF9Sb2xlXzQ4PC90aXRsZT48cGF0aCBmaWxsPSIjZGQzNDRjIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00NC4wODMgMzIuNTgxYTcyLjg1MyA3Mi44NTMgMCAwIDAtMi4wODIuMTkxbC0uMTY4LjAxOGMtMS43NjUuMTgyLTMuNzYzLjM4Ny00LjcxNC4yNTctLjU5NC0uMDg1LTEuNjg4LS41Ni0yLjg0OC0xLjA2My0xLjk2Ni0uODUyLTQuNDE0LTEuOTE0LTYuNjI3LTIuMDg0LTMuMDQ2LS4yMzQtOC4zMS4zNC0xMS43MDMgMS45MzEtMS45NjItLjA4OC0zLjc4Mi0uNjE2LTUuMTk2LTEuNDg4YTQ2IDQ2IDAgMCAxLS4wMTItLjY0OWMwLTQuMTM2IDEuOTM4LTguMDE1IDUuMzItMTAuNjVhMTUuMiAxNS4yIDAgMCAxIDcuNjYtMi4wNTJjNi4xMiAwIDExLjU1MyAzLjYxNyAxMy42NzIgOC45NDJoLS44MTNjLS44MTQgMC0xLjQ5Ni41NzYtMS42NjMgMS4zNGwtLjQxMi0uMTU2Yy0yLjAzLS43ODMtNC44MTMtMS44NTQtOC4wMzEtMS42NjMtNC43MDUuMjc2LTcuMDIuNTYtOC44NDMgMS4wOGwuNTQ5IDEuOTI0YzEuNjY4LS40NzcgMy44NjgtLjc0IDguNDEtMS4wMDggMi43ODUtLjE1OCA1LjMzOC44MTggNy4xOTUgMS41MzMuMzk1LjE1My43NTIuMjg2IDEuMDkuNDA3di4yMDVjMCAuOTM5Ljc2NiAxLjcwNCAxLjcwNSAxLjcwNGgzLjY0N2MuOTM3IDAgMS43LS43NjIgMS43MDQtMS42OThsLjM1NC0uMDMyYTE3NiAxNzYgMCAwIDAgMS41OTUtLjE1MWwuMjEtLjAyMXpNOS43OTkgMzQuMjQ5Yy0yLjY1LjM2My00Ljc0Mi4wMzktNS42MDgtLjQ5Ni41MjUtLjM3MSAxLjcxLS44OSAyLjU0NC0xLjI1NGE0NCA0NCAwIDAgMCAyLjE2LTEuMDA0YzEuMTU0Ljg3OSAyLjU4MyAxLjUzOCA0LjE2NSAxLjkzMS0uOTE1LjM2OC0yLjA0OC42NTgtMy4yNjEuODIzTTM2Ljg2OCAyOS4zaDMuMDU1di0xLjM2NmgtMy4wNTV6TTI2LjU4NiAxM2M4LjM2OCAwIDE1LjM5NiA2LjI5NSAxNi40MyAxNC40OTJxLS40My4wNDItLjkxMi4wODZsLS4xODUuMDE2YTEuNzA0IDEuNzA0IDAgMCAwLTEuNy0xLjY2aC0uNzExYy0yLjIwMS02LjQ3Ny04LjU3Ni0xMC45NDItMTUuNzk1LTEwLjk0Mi0yLjY3NCAwLTUuMjkuNjEyLTcuNjQxIDEuNzc1cS4wMjQtLjAyMi4wNDYtLjA0MkExNi42IDE2LjYgMCAwIDEgMjYuNTg2IDEzbTE4Ljk0IDE0Ljc5NGExLjYgMS42IDAgMCAwLS40OTctLjI5OEM0My45ODMgMTguMTg1IDM2LjA0OSAxMSAyNi41ODYgMTFhMTguNiAxOC42IDAgMCAwLTExLjczMiA0LjE3NSAxOC41IDE4LjUgMCAwIDAtNi44NSAxNC40MDZjMCAuMDQxLjAwNC4wODIuMDA0LjEyMy0uNjY3LjMzNS0xLjM3Mi42NTUtMi4wNzMuOTYyLTIuMTM2LjkzNC0zLjY4IDEuNjA4LTMuOTEgMi44MjYtLjA1Ny4zMDktLjA2Ny45MTQuNTIgMS41MDIgMS4wMzggMS4wMzcgMy4wMjggMS40MDkgNS4wNSAxLjQwOS44NDIgMCAxLjY4OC0uMDY0IDIuNDc0LS4xNzIgMS4zMzktLjE4MiAzLjgzOS0uNjczIDUuNTM2LTEuOTE1IDIuNjc4LTEuOTQxIDguNzMzLTIuNjY3IDExLjg4Ni0yLjQyMiAxLjg3OS4xNDUgNC4xNTUgMS4xMzIgNS45ODUgMS45MjUgMS4zOTYuNjA3IDIuNSAxLjA4NSAzLjM2NiAxLjIwOCAxLjE5LjE2MyAzLjEzNi0uMDM3IDUuMTk1LS4yNDhsLjE3My0uMDE3YTYzIDYzIDAgMCAxIDEuNTkyLS4xNTFjLjIxNS0uMDIxLjQyOC0uMDM2LjcxMi0uMDU2Ljg4LS4wNjIgMS41NjktLjggMS41NjktMS42OHYtMy44MjljMC0uNDc4LS4yMDItLjkzNC0uNTU2LTEuMjUyIi8+PC9zdmc+" x="442.0" y="680" width="56" height="56"/>
+<text x="470" y="756" class="t" text-anchor="middle">IAM ロール（SSR Compute）</text>
+<text x="470" y="774" class="s" text-anchor="middle">EhimeAI2026-osusowake-demo-ssr</text>
+<text x="470" y="791" class="s" text-anchor="middle">このテーブルの読み書きだけ</text>
+<text x="470" y="808" class="s" text-anchor="middle">アクセスキーを使わない</text>
+<circle cx="500" cy="682" r="11" fill="#1D4ED8"/><text x="500" y="686.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHRpdGxlPkljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQW1hem9uLUR5bmFtb0RCXzQ4PC90aXRsZT48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNjOTI1ZDEiIGQ9Ik0wIDBoNjR2NjRIMHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNDYuNTg2IDI1LjI1SDQzYTEgMSAwIDAgMS0uODIyLS40MzUgMS4wMiAxLjAyIDAgMCAxLS4xMTQtLjkzMWwyLjQ5My02LjcyMmgtOC45MTNsLTQuMDkxIDkuMDk4SDM2Yy4zMiAwIC42MjMuMTU2LjgxMi40Mi4xODcuMjY0LjIzOS42MDIuMTM2LjkxbC0zLjY2IDExLjEwMXptMy4xMi0uMjk3TDMxLjcwOSA0My4xNWEuOTkuOTkgMCAwIDEtMS4yMzIuMTQ2IDEuMDE0IDEuMDE0IDAgMCAxLS40MjMtMS4xOGw0LjU2LTEzLjgzM0gzMGExIDEgMCAwIDEtLjg0MS0uNDYzIDEuMDIgMS4wMiAwIDAgMS0uMDctLjk2Nmw1LTExLjEyYTEgMSAwIDAgMSAuOTEtLjU5M2gxMWMuMzI5IDAgLjYzNi4xNjMuODIzLjQzNS4xODcuMjczLjIzLjYyLjExNS45MzFsLTIuNDk0IDYuNzIxSDQ5YTEgMSAwIDAgMSAuOTI0LjYyNGMuMTU1LjM3OC4wNjkuODEzLS4yMTcgMS4xMDJNNDEuMDAyIDQ0LjIyYy0yLjcxIDEuODg2LTcuNjg3IDIuODgyLTEyLjQ2OCAyLjg4Mi00LjgxNiAwLTkuODM3LTEuMDEtMTIuNTMzLTIuOTI0bC4wMDEgMy44MTZjMCAxLjY2NCA0Ljc2OCAzLjk4NCAxMi41MzIgMy45ODQgNy40OTUgMCAxMi40NjgtMi43MDIgMTIuNDY4LTQuNDl6bTIuMDY0LTMuMjdjMCAuMTg3LS4wMzIuMzY3LS4wNjQuNTQ2djUuOTkzQzQzIDUxLjA3OSAzNi41MSA1NCAyOC41MzMgNTRjLTYuOTAzIDAtMTMuODcxLTEuODktMTQuNDczLTUuNWgtLjA1OUwxNCA0My40NDVWMTYuMTUxaC4wMDFjMC0zLjk5NiA3LjQ4Ny02LjE1MSAxNC41MzItNi4xNTEgMy45NCAwIDcuNzMuNjQgMTAuMzk3IDEuNzU2bC0uNzY2IDEuODY4Yy0yLjQzMi0xLjAxOS01Ljk0My0xLjYwMi05LjYzMS0xLjYwMi03Ljc2NCAwLTEyLjUzMiAyLjQwNS0xMi41MzIgNC4xMyAwIDEuNzI0IDQuNzY4IDQuMTI5IDEyLjUzMiA0LjEyOS4xOTUgMCAuMzk5IDAgLjU5Ni0uMDA3bC4wNzggMi4wMmMtLjIyNS4wMDktLjQ1LjAwOS0uNjc0LjAwOS00LjgxNyAwLTkuODM3LTEuMDEtMTIuNTMzLTIuOTI0djQuMzU4aC4wMDF2LjAxN2MuMDA1LjUzLjQ4OSAxLjE0MyAxLjM2NCAxLjcyIDEuOTgyIDEuMjg4IDUuNTUgMi4xNjggOS41MzkgMi4zNTFsLS4wOTEgMi4wMmMtNC4xMjYtLjE5LTcuNzUtMS4wNjktMTAuMDg2LTIuNDE2LS4zMS4yOTgtLjcyNiAxLjA1Ni0uNzI2IDEuNDY3IDAgMS43MjQgNC43NjggNC4xMjkgMTIuNTMyIDQuMTI5LjczOCAwIDEuNDY1LS4wMjUgMi4xNjItLjA3NWwuMTQgMi4wMTdjLS43NDMuMDU0LTEuNTE4LjA4LTIuMzAyLjA4LTQuODE3IDAtOS44MzctMS4wMDktMTIuNTMzLTIuOTI0djMuNjdoLjAwMWMuMDA1LjU0Ny40ODkgMS4xNiAxLjM2NCAxLjczNyAyLjI2OCAxLjQ3NCA2LjU0OSAyLjM5MyAxMS4xNjggMi4zOTNoLjMzdjIuMDIyaC0uMzNjLTQuNzc4IDAtOS44Ni0xLjAwOC0xMi41MzItMi41NDMtLjMyMi4yOTggMCAxLjAxIDAgMS41NDggMCAxLjcyNSA0Ljc2OCA0LjEzIDEyLjUzMiA0LjEzczEyLjUzMi0yLjQwNSAxMi41MzItNC4xM2MwLS42MS0uNi0xLjE3NC0xLjA5Mi0xLjUzOC0uNDEuMjQ3LS44Ni40ODMtMS4zNzIuN2wtLjc2OC0xLjg2OGMuNTMtLjIyMy45OS0uNDYzIDEuMzY0LS43MTEgMS4xLS43MzQgMS44MDQtMS43NzkgMS44MDQtMi4xNzVoMmMwIC45NC0uNjIxIDEuOTQ3LTEuNDE3IDIuNzc1IDEuMTkyIDEuMDQgMS40OCAyLjA3OCAxLjQ4IDIuODE3TTE3LjE0MiA0OC4zOWMuNzkxLjQwOCAxLjcxNi43NzIgMi43NTIgMS4wOGwuNTY0LTEuOTRhMTQgMTQgMCAwIDEtMi40MDYtLjk0em0yLjc1Mi0xMS4wNS41NjQtMS45NGMtLjkxNi0uMjcyLTEuNzI2LS41ODktMi40MDYtLjk0bC0uOTEgMS43OTljLjc5MS40MSAxLjcxNi43NzIgMi43NTIgMS4wOG0tMi43NTItMTMuMjEuOTEtMS44MDFjLjY4LjM1MiAxLjQ5LjY2OCAyLjQwNi45NGwtLjU2NCAxLjk0YTE2IDE2IDAgMCAxLTIuNzUyLTEuMDgiLz48L2c+PC9zdmc+" x="762.0" y="680" width="56" height="56"/>
+<text x="790" y="756" class="t" text-anchor="middle">DynamoDB（1 テーブル）</text>
+<text x="790" y="774" class="s" text-anchor="middle">EhimeAI2026-osusowake-demo</text>
+<text x="790" y="791" class="s" text-anchor="middle">PK / SK のシングルテーブル</text>
+<text x="790" y="808" class="s" text-anchor="middle">プロビジョンド 5/5・TTL</text>
+<text x="790" y="825" class="s" text-anchor="middle">Project=EhimeAI2026</text>
+<circle cx="820" cy="682" r="11" fill="#1D4ED8"/><text x="820" y="686.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHRpdGxlPkljb24tUmVzb3VyY2UvTWFuYWdlbWVudC1Hb3Zlcm5hbmNlL1Jlc19BbWF6b24tQ2xvdWRXYXRjaF9Mb2dzXzQ4PC90aXRsZT48cGF0aCBmaWxsPSIjZTcxNTdiIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yOS41IDE3Yy0zLjI1OCAwLTYuMDMgMi4wOTItNy4wNjIgNWgyLjE2OWE1LjUgNS41IDAgMCAxIDQuODkzLTNjMy4wMzIgMCA1LjUgMi40NjcgNS41IDUuNVMzMi41MzIgMzAgMjkuNSAzMGE1LjQ5IDUuNDkgMCAwIDEtNC4yNC0yaC0yLjM4OGE3LjUgNy41IDAgMCAwIDYuNjI4IDRjNC4xMzYgMCA3LjUtMy4zNjQgNy41LTcuNVMzMy42MzYgMTcgMjkuNSAxN00yIDMzaDEzdi0ySDJ6bTAtMTVoMTN2LTJIMnptMCA4aDI3di0ySDJ6bTQxLjg0MyA5LjczOC01LjAyNS00LjUyNWExMS41IDExLjUgMCAwIDEtMS40MDMgMS42MDhsNC45OTcgNC41MDhhMS4wNzMgMS4wNzMgMCAwIDAgMS41MS0uMDggMS4wNzUgMS4wNzUgMCAwIDAtLjA4LTEuNTFtMS41NjYgMi44NWEzLjA3IDMuMDcgMCAwIDEtMi4yODQgMS4wMTIgMy4wNiAzLjA2IDAgMCAxLTIuMDUxLS43ODVsLTUuMjQtNC43MjZBMTEuNDMgMTEuNDMgMCAwIDEgMjkuNSAzNmMtNS4xMiAwLTkuNDY3LTMuMzY2LTEwLjk1MS04aDIuMTI4YzEuMzk3IDMuNTEgNC44MjIgNiA4LjgyMyA2IDUuMjM4IDAgOS41LTQuMjYyIDkuNS05LjVTMzQuNzM4IDE1IDI5LjUgMTVjLTQuMzcyIDAtOC4wNTQgMi45NzMtOS4xNTUgN2gtMi4wNjNjMS4xNDYtNS4xNDMgNS43MzctOSAxMS4yMTgtOUMzNS44NCAxMyA0MSAxOC4xNTggNDEgMjQuNWMwIDEuNzc3LS40MTcgMy40NTUtMS4xNDEgNC45Nmw1LjMyNCA0Ljc5NGEzLjA4IDMuMDggMCAwIDEgLjIyNiA0LjMzNE0xLjk5OSA0MWgxOXYtMkgyem0wLTMxaDIxVjhIMnoiLz48L3N2Zz4=" x="1002.0" y="680" width="56" height="56"/>
+<text x="1030" y="756" class="t" text-anchor="middle">CloudWatch Logs</text>
+<text x="1030" y="774" class="s" text-anchor="middle">SSR のログ</text>
+<text x="1030" y="791" class="s" text-anchor="middle">保持 7 日</text>
+<rect x="345" y="880" width="770" height="95" rx="6" fill="#F7F3FF" stroke="#C3A6F5"/>
+<text x="361" y="903" class="t">DynamoDB のアイテム（PK → SK）</text>
+<text x="361" y="928" class="s" font-size="12">FARM#id → META / EVENT#id</text>
+<text x="611" y="928" class="s" font-size="12">EVENT#id → QR#token（TTL 15 分）</text>
+<text x="861" y="928" class="s" font-size="12">EVENT#id → CHECKIN#userId</text>
+<text x="361" y="950" class="s" font-size="12">PRICE#品目 → yyyymm（TTL 24 時間）</text>
+<text x="611" y="950" class="s" font-size="12">WEATHER#380000 → LATEST（TTL 3 時間）</text>
+<text x="861" y="950" class="s" font-size="12">USER#id → META（デモ用ユーザー）</text>
+<rect x="1190" y="110" width="380" height="560" rx="4" fill="#FFFBF0" stroke="#B7791F" stroke-width="1.6"/>
+<text x="1202" y="130" class="g" fill="#B7791F">外部サービス（無料）</text>
+<rect x="1205" y="150" width="350" height="92" rx="6" fill="#fff" stroke="#D9DEE3"/>
+<g transform="translate(1219 168)"><rect width="48" height="48" rx="6" fill="#2E7D32"/><g fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"><path d="M8 12l10-4 12 4 10-4v28l-10 4-12-4-10 4z"/><path d="M18 8v28M30 12v28"/></g></g>
+<text x="1281" y="180" class="t">地理院タイル（地図）</text>
+<text x="1281" y="200" class="s">国土地理院。キー不要・無料</text>
+<text x="1281" y="217" class="s">出典「地理院タイル」を表示</text>
+<circle cx="1535" cy="165" r="11" fill="#0F7B3F"/><text x="1535" y="169.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+<rect x="1205" y="270" width="350" height="92" rx="6" fill="#fff" stroke="#D9DEE3"/>
+<g transform="translate(1219 288)"><rect width="48" height="48" rx="6" fill="#2B7BB9"/><g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="18" cy="18" r="6"/><path d="M18 5v3M18 28v3M5 18h3M28 18h3M9 9l2 2M27 9l-2 2"/><path d="M20 38h18a7 7 0 0 0-2-14 9 9 0 0 0-16 6 4 4 0 0 0 0 8z" fill="#2B7BB9"/></g></g>
+<text x="1281" y="300" class="t">気象庁 天気予報 JSON</text>
+<text x="1281" y="320" class="s">愛媛県 380000。キー不要</text>
+<text x="1281" y="337" class="s">出典「気象庁ホームページ」</text>
+<circle cx="1535" cy="285" r="11" fill="#0F7B3F"/><text x="1535" y="289.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+<rect x="1205" y="390" width="350" height="92" rx="6" fill="#fff" stroke="#D9DEE3"/>
+<g transform="translate(1219 408)"><rect width="48" height="48" rx="6" fill="#7B3FA0"/><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M14 10l10 13 10-13M24 23v16M16 26h16M16 32h16"/></g></g>
+<text x="1281" y="420" class="t">e-Stat 統計表ファイル（野菜価格）</text>
+<text x="1281" y="440" class="s">小売物価統計・松山市・円/kg・月次</text>
+<text x="1281" y="457" class="s">キー不要。出典「e-Stat」を表示</text>
+<circle cx="1535" cy="405" r="11" fill="#0F7B3F"/><text x="1535" y="409.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+<rect x="1205" y="505" width="350" height="150" rx="6" fill="#fff" stroke="#D9DEE3"/>
+<text x="1221" y="528" class="t">お礼の換算（自動計算）</text>
+<text x="1221" y="550" class="s">1. e-Stat の Excel から松山市の単価を読む</text>
+<text x="1221" y="567" class="s">2. DynamoDB に 24 時間キャッシュ</text>
+<text x="1221" y="584" class="s">3. 単価 × もらった kg を品目ごとに合計</text>
+<text x="1221" y="601" class="s">4. 「市場価格で約◯円ぶん（目安）」と</text>
+<text x="1221" y="618" class="s">    1 人あたりの金額を返す</text>
+<text x="1221" y="635" class="s">取得できないときは初期データの単価を使う</text>
+<rect x="1190" y="700" width="380" height="310" rx="4" fill="#F5F7FA" stroke="#334155" stroke-width="1.6"/>
+<text x="1202" y="722" class="g" fill="#334155">3 人の分担（1 日）</text>
+<circle cx="1216" cy="752" r="11" fill="#1D4ED8"/><text x="1216" y="756.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<text x="1236" y="757" class="t">基盤・DB</text>
+<text x="1236" y="776" class="s">Amplify・IAM ロール・DynamoDB</text>
+<text x="1236" y="793" class="s">初期データ・農場と募集の API</text>
+<circle cx="1216" cy="818" r="11" fill="#0F7B3F"/><text x="1216" y="822.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+<text x="1236" y="823" class="t">外部 API・計算</text>
+<text x="1236" y="842" class="s">天気・野菜価格・換算計算</text>
+<text x="1236" y="859" class="s">地図（地理院タイル）</text>
+<circle cx="1216" cy="884" r="11" fill="#B45309"/><text x="1216" y="888.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">C</text>
+<text x="1236" y="889" class="t">QR・チェックイン</text>
+<text x="1236" y="908" class="s">QR 発行・表示・読み取り</text>
+<text x="1236" y="925" class="s">チェックイン API と画面</text>
+<text x="1202" y="960" class="s">9:00 設計確定 → 午前・午後 並行開発</text>
+<text x="1202" y="978" class="s">→ 15:00 デプロイ・スマホ 2 台で通し確認</text>
+<text x="1202" y="996" class="s">→ 16:30 予行・不要リソースの確認</text>
+<rect x="30" y="840" width="250" height="170" rx="4" fill="#F0F8F1" stroke="#2E7D32" stroke-width="1.6"/>
+<text x="42" y="862" class="g" fill="#2E7D32">無料で運営</text>
+<text x="42" y="886" class="s">Amplify Hosting：無料枠</text>
+<text x="42" y="905" class="s">DynamoDB：常時無料枠</text>
+<text x="42" y="924" class="s">（プロビジョンド 5/5）</text>
+<text x="42" y="943" class="s">CloudWatch Logs：5GB / 月</text>
+<text x="42" y="962" class="s">外部 API：すべてキー不要</text>
+<text x="42" y="981" class="s">API キーを一切使わない</text>
+<polyline points="203,180 416,258" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="300" y="212" class="l" text-anchor="middle">HTTPS</text>
+<polyline points="203,360 330,360 330,282 416,282" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="300" y="352" class="l" text-anchor="middle">HTTPS</text>
+<polyline points="145,600 145,690" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<polyline points="205,760 322,760 322,306 416,306" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="324" y="600" class="l" text-anchor="start">自動ビルド</text>
+<polyline points="203,165 275,132 1170,132 1170,196 1200,196" fill="none" stroke="#2F6FDE" stroke-width="1.9" stroke-dasharray="6 5" marker-end="url(#b)"/>
+<text x="760" y="128" class="lb" text-anchor="middle">地図タイル（ブラウザから直接）</text>
+<polyline points="1095,466 1150,466 1150,316 1200,316" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="1160" y="380" class="l" text-anchor="start">予報</text>
+<polyline points="1095,500 1170,500 1170,436 1200,436" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="1176" y="478" class="l" text-anchor="start">単価</text>
+<polyline points="700,600 700,640 470,640 470,675" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="560" y="634" class="l" text-anchor="middle">SSR Compute</text>
+<polyline points="500,708 758,708" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="630" y="702" class="l" text-anchor="middle">読み書き</text>
+<polyline points="1030,600 1030,675" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="1040" y="645" class="l" text-anchor="start">ログ</text>
+<polyline points="790,830 790,875" fill="none" stroke="#3F4B57" stroke-width="1.9" marker-end="url(#a)"/>
+<text x="30" y="1045" class="s">アイコン：AWS Architecture Icons（npm aws-icons@3.3.0）。GitHub と外部サービスは独自の簡易アイコン。</text>
+</svg>
